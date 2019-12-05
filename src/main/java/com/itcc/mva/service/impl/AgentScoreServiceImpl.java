@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class AgentScoreServiceImpl implements IAgentScoreService {
+
     @Autowired
     private AgentScoreMapper agentScoreMapper;
 

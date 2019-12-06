@@ -20,10 +20,14 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
 
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <!--每个日志文件最大100MB-->
+            <maxFileSize>1024MB</maxFileSize>
+        </triggeringPolicy>
+
         <encoder>
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{80} - %msg%n
-            </pattern>
+            <pattern>%d [%thread] %-5level %logger{36} [%file : %line] - %msg%n</pattern>
         </encoder>
 
     </appender>

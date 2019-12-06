@@ -64,3 +64,6 @@ mybatis-plus:
 
 server:
   port: 52113
+
+zookeeper:
+  url: 127.0.0.1:2181

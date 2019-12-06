@@ -17,7 +17,8 @@ CREATE TABLE shedlock(
 )
 ```
 
-参照：TimeTaskJob
+参照：TimeTaskJob  
+原文地址:https://github.com/lukas-krecan/ShedLock
 
 
 ---

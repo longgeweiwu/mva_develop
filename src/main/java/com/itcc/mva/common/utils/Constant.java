@@ -2,6 +2,7 @@ package com.itcc.mva.common.utils;
 
 /**
  * 根据github项目中，您必须将lockAtMostFor设置为比正常执行时间长得多的值。这个时间小于轮训时间
+ * 否则会出问题
  */
 public class Constant {
     /**

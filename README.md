@@ -2,7 +2,7 @@
 **Q&A**  
 * 1、  ShedLock 部署时需要创建表
 
--  ```
+  ```
    CREATE TABLE shedlock(
           name VARCHAR(64), 
           lock_until TIMESTAMP(3) NULL, 

@@ -1,5 +1,6 @@
 # Logger Config
 logging:
+  config: classpath:logback.xml
   level:
     com.baomidou.mybatisplus.samples: debug
     org.springframework.cloud: info

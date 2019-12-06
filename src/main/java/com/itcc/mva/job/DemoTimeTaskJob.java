@@ -17,7 +17,7 @@ public class DemoTimeTaskJob {
     @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     public void run()
     {
-        logger.info(new Date().toString() + "\n");
+        logger.info(new Date().toString());
        // System.out.print(new Date().toString() + "\n");
     }
 }

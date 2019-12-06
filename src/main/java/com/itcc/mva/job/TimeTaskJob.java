@@ -10,8 +10,6 @@ import java.util.Date;
 @Component
 public class TimeTaskJob {
 
-    private static final int lockTime = 1000;
-
     @Scheduled(cron = "0/2 * * * * ?")
     @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     public void run()

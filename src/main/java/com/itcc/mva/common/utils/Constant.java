@@ -1,14 +1,7 @@
 package com.itcc.mva.common.utils;
 
 /**
- * Title. 常量类 <br>
- * Description. 常量类
- *
- * <p>
- * Author: LCL
- * <p>
- * Version: 1.0
- * <p>
+ * 根据github项目中，您必须将lockAtMostFor设置为比正常执行时间长得多的值。这个时间小于轮训时间
  */
 public class Constant {
     /**

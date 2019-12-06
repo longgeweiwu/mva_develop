@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class TimeTaskJob {
+public class DemoTimeTaskJob {
 
     @Scheduled(cron = "0/2 * * * * ?")
     @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)

@@ -1,7 +1,7 @@
 package com.itcc.mva.job;
 
 import com.itcc.mva.common.utils.Constant;
-import net.javacrumbs.shedlock.core.SchedulerLock;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +18,7 @@ public class DemoTimeTaskJob {
     //避免一次任务未执行完，下一个定时任务又启动了。
     //任务执行完，会自动释放锁。
     @Scheduled(cron = "0/2 * * * * ?")
+//    @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     public void run()
     {

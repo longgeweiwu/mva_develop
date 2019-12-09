@@ -13,11 +13,11 @@ public class Constant {
      *  (more then one process will effectively hold the lock).
      *  lockAtMostFor：锁的最大时间单位为毫秒
      */
-    public static final int lockAtMostForTime = 1000;
+    public static final String lockAtMostForTime = "1s";
     /**
      *Lastly, you can set lockAtLeastFor attribute which specifies minimum amount of time for which the lock should be kept.
      *  Its main purpose is to prevent execution from multiple nodes in case of really short tasks and clock difference between the nodes.
      *  lockAtLeastFor：锁的最小时间单位为毫秒
      */
-    public static final int lockAtLeastForTime = 1000;
+    public static final String lockAtLeastForTime = "1s";
 }

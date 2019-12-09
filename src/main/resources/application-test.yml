@@ -35,8 +35,6 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
-  profiles:
-    active: test
 
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml

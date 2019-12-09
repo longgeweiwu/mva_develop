@@ -15,7 +15,7 @@ public class AsrJsonParseJob {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @SchedulerLock(name = "AsrJsonParseJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void run()
     {
 

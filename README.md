@@ -13,6 +13,7 @@
       ) 
   
    Oracel:
+   DROP TABLE ICC_UNION.SHEDLOCK CASCADE CONSTRAINTS;
    CREATE TABLE SHEDLOCK (
      name VARCHAR2(64 CHAR),
      lock_until TIMESTAMP,

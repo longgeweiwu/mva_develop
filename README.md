@@ -1,3 +1,6 @@
+# **主要架构选型**
+Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
+
 # **开发注意事项**
 **Q&A**  
 * 1、  ShedLock 部署时需要创建表 （特别注意不同库创建的sql）

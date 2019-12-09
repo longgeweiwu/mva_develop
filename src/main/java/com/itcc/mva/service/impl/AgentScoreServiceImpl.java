@@ -18,4 +18,10 @@ public class AgentScoreServiceImpl implements IAgentScoreService {
     public List<AgentScore> getAgentList() {
         return agentScoreMapper.getList();
     }
+
+    @Override
+    public List<AgentScore> getSqlAccess() {
+        return agentScoreMapper.getSqlList();
+    }
+
 }

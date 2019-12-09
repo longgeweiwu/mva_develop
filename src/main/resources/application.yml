@@ -54,7 +54,7 @@ mybatis-plus:
       #逻辑删除配置
       logic-delete-value: 0
       logic-not-delete-value: 1
-      db-type: mysql
+      db-type: oracle
     #刷新mapper 调试神器
     refresh: true
     sql-parser-cache: true

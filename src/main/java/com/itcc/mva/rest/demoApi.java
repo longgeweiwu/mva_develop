@@ -18,4 +18,11 @@ public class demoApi {
         return iAgentScoreService.getAgentList();
     }
 
+
+    @GetMapping("/demo2")
+    public List<AgentScore> querysql() {
+        return iAgentScoreService.getSqlAccess();
+    }
+
+
 }

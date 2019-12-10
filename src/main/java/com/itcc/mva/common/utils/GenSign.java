@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class GenSign {
 
-    public static Map<String,String> getValidSign(){
-        Map<String, String> result = new HashMap<String, String>();
+    public static Map<String,Object> getValidSign(){
+        Map<String, Object> result = new HashMap<String, Object>();
         //appId
         String appId = "incoming_phone";
         //appSecret

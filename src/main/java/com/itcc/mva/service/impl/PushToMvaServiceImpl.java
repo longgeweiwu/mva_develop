@@ -1,0 +1,60 @@
+package com.itcc.mva.service.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.itcc.mva.common.utils.Constant;
+import com.itcc.mva.common.utils.GenSign;
+import com.itcc.mva.common.utils.HttpUtil;
+import com.itcc.mva.service.IPushToMvaService;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
+public class PushToMvaServiceImpl implements IPushToMvaService {
+
+
+
+
+    @Override
+    public String sendToMvaService() {
+        Map<String, Object> headers = new HashMap<String, Object>();
+        Map<String, Object> postparams = GenSign.getValidSign();
+
+        JSONObject jsonObject= new JSONObject();
+        jsonObject.put("extIdcard","");//身份证号码
+        /**
+         * 一级主要述求
+         * 1：退役安置类
+         * 2：优待抚恤类
+         * 3：就业创业类
+         * 4：褒扬纪念类
+         * 5：军休服务类
+         * 6：帮扶援助类
+         * 7：党员管理类
+         * 8：咨询建议类
+         * 9：其他
+         *
+         * 传 数字
+         */
+        jsonObject.put("regMainAppealOne","");
+        jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
+        jsonObject.put("regAppealContent","");//主要述求详情
+        jsonObject.put("regRecordFileUri","");//录音文件地址
+
+
+        postparams.put("data", jsonObject.toJSONString());
+        postparams.put("sign", "cf7aa25fa08411dd3b0d0c3f2f54f64e");
+        postparams.put("t", "1575954980702");
+        String resultpost= HttpUtil.httpPost("http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg", headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+        /**
+         * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
+         */
+        JSONObject httpResult= JSON.parseObject(resultpost);
+        if(1!=httpResult.getInteger("code")){
+
+        }
+        return resultpost;
+    }
+}

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -52,13 +53,13 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
     public void asr() {
         List<String> records = intelligentAsrMapper.getRecordsToAsr();
         JSONObject recordsDetail = new JSONObject();
-        JSONArray audioPath = new JSONArray();
+        JSONArray audioPaths = new JSONArray();
         JSONArray fileExtension = new JSONArray();
 
         for(String record:records){
-            audioPath.add(record);
+            audioPaths.add(record);
         }
-        recordsDetail.put("audio_path",audioPath);
+        recordsDetail.put("audio_paths",audioPaths);
         recordsDetail.put("is_path_dir",false);
         fileExtension.add(".wav");
         fileExtension.add(".mp3");
@@ -93,7 +94,12 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
             log.info("任务转写完成");
             responseStatus = intelligentAsrFeign.asrStatus(statusDetail);
             JSONArray status_list = responseStatus.getJSONArray("status_list");
-            //status_list.getJSONObject()
+            Iterator<Object> fileStatus = status_list.iterator();
+            while (fileStatus.hasNext()) {
+                JSONObject ob = (JSONObject) fileStatus.next();
+                //打印出遍历出的jsonObject
+                System.out.println(ob);
+            }
 
 
         }catch(Exception e){

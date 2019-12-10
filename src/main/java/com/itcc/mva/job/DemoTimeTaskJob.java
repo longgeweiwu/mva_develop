@@ -18,11 +18,10 @@ public class DemoTimeTaskJob {
     //避免一次任务未执行完，下一个定时任务又启动了。
     //任务执行完，会自动释放锁。
     @Scheduled(cron = "0/2 * * * * ?")
-//    @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     @SchedulerLock(name = "TaskScheduler_scheduledTask", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     public void run()
     {
         logger.info(new Date().toString());
-       // System.out.print(new Date().toString() + "\n");
+        // System.out.print(new Date().toString() + "\n");
     }
 }

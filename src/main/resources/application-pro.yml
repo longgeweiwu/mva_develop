@@ -78,7 +78,9 @@ mybatis-plus:
 
 server:
   port: 52113
-
+shedlock:
+  defaults:
+    lock-at-most-for: 1m
 
 asrParams:
   recordsUrl: 172.16.12.229:9999

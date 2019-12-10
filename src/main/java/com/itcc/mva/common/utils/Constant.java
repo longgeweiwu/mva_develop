@@ -20,4 +20,7 @@ public class Constant {
      *  lockAtLeastFor：锁的最小时间单位为毫秒
      */
     public static final String lockAtLeastForTime = "1s";
+
+
+    public static final int HTTP_TIMEOUT=60000;//默认超时时间
 }

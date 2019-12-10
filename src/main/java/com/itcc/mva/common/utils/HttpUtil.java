@@ -1,6 +1,5 @@
 package com.itcc.mva.common.utils;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
@@ -508,15 +507,25 @@ public class HttpUtil {
     }
 
     public static void main(String args[]) {
-        List lit = new ArrayList<String>();
-        lit.add("asd");
-        Map<String, Object> param = new HashMap<>();
-        param.put("operationName", "StartContactCenterSession");
-        param.put("isForceLogin", "1");
-        param.put("channels", lit);
-        String namValStr =JSON.toJSONString(param);
-        String  s= httpRequestJson("http://172.21.49.47:80" + "/api/v1/me", namValStr);
-        System.out.println(namValStr);
-        System.out.println(s);
+        /*
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("idCard", "110000198103154566 ");
+        params.put("sign", "cf7aa25fa08411dd3b0d0c3f2f54f64e");
+        params.put("t", "1575954980702");
+
+       String result= get("http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify",params);
+
+        System.out.println(result);
+
+         */
+
+        Map<String, Object> headers = new HashMap<String, Object>();
+        Map<String, Object> postparams = new HashMap<String, Object>();
+        postparams.put("data", "{ \"extIdcard\":\"5134362xxxx2093142\",\"regMainAppealOne\":\"1\", \"acceptItem\":\"1100000\",\"regAppealContent\":\"请求安置\" ,\"regRecordFileUri\":\"http://test.cn/incoming/record/file/asdasdasda.wav\"} ");
+        postparams.put("sign", "cf7aa25fa08411dd3b0d0c3f2f54f64e");
+        postparams.put("t", "1575954980702");
+        String resultpost=httpPost("http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg", headers, null, postparams, 60000, false);
+
+        System.out.println(resultpost);
     }
 }

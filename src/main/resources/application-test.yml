@@ -82,3 +82,17 @@ server:
 shedlock:
   defaults:
     lock-at-most-for: 1m
+asrParams:
+  recordsUrl: 172.16.12.229:9999
+  recordDir: /share/vpshare/leaveword/jt
+  channelType: 1
+  audioFormat: auto
+  property: chinese_8k_common
+  fileExtention: .wav
+  resultType: JSON,
+  wordsInfo: WORD,
+  enableAddPunc: true,
+  enableDiarization: true,
+  enableEmotion: true,
+  enableSpeed: true
+  parallel: 24

@@ -5,7 +5,7 @@ import com.itcc.mva.fallback.IntelligentAsrFeignFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "downloadRecord",url = "${asrParams.recordUrl}",fallback = IntelligentAsrFeignFallBack.class)
+@FeignClient(name = "downloadRecord",url = "${asrParams.recordsUrl}",fallback = IntelligentAsrFeignFallBack.class)
 public interface IntelligentAsrFeign {
     @PostMapping(value = "/speechAnalysis")
     JSONObject asrResult(JSONObject recordsDetail);

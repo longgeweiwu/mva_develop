@@ -22,6 +22,8 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
     @Autowired
     private IntelligentAsrFeign intelligentAsrFeign;
 
+    @Value("${asrParams.recordDir}")
+    private int recordDir;
     @Value("${asrParams.parallel}")
     private int parallel;
     @Value("${asrParams.channelType}")
@@ -55,9 +57,8 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
         JSONObject recordsDetail = new JSONObject();
         JSONArray audioPaths = new JSONArray();
         JSONArray fileExtension = new JSONArray();
-
         for(String record:records){
-            audioPaths.add(record);
+            audioPaths.add(recordDir+record);
         }
         recordsDetail.put("audio_paths",audioPaths);
         recordsDetail.put("is_path_dir",false);
@@ -76,13 +77,17 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
 
         try {
             JSONObject responseResult = intelligentAsrFeign.asrResult(recordsDetail);
+            JSONArray files = new JSONArray();
+            for(String record:records){
+                files.add(record);
+            }
+            recordsDetail.put("files",files);
             String task_no = responseResult.getString("task_no");
             JSONObject statusDetail = new JSONObject();
             statusDetail.put("task_no",task_no);
+
             JSONObject responseStatus = intelligentAsrFeign.asrStatus(statusDetail);
             String res_msg = responseStatus.getString("res_msg");
-
-
 
             while(!"finished".equals(res_msg)){
                 responseStatus = intelligentAsrFeign.asrStatus(statusDetail);
@@ -108,11 +113,9 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
 
             }
 
-
         }catch(Exception e){
             log.info("ASR解析错误，请核对发送参数是否符合要求。");
         }
-
 
     }
 

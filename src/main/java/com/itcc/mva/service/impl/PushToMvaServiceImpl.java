@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.GenSign;
 import com.itcc.mva.common.utils.HttpUtil;
+import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.mapper.PushToMvaMapper;
 import com.itcc.mva.service.IPushToMvaService;
 import com.itcc.mva.vo.MvaOutVo;
@@ -19,11 +20,12 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
     private static final String url = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
 
+    private static final String recordUrl="";
     @Autowired
     private PushToMvaMapper pushToMvaMapper;
 
     @Override
-    public String singleSendToMvaService(String callid,String regAppealContent) {
+    public String singleSendToMvaService(String callid, IntelligentAsrEntity intelligentAsrEntity) {
         /**
          * 查询callid对应信息存储
          */
@@ -50,8 +52,8 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          */
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
-        jsonObject.put("regAppealContent",regAppealContent);//主要述求详情
-        jsonObject.put("regRecordFileUri","");//录音文件地址
+        jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
+        jsonObject.put("regRecordFileUri",recordUrl);//录音文件地址
 
 
         Map<String, Object> validSign = GenSign.getValidSign();

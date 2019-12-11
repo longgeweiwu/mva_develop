@@ -84,7 +84,6 @@ shedlock:
 
 asrParams:
   recordsUrl: 172.16.12.229:9999
-  recordDir: /share/vpshare/leaveword/jt/
   channelType: 1
   audioFormat: auto
   property: chinese_8k_common

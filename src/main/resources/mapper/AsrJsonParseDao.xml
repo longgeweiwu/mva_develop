@@ -21,6 +21,7 @@
             , JSONPARSE_RESULT
             , CALLID
             ,ISSUBMIT
+            ,FULL_PATH
         FROM ICC_UNION.T_QC_INTELLIGENT_ASR
         WHERE ROWNUM &lt;= #{top}
           AND JSONPARSE_STATUS IS NULL
@@ -48,9 +49,12 @@
             , JSONPARSE_RESULT
             , CALLID
             ,ISSUBMIT
+            ,FULL_PATH
         FROM ICC_UNION.T_QC_INTELLIGENT_ASR
         WHERE ROWNUM &lt;= #{num}
-
+          AND ISSUBMIT IS NULL
+          AND CALLID IS NOT NULL
+          AND JSONPARSE_RESULT IS NOT NULL
         ORDER BY TO_date(LEAV_WORD_TIME,'YYYY-MM-DD HH:MI:SS')
     </select>
 

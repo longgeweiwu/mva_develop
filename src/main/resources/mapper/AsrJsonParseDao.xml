@@ -4,6 +4,27 @@
 <mapper namespace="com.itcc.mva.mapper.AsrJsonParseMapper">
 
     <select id="queryPendingTopMapper" resultType="com.itcc.mva.entity.IntelligentAsrEntity" parameterType="java.lang.Integer">
-
+        SELECT
+            PID
+            , LOG_ID
+            , LEAV_WORD_TIME
+            , ANI
+            , LEAVEWORD_PATH
+            , VOICE_FILE_NAME
+            , OUTPUT_FILEPATH
+            , OUTPUT_FILENAME
+            , ASR_STATUS
+            , ASR_TIMESTAMP
+            , ASR_FAILTIMES
+            , DATAGENERATE_TIME
+            , JSONPARSE_STATUS
+            , JSONPARSE_RESULT
+            , CALLID
+        FROM ICC_UNION.T_QC_INTELLIGENT_ASR
+        WHERE ROWNUM &lt;= #{top}
+          AND JSONPARSE_STATUS IS NULL
+          AND OUTPUT_FILEPATH IS NOT NULL
+          AND OUTPUT_FILENAME IS NOT NULL
+        ORDER BY TO_date(LEAV_WORD_TIME,'YYYY-MM-DD HH:MI:SS')
     </select>
 </mapper>

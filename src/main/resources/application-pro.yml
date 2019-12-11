@@ -88,10 +88,10 @@ asrParams:
   audioFormat: auto
   property: chinese_8k_common
   fileExtention: .wav
-  resultType: JSON,
-  wordsInfo: NONE,
-  enableAddPunc: false,
-  enableDiarization: false,
-  enableEmotion: false,
+  resultType: JSON
+  wordsInfo: NONE
+  enableAddPunc: false
+  enableDiarization: false
+  enableEmotion: false
   enableSpeed: false
   parallel: 24

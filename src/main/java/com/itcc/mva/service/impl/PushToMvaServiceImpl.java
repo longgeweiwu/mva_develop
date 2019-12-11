@@ -25,11 +25,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
     private PushToMvaMapper pushToMvaMapper;
 
     @Override
-    public String singleSendToMvaService(String callid, IntelligentAsrEntity intelligentAsrEntity) {
+    public String singleSendToMvaService(IntelligentAsrEntity intelligentAsrEntity) {
         /**
          * 查询callid对应信息存储
          */
-        MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(callid);
+        MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(intelligentAsrEntity.getCallid());
 
         Map<String, Object> headers = new HashMap<String, Object>();
         Map<String, Object> postparams = GenSign.getValidSign();
@@ -53,7 +53,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
-        jsonObject.put("regRecordFileUri",recordUrl);//录音文件地址
+        jsonObject.put("regRecordFileUri",recordUrl+intelligentAsrEntity.getFullPath()+intelligentAsrEntity.getVoiceFilename());//录音文件地址
 
 
         Map<String, Object> validSign = GenSign.getValidSign();

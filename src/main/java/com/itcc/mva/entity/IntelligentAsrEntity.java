@@ -43,6 +43,6 @@ public class IntelligentAsrEntity {
     private String callid;
     @TableField(value = "ISSUBMIT")
     private String issubmit;
-    @TableField(value = "PULL_PATH")
-    private String pullPath;
+    @TableField(value = "FULL_PATH")
+    private String fullPath;
 }

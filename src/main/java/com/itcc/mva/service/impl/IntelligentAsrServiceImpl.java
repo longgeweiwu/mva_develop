@@ -97,8 +97,15 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
             Iterator<Object> fileStatus = status_list.iterator();
             while (fileStatus.hasNext()) {
                 JSONObject ob = (JSONObject) fileStatus.next();
-                //打印出遍历出的jsonObject
-                System.out.println(ob);
+                String file = ob.getString("file");
+                String[] path = file.split("/");
+                String fileName = path[path.length-1];
+                if("success".equals(ob.getString("msg"))){
+                    intelligentAsrMapper.asrSuccess();
+                }else{
+                    intelligentAsrMapper.asrFail();
+                }
+
             }
 
 

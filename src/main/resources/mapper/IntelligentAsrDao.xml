@@ -25,4 +25,26 @@
         and t.asr_failtimes &lt; 4
         and ROWNUM &lt; 25
     </select>
+
+    <update id="asrSuccess">
+        select *
+        from T_QC_INTELLIGENT_ASR t
+        where t.output_filepath is null
+        and t.output_filename is null
+        and t.asr_status = 0
+        and t.asr_timestamp is null
+        and t.asr_failtimes &lt; 4
+        and ROWNUM &lt; 25
+    </update>
+
+    <update id="asrFail">
+        select *
+        from T_QC_INTELLIGENT_ASR t
+        where t.output_filepath is null
+        and t.output_filename is null
+        and t.asr_status = 0
+        and t.asr_timestamp is null
+        and t.asr_failtimes &lt; 4
+        and ROWNUM &lt; 25
+    </update>
 </mapper>

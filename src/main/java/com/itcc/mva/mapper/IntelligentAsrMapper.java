@@ -15,10 +15,4 @@ public interface IntelligentAsrMapper extends BaseMapper<IntelligentAsrEntity> {
     void asrSuccess();
 
     void asrFail();
-    /**
-     *
-     * @param top 查询多少条
-     * @return
-     */
-    public List<IntelligentAsrEntity> queryPendingTopMapper(int top);
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -25,12 +26,18 @@ public class PushToMvaService {
     private IPushToMvaService iPushToMvaService;
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
+    @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushInfo()
     {
         List<IntelligentAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSend(Constant.NO_PARSER);
-        for(int i = 0; i < waitingSend.size(); i++){
-            iPushToMvaService.singleSendToMvaService(waitingSend.get(i).getCallid(),waitingSend.get(i));
+        if(0 != waitingSend.size()) {
+            logger.info(">>> 存在[推送]任务 。 开始时间 ["+new Date()+"]");
+            for (int i = 0; i < waitingSend.size(); i++) {
+                iPushToMvaService.singleSendToMvaService(waitingSend.get(i).getCallid(), waitingSend.get(i));
+            }
+            logger.info(">>> 存在[推送]任务 。 结束时间 ["+new Date()+"]");
+        }else{
+            logger.info(">>> 任务名称:PushToMvaJob 暂时没有[推送]任务。");
         }
     }
 }

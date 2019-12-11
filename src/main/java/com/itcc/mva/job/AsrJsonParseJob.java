@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,8 +28,14 @@ public class AsrJsonParseJob {
     public void runParse()
     {
         List<IntelligentAsrEntity> asrEntityList = iAsrJsonParseService.queryPendingTop(Constant.NO_PARSER);
-        for (int i = 0; i < asrEntityList.size(); i++) {
-            iAsrJsonParseService.jsonSigle(asrEntityList.get(i));
+        if(0 != asrEntityList.size()){
+            logger.info(">>> 存在[解析]任务 。 开始时间 ["+new Date()+"]");
+            for (int i = 0; i < asrEntityList.size(); i++) {
+                iAsrJsonParseService.jsonSigle(asrEntityList.get(i));
+            }
+            logger.info(">>> 存在[解析]任务 。 结束时间 ["+new Date()+"]");
+        }else{
+            logger.info(">>> 任务名称:AsrJsonParseJob 暂时没有[解析]任务。");
         }
     }
 }

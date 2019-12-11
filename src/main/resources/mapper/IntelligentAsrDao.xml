@@ -5,17 +5,26 @@
 
     <insert id="generateBaseTable" >
        insert into t_Qc_Intelligent_Asr
-          (PID, LOG_ID, LEAV_WORD_TIME, ANI, LEAVEWORD_PATH, VOICE_FILE_NAME,CALLID,FULL_PATH)
+          (PID,
+           LOG_ID,
+           LEAV_WORD_TIME,
+           ANI,
+           LEAVEWORD_PATH,
+           VOICE_FILE_NAME,
+           CALLID,
+           FULL_PATH)
           select sys_guid(),
-         LOG_ID,
-         LEAV_WORD_TIME,
-         ANI,
-         LEAVEWORD_PATH,
-         VOICE_FILE_NAME,
-         CALLID,
-         FULL_PATH
-        from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
-        where ivr.CALLID not exists (select callid from t_Qc_Intelligent_Asr)
+                 LOG_ID,
+                 LEAV_WORD_TIME,
+                 ANI,
+                 LEAVEWORD_PATH,
+                 VOICE_FILE_NAME,
+                 CALLID,
+                 FULL_PATH
+            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+           where not exists (select callid
+                    from t_Qc_Intelligent_Asr asr
+                   where ivr.CALLID = asr.callid)
 	</insert>
 
     <select id="getRecordsToAsr" resultType="com.itcc.mva.vo.RecordNameAndPathVo">

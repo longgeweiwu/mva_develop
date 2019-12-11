@@ -28,7 +28,7 @@
 	</insert>
 
     <select id="getRecordsToAsr" resultType="com.itcc.mva.vo.RecordNameAndPathVo">
-        select VOICE_FILE_NAME as voice_filename,FULL_PATH
+        select VOICE_FILE_NAME as voice_filename, FULL_PATH
         from T_QC_INTELLIGENT_ASR t
         where t.output_filepath is null
         and t.output_filename is null
@@ -36,6 +36,7 @@
         and t.asr_timestamp is null
         and t.asr_failtimes &lt; 4
         and ROWNUM &lt; 25
+        order by leav_word_time desc
     </select>
 
     <update id="asrSuccess" parameterType="java.util.Map" >

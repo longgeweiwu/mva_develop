@@ -25,8 +25,8 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
     @Autowired
     private IntelligentAsrFeign intelligentAsrFeign;
 
-    @Value("${asrParams.recordDir}")
-    private String recordDir;
+//    @Value("${asrParams.recordDir}")
+//    private String recordDir;
     @Value("${asrParams.parallel}")
     private int parallel;
     @Value("${asrParams.channelType}")

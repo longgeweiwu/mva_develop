@@ -24,4 +24,8 @@ public class Constant {
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 
     public static final int NO_PARSER = 25; //解析数量
+
+
+    public static final int ASRPARSER_SUCCESS = 1; //成功
+    public static final int ASRPARSER_FAIL = 2; //失败
 }

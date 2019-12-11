@@ -36,7 +36,7 @@ public class IntelligentAsrEntity {
     @TableField(value = "DATAGENERATE_TIME")
     private Date datagenerateTime;
     @TableField(value = "JSONPARSE_STATUS")
-    private String jsonparseStatus;
+    private Integer jsonparseStatus;
     @TableField(value = "JSONPARSE_RESULT")
     private String jsonparseResult;
 }

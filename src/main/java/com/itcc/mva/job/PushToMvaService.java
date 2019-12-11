@@ -33,7 +33,7 @@ public class PushToMvaService {
         if(0 != waitingSend.size()) {
             logger.info(">>> 存在[推送]任务 。 开始时间 ["+new Date()+"]");
             for (int i = 0; i < waitingSend.size(); i++) {
-                iPushToMvaService.singleSendToMvaService(waitingSend.get(i).getCallid(), waitingSend.get(i));
+                iPushToMvaService.singleSendToMvaService(waitingSend.get(i));
             }
             logger.info(">>> 存在[推送]任务 。 结束时间 ["+new Date()+"]");
         }else{

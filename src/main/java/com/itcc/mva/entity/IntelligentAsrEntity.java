@@ -39,4 +39,8 @@ public class IntelligentAsrEntity {
     private Integer jsonparseStatus;
     @TableField(value = "JSONPARSE_RESULT")
     private String jsonparseResult;
+    @TableField(value = "CALLID")
+    private String callid;
+    @TableField(value = "ISSUBMIT")
+    private String issubmit;
 }

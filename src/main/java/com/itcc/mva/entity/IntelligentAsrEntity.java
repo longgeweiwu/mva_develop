@@ -35,4 +35,8 @@ public class IntelligentAsrEntity {
     private String asrFailtimes;
     @TableField(value = "DATAGENERATE_TIME")
     private Date datagenerateTime;
+    @TableField(value = "JSONPARSE_STATUS")
+    private String jsonparseStatus;
+    @TableField(value = "JSONPARSE_RESULT")
+    private String jsonparseResult;
 }

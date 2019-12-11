@@ -25,7 +25,7 @@ public class PushToMvaService {
     private IPushToMvaService iPushToMvaService;
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
+    @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushInfo()
     {
         List<IntelligentAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSend(Constant.NO_PARSER);

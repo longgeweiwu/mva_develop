@@ -30,7 +30,7 @@ public class PushToMvaService {
     {
         List<IntelligentAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSend(Constant.NO_PARSER);
         for(int i = 0; i < waitingSend.size(); i++){
-            iPushToMvaService.singleSendToMvaService(waitingSend.get(i).getCallid());
+            iPushToMvaService.singleSendToMvaService(waitingSend.get(i).getCallid(),waitingSend.get(i).getJsonparseResult());
         }
     }
 }

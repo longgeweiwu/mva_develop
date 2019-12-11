@@ -90,9 +90,9 @@ asrParams:
   property: chinese_8k_common
   fileExtention: .wav
   resultType: JSON,
-  wordsInfo: WORD,
-  enableAddPunc: true,
-  enableDiarization: true,
-  enableEmotion: true,
-  enableSpeed: true
+  wordsInfo: NONE,
+  enableAddPunc: false,
+  enableDiarization: false,
+  enableEmotion: false,
+  enableSpeed: false
   parallel: 24

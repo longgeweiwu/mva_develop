@@ -5,18 +5,20 @@
 
     <insert id="generateBaseTable" >
        insert into t_Qc_Intelligent_Asr
-          (pid, LOG_ID, LEAV_WORD_TIME, ANI, LEAVEWORD_PATH, VOICE_FILE_NAME)
+          (PID, LOG_ID, LEAV_WORD_TIME, ANI, LEAVEWORD_PATH, VOICE_FILE_NAME,CALLID,FULL_PATH)
           select sys_guid(),
          LOG_ID,
          LEAV_WORD_TIME,
          ANI,
          LEAVEWORD_PATH,
-         VOICE_FILE_NAME
+         VOICE_FILE_NAME,
+         CALLID,
+         FULL_PATH
         from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK
 	</insert>
 
-    <select id="getRecordsToAsr" resultType="string">
-        select *
+    <select id="getRecordsToAsr" resultType="com.itcc.mva.vo.RecordNameAndPathVo">
+        select VOICE_FILE_NAME as voice_filename,FULL_PATH
         from T_QC_INTELLIGENT_ASR t
         where t.output_filepath is null
         and t.output_filename is null
@@ -26,25 +28,18 @@
         and ROWNUM &lt; 25
     </select>
 
-    <update id="asrSuccess">
-        select *
-        from T_QC_INTELLIGENT_ASR t
-        where t.output_filepath is null
-        and t.output_filename is null
-        and t.asr_status = 0
-        and t.asr_timestamp is null
-        and t.asr_failtimes &lt; 4
-        and ROWNUM &lt; 25
+    <update id="asrSuccess" parameterType="java.util.Map" >
+        update T_QC_INTELLIGENT_ASR
+           set output_filepath = #{param.filePath},
+               output_filename = FULL_PATH || #{param.task_no} || '/',
+               asr_status      = 1,
+               asr_timestamp   = sysdate
+           where voice_file_name = #{param.recordName}
     </update>
 
-    <update id="asrFail">
-        select *
-        from T_QC_INTELLIGENT_ASR t
-        where t.output_filepath is null
-        and t.output_filename is null
-        and t.asr_status = 0
-        and t.asr_timestamp is null
-        and t.asr_failtimes &lt; 4
-        and ROWNUM &lt; 25
+    <update id="asrFail" parameterType="java.util.String">
+        update T_QC_INTELLIGENT_ASR
+           set asr_failtimes = asr_failtimes + 1
+         where voice_file_name = #{recordName}
     </update>
 </mapper>

@@ -24,7 +24,7 @@ public class PushToMvaService {
     @Autowired
     private IPushToMvaService iPushToMvaService;
 
-    @Scheduled(cron = "0/2 * * * * ?")
+    @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = Constant.lockAtMostForTime, lockAtLeastFor = Constant.lockAtLeastForTime)
     public void pushInfo()
     {

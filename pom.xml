@@ -126,11 +126,10 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>2.2.0.RELEASE</version>
         </dependency>
-
         <dependency>
-            <groupId>com.inspur.est</groupId>
-            <artifactId>signsec</artifactId>
-            <version>1.1.6</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>2.2.3.RELEASE</version>
         </dependency>
     </dependencies>
 

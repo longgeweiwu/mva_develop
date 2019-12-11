@@ -11,4 +11,8 @@ public interface IntelligentAsrMapper extends BaseMapper<IntelligentAsrEntity> {
     void generateBaseTable();
 
     List<String> getRecordsToAsr();
+
+    void asrSuccess();
+
+    void asrFail();
 }

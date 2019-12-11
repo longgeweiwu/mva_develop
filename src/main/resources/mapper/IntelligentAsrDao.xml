@@ -14,7 +14,8 @@
          VOICE_FILE_NAME,
          CALLID,
          FULL_PATH
-        from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK
+        from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+        where ivr.CALLID not exists (select callid from t_Qc_Intelligent_Asr)
 	</insert>
 
     <select id="getRecordsToAsr" resultType="com.itcc.mva.vo.RecordNameAndPathVo">
@@ -37,7 +38,7 @@
            where voice_file_name = #{param.recordName}
     </update>
 
-    <update id="asrFail" parameterType="java.util.String">
+    <update id="asrFail" parameterType="java.lang.String">
         update T_QC_INTELLIGENT_ASR
            set asr_failtimes = asr_failtimes + 1
          where voice_file_name = #{recordName}

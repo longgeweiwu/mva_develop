@@ -15,6 +15,7 @@ import java.util.Map;
 public class PushToMvaServiceImpl implements IPushToMvaService {
 
 
+    private static final String url = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
 
 
     @Override
@@ -44,10 +45,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         jsonObject.put("regRecordFileUri","");//录音文件地址
 
 
+        Map<String, Object> validSign = GenSign.getValidSign();
         postparams.put("data", jsonObject.toJSONString());
-        postparams.put("sign", "cf7aa25fa08411dd3b0d0c3f2f54f64e");
-        postparams.put("t", "1575954980702");
-        String resultpost= HttpUtil.httpPost("http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg", headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+        postparams.put("sign", validSign.get("sign"));
+        postparams.put("t", validSign.get("t"));
+        String resultpost= HttpUtil.httpPost(url, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
         /**
          * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
          */

@@ -49,14 +49,17 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         postparams.put("data", jsonObject.toJSONString());
         postparams.put("sign", validSign.get("sign"));
         postparams.put("t", validSign.get("t"));
-        String resultpost= HttpUtil.httpPost(url, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+        String resultPost= HttpUtil.httpPost(url, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
         /**
          * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
          */
-        JSONObject httpResult= JSON.parseObject(resultpost);
-        if(1!=httpResult.getInteger("code")){
+        if(null != resultPost){
+            JSONObject httpResult= JSON.parseObject(resultPost);
+            System.out.println(httpResult);
+            if(1!=httpResult.getInteger("code")){
 
+            }
         }
-        return resultpost;
+        return resultPost;
     }
 }

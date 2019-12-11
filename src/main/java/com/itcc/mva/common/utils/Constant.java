@@ -21,6 +21,7 @@ public class Constant {
      */
     public static final String lockAtLeastForTime = "1s";
 
-
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
+
+    public static final int NO_PARSER = 25; //解析数量
 }

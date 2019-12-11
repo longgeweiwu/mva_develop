@@ -19,4 +19,12 @@ public interface IAsrJsonParseService {
      * 单条解析文本
      */
     void jsonSigle(IntelligentAsrEntity intelligentAsrEntity);
+
+
+    /**
+     *
+     * @param num 查询待发送多少条
+     * @return
+     */
+    List<IntelligentAsrEntity> queryWaitingSend(int num);
 }

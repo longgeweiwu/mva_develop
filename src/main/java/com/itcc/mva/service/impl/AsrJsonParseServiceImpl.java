@@ -49,4 +49,9 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
             intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", ""));
         }
     }
+
+    @Override
+    public List<IntelligentAsrEntity> queryWaitingSend(int num) {
+        return asrJsonParseMapper.queryWaitingSend(num);
+    }
 }

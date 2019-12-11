@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcc.mva.mapper.PushToMvaMapper">
+
+    <select id="queryByCallid" resultType="com.itcc.mva.vo.MvaOutVo" parameterType="java.lang.String">
+         SELECT IJ.CALLID AS CALLID
+              , IJ.START_TIME AS START_TIME
+              , IJL.LEAV_WORD_TIME AS LEAV_WORD_TIME
+              , IJ.CALLNO AS CALLNO
+              , IJL.ANI AS ANI
+              , IJ.ID AS ID
+              , IJ.PHONENO AS PHONENO
+              , IJ.QUESTION_TYPE AS QUESTION_TYPE
+              , IJ.FLAG AS FLAG
+           FROM IVR_JTINFO@HUAWEI_ICD_DB_LINK IJ
+              , IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK IJL
+          WHERE IJ.CALLID = IJL.CALLID ( +) AND IJ.FLAG = '1'
+    </select>
+</mapper>

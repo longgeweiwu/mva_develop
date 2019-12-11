@@ -12,4 +12,6 @@ public interface AsrJsonParseMapper {
      */
     public List<IntelligentAsrEntity> queryPendingTopMapper(int top);
 
+    public List<IntelligentAsrEntity> queryWaitingSend(int num);
+
 }

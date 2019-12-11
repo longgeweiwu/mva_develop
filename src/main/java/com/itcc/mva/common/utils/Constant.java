@@ -25,6 +25,7 @@ public class Constant {
 
     public static final int NO_PARSER = 25; //解析数量
 
+    public static final int NO_SENDER = 25; //发送数量
 
     public static final int ASRPARSER_SUCCESS = 1; //成功
     public static final int ASRPARSER_FAIL = 2; //失败

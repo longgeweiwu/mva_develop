@@ -5,7 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.GenSign;
 import com.itcc.mva.common.utils.HttpUtil;
+import com.itcc.mva.mapper.PushToMvaMapper;
 import com.itcc.mva.service.IPushToMvaService;
+import com.itcc.mva.vo.MvaOutVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,17 +17,23 @@ import java.util.Map;
 @Service
 public class PushToMvaServiceImpl implements IPushToMvaService {
 
-
     private static final String url = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
 
+    @Autowired
+    private PushToMvaMapper pushToMvaMapper;
 
     @Override
-    public String sendToMvaService() {
+    public String singleSendToMvaService(String callid,String regAppealContent) {
+        /**
+         * 查询callid对应信息存储
+         */
+        MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(callid);
+
         Map<String, Object> headers = new HashMap<String, Object>();
         Map<String, Object> postparams = GenSign.getValidSign();
 
         JSONObject jsonObject= new JSONObject();
-        jsonObject.put("extIdcard","");//身份证号码
+        jsonObject.put("extIdcard",mvaOutVo.getId());//身份证号码
         /**
          * 一级主要述求
          * 1：退役安置类
@@ -39,9 +48,9 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          *
          * 传 数字
          */
-        jsonObject.put("regMainAppealOne","");
+        jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
-        jsonObject.put("regAppealContent","");//主要述求详情
+        jsonObject.put("regAppealContent",regAppealContent);//主要述求详情
         jsonObject.put("regRecordFileUri","");//录音文件地址
 
 

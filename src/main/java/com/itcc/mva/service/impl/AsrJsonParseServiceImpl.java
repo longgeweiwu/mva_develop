@@ -34,13 +34,19 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     @Transactional(rollbackFor = Exception.class)
     public void jsonSigle(IntelligentAsrEntity intelligentAsrEntity) {
         String path = intelligentAsrEntity.getOutputFilepath()+intelligentAsrEntity.getOutputFilename();
-        String readJsonFile = JsonTools.readJsonFile(path);
-        /**
-         * 处理内容
-         */
-        IntelligentAsrEntity result = new IntelligentAsrEntity();
-        result.setJsonparseStatus(Constant.ASRPARSER_SUCCESS);
-        result.setJsonparseResult("");
-        intelligentAsrMapper.update(result,new QueryWrapper<IntelligentAsrEntity>().eq("CALLID",""));
+        try {
+            String readJsonFile = JsonTools.readJsonFile(path);
+            /**
+             * 处理内容
+             */
+            IntelligentAsrEntity result = new IntelligentAsrEntity();
+            result.setJsonparseStatus(Constant.ASRPARSER_SUCCESS);
+            result.setJsonparseResult("");
+            intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", ""));
+        }catch(Exception e){
+            IntelligentAsrEntity result = new IntelligentAsrEntity();
+            result.setJsonparseStatus(Constant.ASRPARSER_FAIL);
+            intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", ""));
+        }
     }
 }

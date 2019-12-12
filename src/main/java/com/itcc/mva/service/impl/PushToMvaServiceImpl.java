@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.GenSign;
 import com.itcc.mva.common.utils.HttpUtil;
+import com.itcc.mva.common.utils.Tools;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.mapper.IntelligentAsrMapper;
 import com.itcc.mva.mapper.PushToMvaMapper;
@@ -75,7 +76,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         /**
          * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
          */
-        if(null != resultPost){
+        if(null != resultPost && Tools.isJSONValid(resultPost)){
             JSONObject httpResult= JSON.parseObject(resultPost);
             if(1==httpResult.getInteger("code")){
                 logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));

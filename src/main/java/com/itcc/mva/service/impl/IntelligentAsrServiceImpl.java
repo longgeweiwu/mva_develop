@@ -40,14 +40,19 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
     @Value("${asrParams.wordsInfo}")
     private String wordsInfo;
     @Value("${asrParams.enableAddPunc}")
-    private String enableAddPunc;
+    private boolean enableAddPunc;
     @Value("${asrParams.enableDiarization}")
-    private String enableDiarization;
+    private boolean enableDiarization;
     @Value("${asrParams.enableEmotion}")
-    private String enableEmotion;
+    private boolean enableEmotion;
     @Value("${asrParams.enableSpeed}")
-    private String enableSpeed;
-
+    private boolean enableSpeed;
+    @Value("${asrParams.isPathdir}")
+    private boolean isPathdir;
+    @Value("${asrParams.enableCallback}")
+    private boolean enableCallback;
+    @Value("${asrParams.enableDigitnorm}")
+    private boolean enableDigitnorm;
 
     @Override
     public void generateBaseTable() {
@@ -60,11 +65,14 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
         JSONObject recordsDetail = new JSONObject();
         JSONArray audioPaths = new JSONArray();
         JSONArray fileExtension = new JSONArray();
+        String resultPath = null;
         for(RecordNameAndPathVo record:records){
             audioPaths.add("file://"+record.getFullPath()+record.getVoiceFilename());
+            resultPath = "file://"+record.getFullPath();
         }
         recordsDetail.put("audio_paths",audioPaths);
-        recordsDetail.put("is_path_dir",false);
+        recordsDetail.put("is_path_dir",isPathdir);
+        recordsDetail.put("result_path",resultPath);
         fileExtension.add(".wav");
         fileExtension.add(".mp3");
         recordsDetail.put("file_extensions",fileExtension);
@@ -77,6 +85,8 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
         recordsDetail.put("enable_diarization",enableDiarization);
         recordsDetail.put("enable_emotion",enableEmotion);
         recordsDetail.put("enable_speed",enableSpeed);
+        recordsDetail.put("enable_callback",enableCallback);
+        recordsDetail.put("enable_digit_norm",enableDigitnorm);
         log.info("发送参数如下，到ASR引擎"+recordsDetail.toJSONString());
         try {
             log.info("准备发送json参数给asr引擎--------------------------");
@@ -134,6 +144,7 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
 
         }catch(Exception e){
             log.info("ASR解析错误，请核对发送参数是否符合要求。");
+            e.printStackTrace();
         }
 
     }

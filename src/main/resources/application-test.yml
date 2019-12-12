@@ -85,14 +85,17 @@ shedlock:
 
 asrParams:
   recordsUrl: 172.16.12.229:9999
-  channelType: 1
+  isPathdir: false
+  channelType: MONO
   audioFormat: auto
   property: chinese_8k_common
   fileExtention: .wav
-  resultType: JSON,
-  wordsInfo: NONE,
-  enableAddPunc: false,
-  enableDiarization: false,
-  enableEmotion: false,
+  resultType: JSON
+  wordsInfo: NONE
+  enableCallback: false
+  enableDigitnorm: false
+  enableAddPunc: false
+  enableDiarization: false
+  enableEmotion: false
   enableSpeed: false
   parallel: 24

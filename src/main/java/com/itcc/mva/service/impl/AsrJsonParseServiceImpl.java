@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.JsonTools;
+import com.itcc.mva.common.utils.Tools;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.mapper.AsrJsonParseMapper;
 import com.itcc.mva.mapper.IntelligentAsrMapper;
@@ -39,7 +40,9 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void jsonSigle(IntelligentAsrEntity intelligentAsrEntity) {
-        String path = intelligentAsrEntity.getOutputFilepath()+intelligentAsrEntity.getOutputFilename();
+        //生产path要修改！！！
+        String dirPath=intelligentAsrEntity.getLeaveWordpath()+intelligentAsrEntity.getOutputFilepath().split("/")[4];
+        String path = dirPath+"\\"+ Tools.findTrueFname(dirPath,Tools.getSplitMaxValue(intelligentAsrEntity.getOutputFilename(),"_"));
         try {
             StringBuffer bfText = new StringBuffer();
             String readJsonFile = JsonTools.readJsonFile(path);

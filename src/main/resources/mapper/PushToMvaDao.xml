@@ -15,6 +15,8 @@
               , IJ.FLAG AS FLAG
            FROM IVR_JTINFO@HUAWEI_ICD_DB_LINK IJ
               , IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK IJL
-          WHERE IJ.CALLID = IJL.CALLID ( +) AND IJ.FLAG = '1'
+          WHERE IJ.CALLID = IJL.CALLID ( +)
+            AND IJ.FLAG = '1'
+            AND IJ.CALLID=#{callid}
     </select>
 </mapper>

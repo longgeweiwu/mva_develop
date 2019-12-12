@@ -11,6 +11,8 @@ import com.itcc.mva.mapper.IntelligentAsrMapper;
 import com.itcc.mva.mapper.PushToMvaMapper;
 import com.itcc.mva.service.IPushToMvaService;
 import com.itcc.mva.vo.MvaOutVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.Map;
 
 @Service
 public class PushToMvaServiceImpl implements IPushToMvaService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static final String url = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
 
@@ -73,12 +76,14 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         if(null != resultPost){
             JSONObject httpResult= JSON.parseObject(resultPost);
             if(1==httpResult.getInteger("code")){
+                logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
                 //只有等于1 的时候说明推送成功
                 IntelligentAsrEntity result = new IntelligentAsrEntity();
                 result.setJsonparseStatus(Constant.SEND_SUCCESS);
                 intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
             }
         }else{
+            logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
             //等于空说明推送失败
             IntelligentAsrEntity result = new IntelligentAsrEntity();
             result.setJsonparseStatus(Constant.SEND_FAIL);

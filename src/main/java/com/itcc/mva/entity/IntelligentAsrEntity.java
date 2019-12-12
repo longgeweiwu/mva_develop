@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName(value="T_QC_AGENTSCORE")
+@TableName(value="T_QC_INTELLIGENT_ASR")
 public class IntelligentAsrEntity {
 
     @TableId(value = "PID")

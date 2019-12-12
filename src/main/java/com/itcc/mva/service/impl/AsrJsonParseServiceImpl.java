@@ -42,7 +42,7 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     public void jsonSigle(IntelligentAsrEntity intelligentAsrEntity) {
         //生产path要修改！！！
         String dirPath=intelligentAsrEntity.getLeaveWordpath()+intelligentAsrEntity.getOutputFilepath().split("/")[4];
-        String path = dirPath+ Tools.findTrueFname(dirPath,Tools.getSplitMaxValue(intelligentAsrEntity.getOutputFilename(),"_"));
+        String path = dirPath+"\\"+ Tools.findTrueFname(dirPath,Tools.getSplitMaxValue(intelligentAsrEntity.getOutputFilename(),"_"));
         try {
             StringBuffer bfText = new StringBuffer();
             String readJsonFile = JsonTools.readJsonFile(path);

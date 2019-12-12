@@ -1,9 +1,17 @@
 package com.itcc.mva.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Tools {
     /**
@@ -51,5 +59,67 @@ public class Tools {
             }
         }
         return true;
+    }
+
+
+    /**
+     * @return 32位随机数
+     */
+    public static String getUniqueID() {
+        return UUID.randomUUID().toString().replaceAll("-","");
+    }
+
+    /***
+     * 解析回调报文
+     * @param result
+     * @return
+     */
+    public static void parseReuslt(StringBuffer resultBuff, String result) {
+        if (StringUtils.isEmpty(result)) {
+            return;
+        }
+        JSONObject json = JSON.parseObject(result);
+        JSONObject st = json.getJSONObject("st");    //句子
+        String rl = st.getString("rl"); //角色
+        JSONArray rtArray = st.getJSONArray("rt");
+        resultBuff.append(rl).append(":");
+        if (rtArray != null && rtArray.size() != 0) {
+            for (Object rt : rtArray) {
+                JSONArray wsArray = ((JSONObject) rt).getJSONArray("ws");   //表示开始输出词语识别结果
+                if (wsArray != null && wsArray.size() != 0) {
+                    for (Object ws : wsArray) {
+                        JSONArray cwArray = ((JSONObject) ws).getJSONArray("cw");   //词语候选识别结果
+                        for (Object cw : cwArray) {
+                            String w = ((JSONObject) cw).getString("w");    //识别结果
+                            resultBuff.append(w);
+                        }
+                    }
+                }
+            }
+        }
+        resultBuff.append("\r\n");
+    }
+
+    /**
+     * 添加离线转写任务
+     * @param wavcid    任务唯一Id
+     * @param audiourl  音频文件下载地址
+     * @param notifyUrl 转写结果通知url地址
+     */
+    public static void addTask(String wavcid,String serverurl,String audiourl,String notifyUrl){
+        long start=System.currentTimeMillis();
+        Map<String, Object> map = new HashMap<>();
+        map.put("wavcid", wavcid);
+        map.put("file_db_type", "http");
+        map.put("http_file", audiourl);
+        map.put("proc_complite_notify_http_url",notifyUrl);
+        map.put("eparam", "sample_type=16k;vspp_on=1");
+        map.put("quark_procer_action", "process");
+        map.put("action", "quark_procer");
+        long netstart=System.currentTimeMillis();
+        String resp = HttpUtil.get(serverurl, map);
+        long end=System.currentTimeMillis()-start;
+        long netEnd=System.currentTimeMillis()-netstart;
+        System.out.println("添加离线转写任务taskId:"+wavcid+",总耗时："+end +"网络耗时:"+netEnd+" 响应结果:"+resp);
     }
 }

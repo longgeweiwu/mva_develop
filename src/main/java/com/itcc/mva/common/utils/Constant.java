@@ -31,4 +31,13 @@ public class Constant {
 
     public static final int SEND_SUCCESS = 1; //成功
     public static final int SEND_FAIL = 2; //失败
+
+    public static final String TYPE_JSON = "application/json";
+
+    //转写音频回调地址
+    public static String NOTIFYURL="http://192.168.102.115:52113/quark/callback";
+    //离线转写引擎服务器地址
+    public static String URL="http://172.16.12.231:9505/quark_procer";
+    //待转写音频下载地址
+    public static String AUDIO="http://192.168.102.115:52113/4s.wav";
 }

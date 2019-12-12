@@ -41,11 +41,11 @@
 
     <update id="asrSuccess" parameterType="java.util.Map" >
         update T_QC_INTELLIGENT_ASR
-           set output_filepath = #{param.filePath},
-               output_filename = FULL_PATH || #{param.task_no} || '/',
+           set output_filepath = #{params.filePath},
+               output_filename = FULL_PATH || #{params.task_no} || '/',
                asr_status      = 1,
                asr_timestamp   = sysdate
-           where voice_file_name = #{param.recordName}
+           where voice_file_name = #{params.recordName}
     </update>
 
     <update id="asrFail" parameterType="java.lang.String">

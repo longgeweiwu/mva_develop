@@ -29,7 +29,7 @@ public class PushToMvaService {
     @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushInfo()
     {
-        List<IntelligentAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSend(Constant.NO_PARSER);
+        List<IntelligentAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSend(Constant.NO_SENDER);
         if(0 != waitingSend.size()) {
             logger.info(">>> 存在[推送]任务 。 开始时间 ["+new Date()+"]");
             for (int i = 0; i < waitingSend.size(); i++) {

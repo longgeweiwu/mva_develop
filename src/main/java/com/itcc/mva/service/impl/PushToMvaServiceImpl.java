@@ -2,10 +2,12 @@ package com.itcc.mva.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.GenSign;
 import com.itcc.mva.common.utils.HttpUtil;
 import com.itcc.mva.entity.IntelligentAsrEntity;
+import com.itcc.mva.mapper.IntelligentAsrMapper;
 import com.itcc.mva.mapper.PushToMvaMapper;
 import com.itcc.mva.service.IPushToMvaService;
 import com.itcc.mva.vo.MvaOutVo;
@@ -24,8 +26,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
     @Autowired
     private PushToMvaMapper pushToMvaMapper;
 
+    @Autowired
+    private IntelligentAsrMapper intelligentAsrMapper;
+
     @Override
-    public String singleSendToMvaService(IntelligentAsrEntity intelligentAsrEntity) {
+    public void singleSendToMvaService(IntelligentAsrEntity intelligentAsrEntity) {
         /**
          * 查询callid对应信息存储
          */
@@ -67,11 +72,17 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          */
         if(null != resultPost){
             JSONObject httpResult= JSON.parseObject(resultPost);
-            System.out.println(httpResult);
-            if(1!=httpResult.getInteger("code")){
-
+            if(1==httpResult.getInteger("code")){
+                //只有等于1 的时候说明推送成功
+                IntelligentAsrEntity result = new IntelligentAsrEntity();
+                result.setJsonparseStatus(Constant.SEND_SUCCESS);
+                intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
             }
+        }else{
+            //等于空说明推送失败
+            IntelligentAsrEntity result = new IntelligentAsrEntity();
+            result.setJsonparseStatus(Constant.SEND_FAIL);
+            intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
         }
-        return resultPost;
     }
 }

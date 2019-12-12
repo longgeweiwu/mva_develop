@@ -1,5 +1,8 @@
 package com.itcc.mva.common.utils;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.File;
 
 public class Tools {
@@ -30,5 +33,23 @@ public class Tools {
      */
     public static String getSplitMaxValue(String value,String split) {
         return value.split(split)[value.split(split).length-1];
+    }
+
+    /**
+     * 暴力解析:Alibaba fastjson
+     * @param test
+     * @return
+     */
+    public final static boolean isJSONValid(String test) {
+        try {
+            JSONObject.parseObject(test);
+        } catch (JSONException ex) {
+            try {
+                JSONObject.parseArray(test);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
     }
 }

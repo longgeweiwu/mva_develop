@@ -28,7 +28,7 @@
           AND OUTPUT_FILEPATH IS NOT NULL
           AND OUTPUT_FILENAME IS NOT NULL
           AND ASR_STATUS = 1
-        ORDER BY TO_date(LEAV_WORD_TIME,'YYYY-MM-DD HH:MI:SS')
+        ORDER BY TO_DATE(LEAV_WORD_TIME,'YYYY-MM-DD HH24:MI:SS')
     </select>
 
     <select id="queryWaitingSend" resultType="com.itcc.mva.entity.IntelligentAsrEntity" parameterType="java.lang.Integer">

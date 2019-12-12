@@ -116,9 +116,9 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
             responseStatus = intelligentAsrFeign.asrStatus(statusDetail);
             JSONArray status_list = responseStatus.getJSONArray("status_list");
             Iterator<Object> fileStatus = status_list.iterator();
+            int i = 1;
             while (fileStatus.hasNext()) {
                 log.info("遍历每个文件转写结果");
-                int i = 1;
                 JSONObject ob = (JSONObject) fileStatus.next();
                 String filePath = ob.getString("file");
                 log.info("第"+i+"个文件路径"+filePath);

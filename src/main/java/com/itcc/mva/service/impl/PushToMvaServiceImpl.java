@@ -69,6 +69,8 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         postparams.put("data", jsonObject.toJSONString());
         postparams.put("sign", validSign.get("sign"));
         postparams.put("t", validSign.get("t"));
+        logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+
         String resultPost= HttpUtil.httpPost(url, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
         /**
          * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写

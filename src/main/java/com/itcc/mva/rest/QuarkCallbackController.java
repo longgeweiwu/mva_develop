@@ -1,13 +1,11 @@
 package com.itcc.mva.rest;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.itcc.mva.common.utils.Tools;
+import com.itcc.mva.service.IQuarkCallbackService;
 import com.itcc.mva.vo.QuarkCallbackVo;
-import com.itcc.mva.common.utils.WriteJson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +26,6 @@ import java.util.Map;
 public class QuarkCallbackController {
     private int size = 0;
     private Map<String, String> results = new HashMap<>();
-
     /**
      * 接收离线转写结果通知
      *
@@ -68,8 +65,6 @@ public class QuarkCallbackController {
             int i = size++;
         }
         log.info("解析转写结果,处理总数:{} aid:{},result:{}", size, resp.getAid(), resultBuff.toString());
-        //转写结果通过logback输出到文件
-        WriteJson.writeLog(resp.getAid(), resultBuff.toString());
         return "success";
     }
 

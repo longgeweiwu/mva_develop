@@ -45,4 +45,6 @@ public class IntelligentAsrEntity {
     private Integer issubmit;
     @TableField(value = "FULL_PATH")
     private String fullPath;
+    @TableField(value = "IFLYPARSE_STATUS")
+    private String iflyparseStatus;
 }

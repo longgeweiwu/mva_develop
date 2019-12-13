@@ -25,7 +25,21 @@ Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
      PRIMARY KEY (name)
    );
   ```
-
+  @SchedulerLock(name = "任务名称 不要重复", lockAtMostFor = "见下", lockAtLeastFor ="见下")
+  ```
+    /**
+     *You can also set lockAtMostFor attribute which specifies how long the lock should be kept in case the executing node dies.
+     *  This is just a fallback, under normal circumstances the lock is released as soon the tasks finishes.
+     *  You have to set lockAtMostFor to a value which is much longer than normal execution time.
+     *  If the task takes longer than lockAtMostFor the resulting behavior may be unpredictable
+     *  (more then one process will effectively hold the lock).
+     *  lockAtMostFor：锁的最大时间单位为毫秒
+     *
+     *Lastly, you can set lockAtLeastFor attribute which specifies minimum amount of time for which the lock should be kept.
+     *  Its main purpose is to prevent execution from multiple nodes in case of really short tasks and clock difference between the nodes.
+     *  lockAtLeastFor：锁的最小时间单位为毫秒
+     */
+```
 
 > [项目ShedLock地址](https://github.com/lukas-krecan/ShedLock)
 
@@ -61,7 +75,8 @@ CREATE TABLE ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
 	, AID         VARCHAR2 (128)
 	, IFLY_RESULT CLOB
 	, INSERT_TIME DATE
-	, IFLYPARSE_STATUS  NUMBER, 
+	, IFLYPARSE_STATUS  NUMBER
+	, ISSUBMIT  NUMBER, 
 	CONSTRAINT PK_MVA_IFLY_INTELLIGENT_ASR PRIMARY KEY (PID)
 	)
 	TABLESPACE ICC_UNION_DATA

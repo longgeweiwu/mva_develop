@@ -26,8 +26,6 @@
                               WHERE ivr.CALLID = asr.callid)
 	</insert>
 
-
-
     <select id="queryIflyPendingTopMapper" resultType="com.itcc.mva.entity.QuarkCallbackEntity" parameterType="java.lang.Integer">
         SELECT PID
              , LOG_ID
@@ -41,6 +39,7 @@
              , IFLY_RESULT
              , INSERT_TIME
              , IFLYPARSE_STATUS
+             ,ISSUBMIT
         FROM ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
         WHERE ROWNUM  &lt;= #{top}
         AND (IFLYPARSE_STATUS IS NULL OR IFLYPARSE_STATUS = 2 OR IFLYPARSE_STATUS = 3 OR IFLYPARSE_STATUS = 4)

@@ -27,9 +27,6 @@ import java.util.Map;
 public class PushToMvaServiceImpl implements IPushToMvaService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${engineType.type}")
-    private int engineType;
-
     private static final String url = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
 
     private static final String recordUrl="";

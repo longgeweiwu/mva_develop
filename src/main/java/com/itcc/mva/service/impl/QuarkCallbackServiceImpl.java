@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
@@ -23,6 +24,11 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
 
     @Autowired
     private IntelligentAsrMapper intelligentAsrMapper;
+
+    @Override
+    public List<IntelligentAsrEntity> queryIflyPendingTop(int top) {
+        return null;
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -18,4 +18,6 @@ public interface IQuarkCallbackService {
 
     void insertQuarkCall(String callid,String iflyresult);
 
+    void modifyIflyParse(String callid);
+
 }

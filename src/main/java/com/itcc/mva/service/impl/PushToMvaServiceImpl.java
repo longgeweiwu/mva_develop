@@ -65,6 +65,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          *
          * 传 数字
          */
+        jsonObject.put("extMobileOne",mvaOutVo.getPhoneno());
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
         jsonObject.put("extDomicileAddress","");//户籍地址
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
@@ -127,6 +128,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          *
          * 传 数字
          */
+        jsonObject.put("extMobileOne",mvaOutVo.getPhoneno());
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
         jsonObject.put("extDomicileAddress","");//户籍地址
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空

@@ -58,6 +58,7 @@ public class QuarkCallbackController {
 
         if (resp.getLattice() == null) {
             log.info("转写错误：{}", resp.getAid());
+            iQuarkCallbackService.modifyIflyParse(resp.getAid());
             return "success";
         }
         for (QuarkCallbackVo.Lattice l : resp.getLattice()) {

@@ -57,4 +57,17 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", callid));
 
     }
+
+    @Override
+    public void modifyIflyParse(String callid) {
+        //修改基表 科讯飞 解析完成
+        IntelligentAsrEntity result = intelligentAsrMapper.selectOne(new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", callid));
+
+        if(null == result.getIflyparseStatus()){
+            result.setIflyparseStatus(Constant.ASRPARSER_IFLY_FAIL);
+        }else{
+            result.setIflyparseStatus(result.getIflyparseStatus()+1);
+        }
+        intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", callid));
+    }
 }

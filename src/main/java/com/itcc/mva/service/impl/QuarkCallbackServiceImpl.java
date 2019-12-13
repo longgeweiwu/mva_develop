@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
@@ -27,7 +28,17 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
 
     @Override
     public List<IntelligentAsrEntity> queryIflyPendingTop(int top) {
-        return null;
+        return quarkCallbackMapper.queryIflyPendingTopMapper(top);
+    }
+
+    @Override
+    public void addIflyTask(IntelligentAsrEntity intelligentAsrEntity) {
+        String wavcid = intelligentAsrEntity.getCallid();
+        //生成唯一的消息通知地址
+        String task_notyfy_url= Constant.NOTIFYURL+"/"+wavcid;
+        String waitingUrl=Constant.AUDIO+intelligentAsrEntity.getFullPath().split("\\/")[3]+wavcid;
+        //添加任务
+        Tools.addTask(wavcid, Constant.URL,waitingUrl,task_notyfy_url);
     }
 
     @Override
@@ -35,14 +46,15 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     public void insertQuarkCall(String callid,String iflyresult) {
         QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
         quarkCallbackEntity.setPid(Tools.getUniqueID());
+        quarkCallbackEntity.setAid(callid);
         quarkCallbackEntity.setCallid(callid);
         quarkCallbackEntity.setIflyResult(iflyresult);
         quarkCallbackEntity.setInsertTime(new Date());
         quarkCallbackMapper.insert(quarkCallbackEntity);
-
         //修改基表 科讯飞 解析完成
         IntelligentAsrEntity result = new IntelligentAsrEntity();
-        result.setJsonparseStatus(Constant.ASRPARSER_FAIL);
+        result.setIflyparseStatus(Constant.ASRPARSER_IFLY_SUCCESS);
         intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", callid));
+
     }
 }

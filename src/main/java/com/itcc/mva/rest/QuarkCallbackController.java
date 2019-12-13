@@ -26,6 +26,9 @@ import java.util.Map;
 public class QuarkCallbackController {
     private int size = 0;
     private Map<String, String> results = new HashMap<>();
+    @Autowired
+    private IQuarkCallbackService iQuarkCallbackService;
+
     /**
      * 接收离线转写结果通知
      *
@@ -65,6 +68,10 @@ public class QuarkCallbackController {
             int i = size++;
         }
         log.info("解析转写结果,处理总数:{} aid:{},result:{}", size, resp.getAid(), resultBuff.toString());
+        //这里面的aid我直接用calli代替
+        iQuarkCallbackService.insertQuarkCall( resp.getAid(),resultBuff.toString());
+
+
         return "success";
     }
 

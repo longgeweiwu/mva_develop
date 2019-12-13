@@ -13,6 +13,8 @@ public class QuarkCallbackEntity {
 
     @TableId(value = "PID")
     private String pid;
+    @TableId(value = "AID")
+    private String aid;
     @TableId(value = "CALLID")
     private String callid;
     @TableId(value = "IFLY_RESULT")

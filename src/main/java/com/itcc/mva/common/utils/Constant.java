@@ -23,6 +23,11 @@ public class Constant {
 
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 
+    public static final int NO_PARSER_IFLY = 25; //解析数量
+    public static final int ASRPARSER_IFLY_SUCCESS = 1; //成功
+    public static final int ASRPARSER_IFLY_FAIL = 2; //失败
+
+
     public static final int NO_PARSER = 25; //解析数量
     public static final int NO_SENDER = 25; //发送数量
 
@@ -39,5 +44,5 @@ public class Constant {
     //离线转写引擎服务器地址
     public static String URL="http://172.16.12.231:9505/quark_procer";
     //待转写音频下载地址
-    public static String AUDIO="http://192.168.102.115:52113/4s.wav";
+    public static String AUDIO="http://192.168.102.115:52113/";
 }

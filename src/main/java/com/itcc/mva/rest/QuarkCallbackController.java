@@ -70,7 +70,7 @@ public class QuarkCallbackController {
         }
         log.info("解析转写结果,处理总数:{} aid:{},result:{}", size, resp.getAid(), resultBuff.toString());
         //这里面的aid我直接用calli代替
-        iQuarkCallbackService.insertQuarkCall( resp.getAid(),resultBuff.toString());
+        iQuarkCallbackService.uiflyresultQuarkCall( resp.getAid(),resultBuff.toString());
 
 
         return "success";

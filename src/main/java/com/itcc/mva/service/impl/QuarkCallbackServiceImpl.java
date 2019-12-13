@@ -38,7 +38,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertQuarkCall(String callid,String iflyresult) {
+    public void uiflyresultQuarkCall(String callid,String iflyresult) {
         QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
 
         quarkCallbackEntity.setAid(callid);

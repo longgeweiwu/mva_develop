@@ -20,8 +20,8 @@ public class IflyAsrJob {
     @Autowired
     private IQuarkCallbackService iQuarkCallbackService;
 
-    @Scheduled(cron = "* 0/5 * * * ?")
-    @SchedulerLock(name = "PushToIflyAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+     @Scheduled(cron = "* 0/2 * * * ?")
+     @SchedulerLock(name = "PushToIflyAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void pushToIflyAudio() {
         /**
          * 先检查未解析过的ifly列表
@@ -40,8 +40,8 @@ public class IflyAsrJob {
 
     }
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+//    @Scheduled(cron = "* 0/2 * * * ?")
+//    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void  generateBaseTable() {
         iQuarkCallbackService.generateIflyBaseTable();
     }

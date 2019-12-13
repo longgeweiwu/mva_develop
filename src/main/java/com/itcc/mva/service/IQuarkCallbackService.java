@@ -16,7 +16,7 @@ public interface IQuarkCallbackService {
      */
     void addIflyTask(QuarkCallbackEntity quarkCallbackEntity);
 
-    void insertQuarkCall(String callid,String iflyresult);
+    void uiflyresultQuarkCall(String callid,String iflyresult);
 
     void modifyIflyParse(String callid);
 

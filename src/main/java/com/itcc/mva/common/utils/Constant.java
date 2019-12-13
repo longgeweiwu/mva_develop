@@ -10,8 +10,8 @@ public class Constant {
      * 引擎选择
      */
     public static final int ENGINETYPE_JT = 1; //捷通
-    public static final int ENGINETYPE_KD = 2; //科大
-    public static final int ENGINETYPE_AL = 3; //阿里
+    public static final int ENGINETYPE_KD = 1; //科大
+    public static final int ENGINETYPE_AL = 1; //阿里
 
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 

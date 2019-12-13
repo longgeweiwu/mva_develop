@@ -8,12 +8,14 @@ import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.JsonTools;
 import com.itcc.mva.common.utils.Tools;
 import com.itcc.mva.entity.IntelligentAsrEntity;
+import com.itcc.mva.entity.QuarkCallbackEntity;
 import com.itcc.mva.mapper.AsrJsonParseMapper;
 import com.itcc.mva.mapper.IntelligentAsrMapper;
 import com.itcc.mva.service.IAsrJsonParseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +73,17 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     }
 
     @Override
-    public List<IntelligentAsrEntity> queryWaitingSend(int num) {
-        return asrJsonParseMapper.queryWaitingSend(num);
+    public List<IntelligentAsrEntity> queryWaitingSendJt(int num) {
+            return asrJsonParseMapper.queryWaitingSendJt(num);
+    }
+
+    @Override
+    public List<QuarkCallbackEntity> queryWaitingSendKd(int num) {
+            return asrJsonParseMapper.queryWaitingSendKd(num);
+    }
+
+    @Override
+    public List<IntelligentAsrEntity> queryWaitingSendAl(int num) {
+            return asrJsonParseMapper.queryWaitingSendAl(num);
     }
 }

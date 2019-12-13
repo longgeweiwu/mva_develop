@@ -36,5 +36,7 @@ public class QuarkCallbackEntity {
     private Integer iflyparseStatus;
     @TableField(value = "INSERT_TIME")
     private Date insertTime;
+    @TableField(value = "ISSUBMIT")
+    private Integer issubmit;
 
 }

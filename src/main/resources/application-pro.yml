@@ -98,3 +98,8 @@ asrParams:
   enableEmotion: false
   enableSpeed: false
   parallel: 24
+
+engineType:
+  jttype: 1
+  kdtype: 0
+  altype: 0

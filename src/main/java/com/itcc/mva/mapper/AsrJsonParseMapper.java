@@ -1,6 +1,7 @@
 package com.itcc.mva.mapper;
 
 import com.itcc.mva.entity.IntelligentAsrEntity;
+import com.itcc.mva.entity.QuarkCallbackEntity;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface AsrJsonParseMapper {
      */
     public List<IntelligentAsrEntity> queryPendingTopMapper(int top);
 
-    public List<IntelligentAsrEntity> queryWaitingSend(int num);
+    public List<IntelligentAsrEntity> queryWaitingSendJt(int num);
+    public List<QuarkCallbackEntity> queryWaitingSendKd(int num);
+    public List<IntelligentAsrEntity> queryWaitingSendAl(int num);
 
 }

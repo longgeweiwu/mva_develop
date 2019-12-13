@@ -15,6 +15,7 @@ public class Constant {
 
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 
+    public static final int NO_RMA_IFLY = 25; //科大讯飞解析数量
     public static final int NO_PARSER_IFLY = 25; //科大讯飞解析数量
     public static final int NO_PARSER = 25; //捷通解析数量
 
@@ -34,4 +35,10 @@ public class Constant {
     public static String URL="http://172.16.12.231:9505/quark_procer";
     //科大待转写音频下载地址
     public static String AUDIO="http://172.16.12.178:52111/";
+    //转码文件存储地址
+    public static final  String RMAPATH = "D:\\AAA\\voice-engine-quark-javademo\\src\\main\\resources\\static\\RM";
+    //转写音频回调地址
+    public static String RMANOTIFYURL="http://192.168.102.115:52113/quark/callback";
+    //离线转写引擎服务器地址
+    public static String RMAURL="http://172.16.12.231:9505/quark_procer";
 }

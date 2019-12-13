@@ -20,6 +20,19 @@ public interface IQuarkCallbackService {
      */
     void addIflyTask(QuarkCallbackEntity quarkCallbackEntity);
 
+    /**
+     * create job visit ifly web
+     * 单条转写文本
+     */
+    void addRmaIflyTask(QuarkCallbackEntity quarkCallbackEntity);
+
+    /**
+     * create job visit ifly web
+     * @param top 查询待转码多少条
+     * @return
+     */
+    List<QuarkCallbackEntity> pushToIflyAudioTop(int top);
+
     // 上面方法是 离线请求
     // 下面是回调处理
     /**

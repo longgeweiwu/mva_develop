@@ -122,4 +122,27 @@ public class Tools {
         long netEnd=System.currentTimeMillis()-netstart;
         System.out.println("添加离线转写任务taskId:"+wavcid+",总耗时："+end +"网络耗时:"+netEnd+" 响应结果:"+resp);
     }
+
+    /**
+     * 添加离线转写任务
+     * @param wavcid    任务唯一Id
+     * @param audiourl  音频文件下载地址
+     * @param notifyUrl 转写结果通知url地址
+     */
+    public static void addRmaTask(String wavcid, String serverurl, String audiourl, String notifyUrl){
+        long start=System.currentTimeMillis();
+        Map<String, Object> map = new HashMap<>();
+        map.put("wavcid", wavcid);
+        map.put("file_db_type", "http");
+        map.put("http_file", audiourl);
+        map.put("proc_complite_notify_http_url",notifyUrl);
+        map.put("eparam", "sample_type=8k;vspp_on=1");
+        map.put("quark_procer_action", "process");
+        map.put("action", "quark_procer");
+        long netstart=System.currentTimeMillis();
+        String resp = HttpUtil.get(serverurl, map);
+        long end=System.currentTimeMillis()-start;
+        long netEnd=System.currentTimeMillis()-netstart;
+        System.out.println("添加离线转写任务taskId:"+wavcid+",总耗时："+end +"网络耗时:"+netEnd+" 响应结果:"+resp);
+    }
 }

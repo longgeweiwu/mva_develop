@@ -28,6 +28,10 @@ public class QuarkCallbackEntity {
     private String callid;
     @TableField(value = "FULL_PATH")
     private String fullPath;
+    @TableField(value = "RMAVOICE_FILE_NAME")
+    private String rmavoiceFileName;
+    @TableField(value = "RMAFLAG")
+    private String rmaflag;
     @TableField(value = "AID")
     private String aid;
     @TableField(value = "IFLY_RESULT")

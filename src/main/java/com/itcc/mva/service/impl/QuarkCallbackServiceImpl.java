@@ -3,7 +3,6 @@ package com.itcc.mva.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.Tools;
-import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 import com.itcc.mva.mapper.QuarkCallbackMapper;
 import com.itcc.mva.service.IQuarkCallbackService;
@@ -13,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
+/**
+ * @author whoami
+ */
 @Service
 public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
 

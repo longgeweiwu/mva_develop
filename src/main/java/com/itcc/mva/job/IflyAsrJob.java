@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author whoami
+ * 请求离线解析任务
+ */
 @Component
 public class IflyAsrJob {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -40,8 +44,8 @@ public class IflyAsrJob {
 
     }
 
-//    @Scheduled(cron = "* 0/2 * * * ?")
-//    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+     @Scheduled(cron = "* 0/2 * * * ?")
+     @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void  generateBaseTable() {
         iQuarkCallbackService.generateIflyBaseTable();
     }

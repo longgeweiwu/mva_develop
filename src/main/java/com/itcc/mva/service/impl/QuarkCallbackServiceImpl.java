@@ -36,7 +36,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         String wavcid = intelligentAsrEntity.getCallid();
         //生成唯一的消息通知地址
         String task_notyfy_url= Constant.NOTIFYURL+"/"+wavcid;
-        String waitingUrl=Constant.AUDIO+intelligentAsrEntity.getFullPath().split("\\/")[3]+wavcid;
+        String waitingUrl=Constant.AUDIO+intelligentAsrEntity.getFullPath().split("\\/")[3]+"/"+intelligentAsrEntity.getVoiceFilename();
         //添加任务
         Tools.addTask(wavcid, Constant.URL,waitingUrl,task_notyfy_url);
     }

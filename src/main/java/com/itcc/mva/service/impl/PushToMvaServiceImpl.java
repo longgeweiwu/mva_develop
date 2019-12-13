@@ -66,10 +66,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          * 传 数字
          */
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
+        jsonObject.put("extDomicileAddress","");//户籍地址
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
         //录音路径还有问题，需要注意
-        jsonObject.put("regRecordFileUri",recordUrl+intelligentAsrEntity.getFullPath().split("/")[3]+intelligentAsrEntity.getVoiceFilename());//录音文件地址
+        jsonObject.put("regRecordFileUri",recordUrl+intelligentAsrEntity.getFullPath().split("/")[3]+"/"+intelligentAsrEntity.getVoiceFilename());//录音文件地址
 
 
         Map<String, Object> validSign = GenSign.getValidSign();
@@ -127,10 +128,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          * 传 数字
          */
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
+        jsonObject.put("extDomicileAddress","");//户籍地址
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",quarkCallbackEntity.getIflyResult());//主要述求详情
         //录音路径还有问题，需要注意
-        jsonObject.put("regRecordFileUri",recordUrl+quarkCallbackEntity.getFullPath().split("/")[3]+quarkCallbackEntity.getVoiceFilename());//录音文件地址
+        jsonObject.put("regRecordFileUri",recordUrl+quarkCallbackEntity.getFullPath().split("/")[3]+"/"+quarkCallbackEntity.getVoiceFilename());//录音文件地址
 
 
         Map<String, Object> validSign = GenSign.getValidSign();

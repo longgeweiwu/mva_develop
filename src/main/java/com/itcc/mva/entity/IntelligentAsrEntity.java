@@ -46,5 +46,5 @@ public class IntelligentAsrEntity {
     @TableField(value = "FULL_PATH")
     private String fullPath;
     @TableField(value = "IFLYPARSE_STATUS")
-    private String iflyparseStatus;
+    private Integer iflyparseStatus;
 }

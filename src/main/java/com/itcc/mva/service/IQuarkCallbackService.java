@@ -11,6 +11,10 @@ public interface IQuarkCallbackService {
      * @return
      */
     List<IntelligentAsrEntity> queryIflyPendingTop(int top);
+    /**
+     * 单条解析文本
+     */
+    void addIflyTask(IntelligentAsrEntity intelligentAsrEntity);
 
     void insertQuarkCall(String callid,String iflyresult);
 

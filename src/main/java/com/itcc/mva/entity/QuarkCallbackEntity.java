@@ -1,6 +1,7 @@
 package com.itcc.mva.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -13,13 +14,27 @@ public class QuarkCallbackEntity {
 
     @TableId(value = "PID")
     private String pid;
-    @TableId(value = "AID")
-    private String aid;
-    @TableId(value = "CALLID")
+    @TableField(value = "LOG_ID")
+    private String logId;
+    @TableField(value = "LEAV_WORD_TIME")
+    private String leavWorktime;
+    @TableField(value = "ANI")
+    private String ani;
+    @TableField(value = "LEAVEWORD_PATH")
+    private String leaveWordpath;
+    @TableField(value = "VOICE_FILE_NAME")
+    private String voiceFilename;
+    @TableField(value = "CALLID")
     private String callid;
-    @TableId(value = "IFLY_RESULT")
+    @TableField(value = "FULL_PATH")
+    private String fullPath;
+    @TableField(value = "AID")
+    private String aid;
+    @TableField(value = "IFLY_RESULT")
     private String iflyResult;
-    @TableId(value = "INSERT_TIME")
+    @TableField(value = "IFLYPARSE_STATUS")
+    private Integer iflyparseStatus;
+    @TableField(value = "INSERT_TIME")
     private Date insertTime;
 
 }

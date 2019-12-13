@@ -1,6 +1,6 @@
 package com.itcc.mva.service;
 
-import com.itcc.mva.entity.IntelligentAsrEntity;
+import com.itcc.mva.entity.QuarkCallbackEntity;
 
 import java.util.List;
 
@@ -10,14 +10,15 @@ public interface IQuarkCallbackService {
      * @param top 查询多少条
      * @return
      */
-    List<IntelligentAsrEntity> queryIflyPendingTop(int top);
+    List<QuarkCallbackEntity> queryIflyPendingTop(int top);
     /**
      * 单条解析文本
      */
-    void addIflyTask(IntelligentAsrEntity intelligentAsrEntity);
+    void addIflyTask(QuarkCallbackEntity quarkCallbackEntity);
 
     void insertQuarkCall(String callid,String iflyresult);
 
     void modifyIflyParse(String callid);
 
+    void generateIflyBaseTable();
 }

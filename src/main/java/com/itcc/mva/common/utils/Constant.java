@@ -44,5 +44,5 @@ public class Constant {
     //离线转写引擎服务器地址
     public static String URL="http://172.16.12.231:9505/quark_procer";
     //待转写音频下载地址
-    public static String AUDIO="http://192.168.102.115:52113/";
+    public static String AUDIO="http://172.16.12.178:52111/";
 }

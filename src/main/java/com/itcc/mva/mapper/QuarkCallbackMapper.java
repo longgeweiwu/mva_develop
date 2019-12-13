@@ -13,5 +13,8 @@ public interface QuarkCallbackMapper extends BaseMapper<QuarkCallbackEntity> {
      * @param top 查询多少条
      * @return
      */
-    public List<IntelligentAsrEntity> queryIflyPendingTopMapper(int top);
+    public List<QuarkCallbackEntity> queryIflyPendingTopMapper(int top);
+
+
+    void generateIflyBaseTable();
 }

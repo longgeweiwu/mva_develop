@@ -50,7 +50,6 @@
             , CALLID
             ,ISSUBMIT
             ,FULL_PATH
-            ,IFLYPARSE_STATUS
         FROM ICC_UNION.T_QC_INTELLIGENT_ASR
         WHERE ROWNUM &lt;= #{num}
           AND ISSUBMIT IS NULL

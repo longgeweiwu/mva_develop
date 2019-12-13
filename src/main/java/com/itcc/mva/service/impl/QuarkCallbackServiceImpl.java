@@ -40,12 +40,12 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     @Transactional(rollbackFor = Exception.class)
     public void insertQuarkCall(String callid,String iflyresult) {
         QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
+
         quarkCallbackEntity.setAid(callid);
-        quarkCallbackEntity.setCallid(callid);
         quarkCallbackEntity.setIflyResult(iflyresult);
         quarkCallbackEntity.setInsertTime(new Date());
-        //修改基表 科讯飞 解析完成
         quarkCallbackEntity.setIflyparseStatus(Constant.ASRPARSER_IFLY_SUCCESS);
+
         quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", callid));
 
     }

@@ -5,6 +5,15 @@ package com.itcc.mva.common.utils;
  * 否则会出问题
  */
 public class Constant {
+    /**
+     * 部委来电信访登记
+     */
+    public static final String MVAURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
+    /**
+     * 部委信息采集身份核验
+     */
+    public static final String IDURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
+
 
     /**
      * 引擎选择

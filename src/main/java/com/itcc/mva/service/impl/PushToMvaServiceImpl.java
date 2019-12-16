@@ -27,7 +27,6 @@ import java.util.Map;
 public class PushToMvaServiceImpl implements IPushToMvaService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final String url = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
 
     private static final String recordUrl="";
     @Autowired
@@ -67,7 +66,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          */
         jsonObject.put("extMobileOne",mvaOutVo.getPhoneno());
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
-        jsonObject.put("extDomicileAddress","");//户籍地址
+        if(null != getJudgeMvaId(mvaOutVo.getId())){
+            jsonObject.put("extDomicileAddress",getJudgeMvaId(mvaOutVo.getId()));//户籍地址
+        }else{
+            jsonObject.put("extDomicileAddress","");//户籍地址
+        }
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
         //录音路径还有问题，需要注意
@@ -78,23 +81,23 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         postparams.put("data", jsonObject.toJSONString());
         postparams.put("sign", validSign.get("sign"));
         postparams.put("t", validSign.get("t"));
-        logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+        logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
 
-        String resultPost= HttpUtil.httpPost(url, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+        String resultPost= HttpUtil.httpPost(Constant.MVAURL, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
         /**
          * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
          */
         if(null != resultPost && Tools.isJSONValid(resultPost)){
             JSONObject httpResult= JSON.parseObject(resultPost);
             if(1==httpResult.getInteger("code")){
-                logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+                logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
                 //只有等于1 的时候说明推送成功
                 IntelligentAsrEntity result = new IntelligentAsrEntity();
                 result.setIssubmit(Constant.SEND_SUCCESS);
                 intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
             }
         }else{
-            logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+            logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
             //等于空说明推送失败
             IntelligentAsrEntity result = new IntelligentAsrEntity();
             result.setIssubmit(Constant.SEND_FAIL);
@@ -130,7 +133,11 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          */
         jsonObject.put("extMobileOne",mvaOutVo.getPhoneno());
         jsonObject.put("regMainAppealOne",mvaOutVo.getQuestionType());
-        jsonObject.put("extDomicileAddress","");//户籍地址
+        if(null != getJudgeMvaId(mvaOutVo.getId())){
+            jsonObject.put("extDomicileAddress",getJudgeMvaId(mvaOutVo.getId()));//户籍地址
+        }else{
+            jsonObject.put("extDomicileAddress","");//户籍地址
+        }
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",quarkCallbackEntity.getIflyResult());//主要述求详情
         //录音路径还有问题，需要注意
@@ -141,23 +148,23 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         postparams.put("data", jsonObject.toJSONString());
         postparams.put("sign", validSign.get("sign"));
         postparams.put("t", validSign.get("t"));
-        logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+        logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
 
-        String resultPost= HttpUtil.httpPost(url, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+        String resultPost= HttpUtil.httpPost(Constant.MVAURL, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
         /**
          * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
          */
         if(null != resultPost && Tools.isJSONValid(resultPost)){
             JSONObject httpResult= JSON.parseObject(resultPost);
             if(1==httpResult.getInteger("code")){
-                logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+                logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
                 //只有等于1 的时候说明推送成功
                 QuarkCallbackEntity result = new QuarkCallbackEntity();
                 result.setIssubmit(Constant.SEND_SUCCESS);
                 quarkCallbackMapper.update(result, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", quarkCallbackEntity.getCallid()));
             }
         }else{
-            logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+url+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+            logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
             //等于空说明推送失败
             QuarkCallbackEntity result = new QuarkCallbackEntity();
             result.setIssubmit(Constant.SEND_FAIL);
@@ -169,6 +176,31 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
     @Override
     public void singleSendToMvaServiceAl() {
 
+    }
+
+    /**
+     * 通过ID查询户籍归属地
+     * @param id
+     * @return 默认是NUll
+     */
+    public String getJudgeMvaId(String id){
+        Map<String, Object> getParams = GenSign.getValidSign();
+        Map<String, Object> validSign = GenSign.getValidSign();
+        getParams.put("idCard", id);
+        getParams.put("sign", validSign.get("sign"));
+        getParams.put("t", validSign.get("t"));
+        logger.info(">>> 身份接口准备 请求时候的参数为 [URL]:"+Constant.IDURL+" [params data]:"+getParams.get("idCard")+" [params sign]:"+getParams.get("sign")+" [params t]:"+getParams.get("t"));
+        String resultGet= HttpUtil.get(Constant.IDURL,getParams);
+        if(null != resultGet && Tools.isJSONValid(resultGet)){
+            JSONObject httpResult= JSON.parseObject(resultGet);
+            if(1==httpResult.getInteger("code")){
+                return httpResult.getJSONObject("data").getString("extDomicileAddress");
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
     }
 
 }

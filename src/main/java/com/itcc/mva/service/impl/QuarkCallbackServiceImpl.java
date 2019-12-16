@@ -32,7 +32,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         String wavcid = quarkCallbackEntity.getCallid();
         //生成唯一的消息通知地址
         String task_notyfy_url= Constant.NOTIFYURL+"/"+wavcid;
-        String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/"+quarkCallbackEntity.getVoiceFilename();
+        String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/16k_"+quarkCallbackEntity.getVoiceFilename();
         //添加任务
         Tools.addTask(wavcid, Constant.URL,waitingUrl,task_notyfy_url);
     }
@@ -61,6 +61,12 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         quarkCallbackEntity.setCallid(aid);
         quarkCallbackEntity.setRmaflag(rmaFlag);
         quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", aid));
+    }
+
+    @Override
+    public String getVoidPath(String voiceFileName) {
+        QuarkCallbackEntity quarkCallbackEntity = quarkCallbackMapper.selectOne(new QueryWrapper<QuarkCallbackEntity>().eq("VOICE_FILE_NAME", voiceFileName));
+        return quarkCallbackEntity.getLeaveWordpath();
     }
 
     @Override

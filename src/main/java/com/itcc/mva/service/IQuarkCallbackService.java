@@ -30,6 +30,8 @@ public interface IQuarkCallbackService {
 
     void updateRmaVoiceFlag(String aid,int rmaFlag);
 
+    String getVoidPath(String voiceFileName);
+
     /**
      * create job visit ifly web
      * @param top 查询待转码多少条

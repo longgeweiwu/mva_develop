@@ -26,10 +26,9 @@ public class IntelligentAsrJob {
 
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "IntelligentAsrJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
-    public String generateBaseTable() {
+    public void generateBaseTable() {
         intelligentTransferService.generateBaseTable();
         log.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
-        return "ok";
     }
 
     /**
@@ -39,9 +38,8 @@ public class IntelligentAsrJob {
 
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "IntelligentAsrJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
-    public String asr() {
+    public void asr() {
         intelligentTransferService.asr();
         log.info("IntelligentAsrJob-------------asr调用了***************************");
-        return "ok";
     }
 }

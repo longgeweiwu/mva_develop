@@ -44,4 +44,6 @@ public class Constant {
     public static String RMAURL="http://172.16.12.231:9505/rma_procer";
     //转码结果文件上传地址
     public static final String UPLOADFILE = "http://192.168.102.115:52113/rma/upload";
+    public static final int RMA_IFLY_SUCCESS = 1; //科大转码成功
+    public static final int RMA_IFLY_FAIL = 2; //科大转码失败
 }

@@ -1,7 +1,11 @@
 package com.itcc.mva.rest;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.itcc.mva.common.utils.Constant;
+import com.itcc.mva.service.IQuarkCallbackService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletInputStream;
@@ -24,6 +28,9 @@ import java.util.Map;
 @RequestMapping(value = "/rma")
 public class RmaCallbackController {
 
+    @Autowired
+    private IQuarkCallbackService iQuarkCallbackService;
+
     @RequestMapping(value = "/upload",method = {RequestMethod.POST, RequestMethod.GET})
     public String orderCallback(HttpServletRequest request){
         return null;
@@ -43,6 +50,8 @@ public class RmaCallbackController {
             e.printStackTrace();
         }
         System.out.println("转码结果通知:"+message);
+        JSONObject jsonObject= JSON.parseObject(message.replaceAll("=",""));
+        iQuarkCallbackService.updateRmaVoiceFlag(jsonObject.getString("aid"),Constant.RMA_IFLY_SUCCESS);
         log.debug("转码结果通知:{}",message);
         return "200";
 
@@ -73,6 +82,7 @@ public class RmaCallbackController {
         out.flush();
         out.close();
         System.out.println("文件存储地址："+filename);
+        iQuarkCallbackService.updateRmaVoiceName(id+".wav",filename);
         return "SUCCESS";
     }
 }

@@ -48,6 +48,22 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     }
 
     @Override
+    public void updateRmaVoiceName(String voiceFileName, String rmaVoiceName) {
+        QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
+        quarkCallbackEntity.setVoiceFilename(voiceFileName);
+        quarkCallbackEntity.setRmavoiceFileName(rmaVoiceName);
+        quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("VOICE_FILE_NAME", voiceFileName));
+    }
+
+    @Override
+    public void updateRmaVoiceFlag(String aid, int rmaFlag) {
+        QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
+        quarkCallbackEntity.setCallid(aid);
+        quarkCallbackEntity.setRmaflag(rmaFlag);
+        quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", aid));
+    }
+
+    @Override
     public List<QuarkCallbackEntity> pushToIflyAudioTop(int top) {
         return quarkCallbackMapper.pushToIflyAudioTopMapper(top);
     }

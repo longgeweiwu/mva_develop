@@ -26,7 +26,9 @@ public interface IQuarkCallbackService {
      */
     void addRmaIflyTask(QuarkCallbackEntity quarkCallbackEntity);
 
-    void updateRmaVoiceName(String id,String rmaVoiceName);
+    void updateRmaVoiceName(String voiceFileName,String rmaVoiceName);
+
+    void updateRmaVoiceFlag(String aid,int rmaFlag);
 
     /**
      * create job visit ifly web

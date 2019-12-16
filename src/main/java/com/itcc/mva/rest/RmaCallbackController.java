@@ -23,8 +23,6 @@ import java.util.Map;
 @Slf4j
 @RequestMapping(value = "/rma")
 public class RmaCallbackController {
-    private int size=0;
-    private Map<String,String> results=new HashMap<>();
 
     @RequestMapping(value = "/upload",method = {RequestMethod.POST, RequestMethod.GET})
     public String orderCallback(HttpServletRequest request){
@@ -44,8 +42,8 @@ public class RmaCallbackController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        System.out.println("消息通知:"+message);
-        log.debug("消息通知:{}",message);
+        System.out.println("转码结果通知:"+message);
+        log.debug("转码结果通知:{}",message);
         return "200";
 
     }

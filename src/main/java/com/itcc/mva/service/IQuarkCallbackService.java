@@ -22,9 +22,11 @@ public interface IQuarkCallbackService {
 
     /**
      * create job visit ifly web
-     * 单条转写文本
+     * 单条转码录音
      */
     void addRmaIflyTask(QuarkCallbackEntity quarkCallbackEntity);
+
+    void updateRmaVoiceName(String id,String rmaVoiceName);
 
     /**
      * create job visit ifly web

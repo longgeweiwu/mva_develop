@@ -35,10 +35,13 @@ public class Constant {
     public static String URL="http://172.16.12.231:9505/quark_procer";
     //科大待转写音频下载地址
     public static String AUDIO="http://172.16.12.178:52111/";
+
     //转码文件存储地址
     public static final  String RMAPATH = "D:\\AAA\\voice-engine-quark-javademo\\src\\main\\resources\\static\\RM";
     //转写音频回调地址
-    public static String RMANOTIFYURL="http://192.168.102.115:52113/quark/callback";
+    public static String RMANOTIFYURL="http://192.168.102.115:52113/rma/callback";
     //离线转写引擎服务器地址
-    public static String RMAURL="http://172.16.12.231:9505/quark_procer";
+    public static String RMAURL="http://172.16.12.231:9505/rma_procer";
+    //转码结果文件上传地址
+    public static final String UPLOADFILE = "http://192.168.102.115:52113/rma/upload";
 }

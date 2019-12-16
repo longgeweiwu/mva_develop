@@ -41,10 +41,10 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     public void addRmaIflyTask(QuarkCallbackEntity quarkCallbackEntity) {
         String wavcid = quarkCallbackEntity.getCallid();
         //生成唯一的消息通知地址
-        String task_notyfy_url=Constant.RMANOTIFYURL+"/"+wavcid;
         String audioUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/"+quarkCallbackEntity.getVoiceFilename();
         //添加任务
-        Tools.addRmaTask(wavcid,Constant.RMAURL,audioUrl,task_notyfy_url);
+        Tools.addRmaTask(wavcid,Constant.RMAURL,Constant.RMANOTIFYURL,Constant.UPLOADFILE+"/"+quarkCallbackEntity.getVoiceFilename().split("\\.")[0],audioUrl);
+
     }
 
     @Override

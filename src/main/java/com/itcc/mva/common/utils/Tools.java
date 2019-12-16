@@ -124,25 +124,25 @@ public class Tools {
     }
 
     /**
-     * 添加离线转写任务
-     * @param wavcid    任务唯一Id
-     * @param audiourl  音频文件下载地址
-     * @param notifyUrl 转写结果通知url地址
+     * 添加异步转码任务
+     * @param taskId    任务Id
+     * @param serverUrl 转码服务器url
+     * @param notifyUrl 转码消息通知地址
+     * @param uploadUrl 转码后的文件上传服务器地址
+     * @param downloadUrl   待转码文件下载地址
      */
-    public static void addRmaTask(String wavcid, String serverurl, String audiourl, String notifyUrl){
-        long start=System.currentTimeMillis();
+    public static void addRmaTask(String taskId,String serverUrl,String notifyUrl,String uploadUrl,String downloadUrl){
         Map<String, Object> map = new HashMap<>();
-        map.put("wavcid", wavcid);
-        map.put("file_db_type", "http");
-        map.put("http_file", audiourl);
-        map.put("proc_complite_notify_http_url",notifyUrl);
-        map.put("eparam", "sample_type=8k;vspp_on=1");
-        map.put("quark_procer_action", "process");
-        map.put("action", "quark_procer");
-        long netstart=System.currentTimeMillis();
-        String resp = HttpUtil.get(serverurl, map);
-        long end=System.currentTimeMillis()-start;
-        long netEnd=System.currentTimeMillis()-netstart;
-        System.out.println("添加离线转写任务taskId:"+wavcid+",总耗时："+end +"网络耗时:"+netEnd+" 响应结果:"+resp);
+        map.put("wavcid", taskId);
+        map.put("file_db_type_wav", "http");
+        map.put("file_db_type_ori", "http");
+        map.put("proc_complite_notify_http_url", notifyUrl);
+        map.put("http_file_ori", downloadUrl);
+        map.put("http_file_wav", uploadUrl);
+        map.put("rma_procer_action", "convert");
+        map.put("action", "rma_procer");
+        String resp = HttpUtil.get(serverUrl, map);
+        System.out.println("添加格式转换完成:taskId："+taskId +"响应结果:"+resp);
+
     }
 }

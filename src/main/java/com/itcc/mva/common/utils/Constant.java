@@ -15,6 +15,8 @@ public class Constant {
     public static final String IDURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
 
 
+    public static final String RECORDURL="http://172.16.12.178:52111/";
+
     /**
      * 引擎选择
      */

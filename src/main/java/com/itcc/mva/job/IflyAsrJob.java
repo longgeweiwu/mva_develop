@@ -24,8 +24,33 @@ public class IflyAsrJob {
     @Autowired
     private IQuarkCallbackService iQuarkCallbackService;
 
-     @Scheduled(cron = "* 0/2 * * * ?")
-     @SchedulerLock(name = "PushToIflyAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @Scheduled(cron = "* 0/2 * * * ?")
+    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    public void  generateBaseTable() {
+        iQuarkCallbackService.generateIflyBaseTable();
+    }
+
+    @Scheduled(cron = "* 0/2 * * * ?")
+    @SchedulerLock(name = "pushToRmaIflyWebJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    public void  pushToRmaIflyWeb() {
+        /**
+         * 先检查未转码过的ifly列表
+         */
+        List<QuarkCallbackEntity> rmaEntityList = iQuarkCallbackService.pushToIflyAudioTop(Constant.NO_RMA_IFLY);
+
+        if(0 != rmaEntityList.size()){
+            logger.info(">>> 存在[IFLY录音转码]任务 。 开始时间 ["+new Date()+"]");
+            for (int i = 0; i < rmaEntityList.size(); i++) {
+                iQuarkCallbackService.addRmaIflyTask(rmaEntityList.get(i));
+            }
+            logger.info(">>> 存在[IFLY录音转码]任务 。 结束时间 ["+new Date()+"]");
+        }else{
+            logger.info(">>> 任务名称:pushToRmaIflyWebJob 暂时没有[IFLY录音转码]任务。");
+        }
+    }
+
+    @Scheduled(cron = "* 0/2 * * * ?")
+    @SchedulerLock(name = "PushToIflyAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void pushToIflyAudio() {
         /**
          * 先检查未解析过的ifly列表
@@ -42,12 +67,6 @@ public class IflyAsrJob {
             logger.info(">>> 任务名称:AsrJsonParseJob 暂时没有[IFLY解析]任务。");
         }
 
-    }
-
-     @Scheduled(cron = "* 0/2 * * * ?")
-     @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
-    public void  generateBaseTable() {
-        iQuarkCallbackService.generateIflyBaseTable();
     }
 
 }

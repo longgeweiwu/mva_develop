@@ -32,9 +32,46 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         String wavcid = quarkCallbackEntity.getCallid();
         //生成唯一的消息通知地址
         String task_notyfy_url= Constant.NOTIFYURL+"/"+wavcid;
-        String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/"+quarkCallbackEntity.getVoiceFilename();
+        String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/16k_"+quarkCallbackEntity.getVoiceFilename();
         //添加任务
         Tools.addTask(wavcid, Constant.URL,waitingUrl,task_notyfy_url);
+    }
+
+    @Override
+    public void addRmaIflyTask(QuarkCallbackEntity quarkCallbackEntity) {
+        String wavcid = quarkCallbackEntity.getCallid();
+        //生成唯一的消息通知地址
+        String audioUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/"+quarkCallbackEntity.getVoiceFilename();
+        //添加任务
+        Tools.addRmaTask(wavcid,Constant.RMAURL,Constant.RMANOTIFYURL,Constant.UPLOADFILE+"/"+quarkCallbackEntity.getVoiceFilename().split("\\.")[0],audioUrl);
+
+    }
+
+    @Override
+    public void updateRmaVoiceName(String voiceFileName, String rmaVoiceName) {
+        QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
+        quarkCallbackEntity.setVoiceFilename(voiceFileName);
+        quarkCallbackEntity.setRmavoiceFileName(rmaVoiceName);
+        quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("VOICE_FILE_NAME", voiceFileName));
+    }
+
+    @Override
+    public void updateRmaVoiceFlag(String aid, int rmaFlag) {
+        QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
+        quarkCallbackEntity.setCallid(aid);
+        quarkCallbackEntity.setRmaflag(rmaFlag);
+        quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", aid));
+    }
+
+    @Override
+    public String getVoidPath(String voiceFileName) {
+        QuarkCallbackEntity quarkCallbackEntity = quarkCallbackMapper.selectOne(new QueryWrapper<QuarkCallbackEntity>().eq("VOICE_FILE_NAME", voiceFileName));
+        return quarkCallbackEntity.getLeaveWordpath();
+    }
+
+    @Override
+    public List<QuarkCallbackEntity> pushToIflyAudioTop(int top) {
+        return quarkCallbackMapper.pushToIflyAudioTopMapper(top);
     }
 
     @Override

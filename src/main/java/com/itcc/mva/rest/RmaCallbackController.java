@@ -69,6 +69,9 @@ public class RmaCallbackController {
         ServletInputStream in = request.getInputStream();
         byte[] buff=new byte[1024];
         int count=0;
+        /**
+         * 程序服务器的录音地址！！！
+         */
         String RMAPATH=iQuarkCallbackService.getVoidPath(id+".wav");
         String filename= RMAPATH +"16k_"+id+".wav";
         File file=new File(filename);

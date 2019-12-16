@@ -69,7 +69,8 @@ public class RmaCallbackController {
         ServletInputStream in = request.getInputStream();
         byte[] buff=new byte[1024];
         int count=0;
-        String filename= Constant.RMAPATH +File.separator+"16k_"+id+".wav";
+        String RMAPATH=iQuarkCallbackService.getVoidPath(id+".wav");
+        String filename= RMAPATH +File.separator+"16k_"+id+".wav";
         File file=new File(filename);
         FileOutputStream out=new FileOutputStream(file);
         while ((count=in.read(buff))!=-1){

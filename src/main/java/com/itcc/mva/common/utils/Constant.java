@@ -6,9 +6,13 @@ package com.itcc.mva.common.utils;
  */
 public class Constant {
     /**
-     * 部委对戒接口
+     * 部委来电信访登记
      */
     public static final String MVAURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
+    /**
+     * 部委信息采集身份核验
+     */
+    public static final String IDURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
 
 
     /**

@@ -12,11 +12,11 @@ import java.util.Date;
 @TableName(value="T_ID_CARD")
 public class IdCardEntity {
     @TableId(value = "F_CODE")
-    private Integer F_CODE;
+    private Integer fCode;
     @TableField(value = "F_PROVINCE")
-    private String F_PROVINCE;
+    private String fProvince;
     @TableField(value = "F_CITY")
-    private String F_CITY;
+    private String fCity;
     @TableField(value = "F_AREA")
-    private String F_AREA;
+    private String fArea;
 }

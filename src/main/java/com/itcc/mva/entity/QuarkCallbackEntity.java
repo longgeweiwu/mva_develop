@@ -31,7 +31,7 @@ public class QuarkCallbackEntity {
     @TableField(value = "RMAVOICE_FILE_NAME")
     private String rmavoiceFileName;
     @TableField(value = "RMAFLAG")
-    private String rmaflag;
+    private Integer rmaflag;
     @TableField(value = "AID")
     private String aid;
     @TableField(value = "IFLY_RESULT")

@@ -7,8 +7,10 @@ import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.GenSign;
 import com.itcc.mva.common.utils.HttpUtil;
 import com.itcc.mva.common.utils.Tools;
+import com.itcc.mva.entity.IdCardEntity;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
+import com.itcc.mva.mapper.IdCardMapper;
 import com.itcc.mva.mapper.IntelligentAsrMapper;
 import com.itcc.mva.mapper.PushToMvaMapper;
 import com.itcc.mva.mapper.QuarkCallbackMapper;
@@ -37,6 +39,9 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
     @Autowired
     private QuarkCallbackMapper quarkCallbackMapper;
+
+    @Autowired
+    private IdCardMapper idCardMapper;
 
     @Override
     public void singleSendToMvaServiceJt(IntelligentAsrEntity intelligentAsrEntity) {
@@ -69,7 +74,9 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         if(null != getJudgeMvaId(mvaOutVo.getId())){
             jsonObject.put("extDomicileAddress",getJudgeMvaId(mvaOutVo.getId()));//户籍地址
         }else{
-            jsonObject.put("extDomicileAddress","");//户籍地址
+            String code = mvaOutVo.getId().substring(0,6);
+            IdCardEntity fCode = idCardMapper.selectOne(new QueryWrapper<IdCardEntity>().eq("F_CODE", code));
+            jsonObject.put("extDomicileAddress",fCode.getFProvince()+fCode.getFCity()+fCode.getFArea());//户籍地址
         }
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
@@ -136,7 +143,9 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         if(null != getJudgeMvaId(mvaOutVo.getId())){
             jsonObject.put("extDomicileAddress",getJudgeMvaId(mvaOutVo.getId()));//户籍地址
         }else{
-            jsonObject.put("extDomicileAddress","");//户籍地址
+            String code = mvaOutVo.getId().substring(0,6);
+            IdCardEntity fCode = idCardMapper.selectOne(new QueryWrapper<IdCardEntity>().eq("F_CODE", code));
+            jsonObject.put("extDomicileAddress",fCode.getFProvince()+fCode.getFCity()+fCode.getFArea());//户籍地址
         }
         jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
         jsonObject.put("regAppealContent",quarkCallbackEntity.getIflyResult());//主要述求详情

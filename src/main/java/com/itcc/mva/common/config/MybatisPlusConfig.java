@@ -29,7 +29,7 @@ public class MybatisPlusConfig {
     @Bean
     @Profile({"test"})// 设置 test 环境开启
     public PerformanceInterceptor performanceInterceptor() {
-        logger.info("加载分页插件");
+        logger.info("loading the config of MybatisPlusConfig");
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         //格式化sql语句
         Properties properties = new Properties();

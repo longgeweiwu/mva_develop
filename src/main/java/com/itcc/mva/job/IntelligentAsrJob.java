@@ -1,14 +1,12 @@
 package com.itcc.mva.job;
 
 import com.itcc.mva.service.IIntelligentTransferService;
-import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * ASR解析
@@ -33,7 +31,7 @@ public class IntelligentAsrJob {
         intelligentTransferService.generateBaseTable();
         //logger.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
         long end_IntelligentBaseJob=System.currentTimeMillis()-start_IntelligentBaseJob;
-        logger.info(">>> 任务名称:IntelligentBaseJob(捷通基本生成) 总执行时间为: ["+ end_IntelligentBaseJob+"]");
+        logger.info(">>> 任务名称:IntelligentBaseJob(捷通基本生成) 总执行时间为: ["+ end_IntelligentBaseJob+" ms]");
     }
 
     /**
@@ -48,6 +46,6 @@ public class IntelligentAsrJob {
         intelligentTransferService.asr();
         //log.info("IntelligentAsrJob-------------asr调用了***************************");
         long end_IntelligentAsrJob=System.currentTimeMillis()-start_IntelligentAsrJob;
-        logger.info(">>> 任务名称:IntelligentAsrJob(捷通离线解析) 总执行时间为: ["+ end_IntelligentAsrJob+"]");
+        logger.info(">>> 任务名称:IntelligentAsrJob(捷通离线解析) 总执行时间为: ["+ end_IntelligentAsrJob+" ms]");
     }
 }

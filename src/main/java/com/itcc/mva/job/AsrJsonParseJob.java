@@ -39,6 +39,6 @@ public class AsrJsonParseJob {
             logger.info(">>> 任务名称:AsrJsonParseJob 暂时没有[解析]任务。");
         }
         long end_runParse=System.currentTimeMillis()-start_runParse;
-        logger.info(">>> 任务名称:AsrJsonParseJob(捷通JSON文件解析) 总执行时间为: ["+ end_runParse+"]");
+        logger.info(">>> 任务名称:AsrJsonParseJob(捷通JSON文件解析) 总执行时间为: ["+ end_runParse+"ms]");
     }
 }

@@ -27,12 +27,16 @@ public class IflyAsrJob {
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void  generateBaseTable() {
+        long start_generateBaseTable=System.currentTimeMillis();
         iQuarkCallbackService.generateIflyBaseTable();
+        long end_generateBaseTable=System.currentTimeMillis()-start_generateBaseTable;
+        logger.info(">>> 任务名称:IflyBaseTableJob 总执行时间为: ["+ end_generateBaseTable+"]");
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "pushToRmaIflyWebJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void  pushToRmaIflyWeb() {
+        long start_pushToRmaIflyWeb=System.currentTimeMillis();
         /**
          * 先检查未转码过的ifly列表
          */
@@ -47,11 +51,14 @@ public class IflyAsrJob {
         }else{
             logger.info(">>> 任务名称:pushToRmaIflyWebJob 暂时没有[IFLY录音转码]任务。");
         }
+        long end_pushToRmaIflyWeb=System.currentTimeMillis()-start_pushToRmaIflyWeb;
+        logger.info(">>> 任务名称:pushToRmaIflyWebJob 总执行时间为: ["+ end_pushToRmaIflyWeb+"]");
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "PushToIflyAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void pushToIflyAudio() {
+        long start_pushToIflyAudio=System.currentTimeMillis();
         /**
          * 先检查未解析过的ifly列表
          */
@@ -66,6 +73,8 @@ public class IflyAsrJob {
         }else{
             logger.info(">>> 任务名称:AsrJsonParseJob 暂时没有[IFLY解析]任务。");
         }
+        long end_pushToIflyAudio=System.currentTimeMillis()-start_pushToIflyAudio;
+        logger.info(">>> 任务名称:PushToIflyAudioJob 总执行时间为: ["+ end_pushToIflyAudio+"]");
 
     }
 

@@ -40,6 +40,7 @@ public class PushToMvaJob {
     @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushInfo()
     {
+        long start_PushToMvaJob=System.currentTimeMillis();
         logger.info(jttype==1?"[>>> JT引擎 开启状态]":"[>>> JT引擎 关闭状态]" + "  "+ (kdtype==1?"[>>> KD引擎 开启状态]":"[>>> KD引擎 关闭状态]") + "  "+ (kdtype==1?"[>>> AL引擎 开启状态]":"[>>> AL引擎 关闭状态]") );
         if(jttype==Constant.ENGINETYPE_JT){
             logger.info(">>> 正在使用JT引擎");
@@ -70,5 +71,7 @@ public class PushToMvaJob {
         if(altype==Constant.ENGINETYPE_AL){
             System.out.println("阿里引擎");
         }
+        long end_PushToMvaJob=System.currentTimeMillis()-start_PushToMvaJob;
+        logger.info(">>> 任务名称:PushToMvaJob 总执行时间为: ["+ end_PushToMvaJob+"]");
     }
 }

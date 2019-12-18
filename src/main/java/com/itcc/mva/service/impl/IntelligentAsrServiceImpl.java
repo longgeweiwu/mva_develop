@@ -62,6 +62,8 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
     @Override
     public void asr() {
         List<RecordNameAndPathVo> records = intelligentAsrMapper.getRecordsToAsr();
+        if(records.size()!=0){
+
         JSONObject recordsDetail = new JSONObject();
         JSONArray audioPaths = new JSONArray();
         JSONArray fileExtension = new JSONArray();
@@ -146,7 +148,9 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
             log.info("ASR解析错误，请核对发送参数是否符合要求。");
             e.printStackTrace();
         }
-
+        }else{
+            log.info("解析任务为0，不存在ASR解析。");
+        }
     }
 
     @Override

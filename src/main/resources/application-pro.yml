@@ -74,6 +74,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     #二级缓存使用 true 打开，false 关闭
     cache-enabled: false
+    #生产需要禁止掉下面这个选项
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:

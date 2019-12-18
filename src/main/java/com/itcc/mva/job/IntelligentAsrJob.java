@@ -33,7 +33,7 @@ public class IntelligentAsrJob {
         intelligentTransferService.generateBaseTable();
         //logger.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
         long end_IntelligentBaseJob=System.currentTimeMillis()-start_IntelligentBaseJob;
-        logger.info(">>> 任务名称:IntelligentBaseJob 总执行时间为: ["+ end_IntelligentBaseJob+"]");
+        logger.info(">>> 任务名称:IntelligentBaseJob(捷通基本生成) 总执行时间为: ["+ end_IntelligentBaseJob+"]");
     }
 
     /**
@@ -48,6 +48,6 @@ public class IntelligentAsrJob {
         intelligentTransferService.asr();
         //log.info("IntelligentAsrJob-------------asr调用了***************************");
         long end_IntelligentAsrJob=System.currentTimeMillis()-start_IntelligentAsrJob;
-        logger.info(">>> 任务名称:IntelligentAsrJob 总执行时间为: ["+ end_IntelligentAsrJob+"]");
+        logger.info(">>> 任务名称:IntelligentAsrJob(捷通离线解析) 总执行时间为: ["+ end_IntelligentAsrJob+"]");
     }
 }

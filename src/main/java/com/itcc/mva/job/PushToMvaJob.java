@@ -72,6 +72,6 @@ public class PushToMvaJob {
             System.out.println("阿里引擎");
         }
         long end_PushToMvaJob=System.currentTimeMillis()-start_PushToMvaJob;
-        logger.info(">>> 任务名称:PushToMvaJob 总执行时间为: ["+ end_PushToMvaJob+"]");
+        logger.info(">>> 任务名称:PushToMvaJob(推部委接口) 总执行时间为: ["+ end_PushToMvaJob+"]");
     }
 }

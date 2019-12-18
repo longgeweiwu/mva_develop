@@ -30,7 +30,7 @@ public class IflyAsrJob {
         long start_generateBaseTable=System.currentTimeMillis();
         iQuarkCallbackService.generateIflyBaseTable();
         long end_generateBaseTable=System.currentTimeMillis()-start_generateBaseTable;
-        logger.info(">>> 任务名称:IflyBaseTableJob 总执行时间为: ["+ end_generateBaseTable+"]");
+        logger.info(">>> 任务名称:IflyBaseTableJob(科大生成科大基表) 总执行时间为: ["+ end_generateBaseTable+"]");
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
@@ -52,7 +52,7 @@ public class IflyAsrJob {
             logger.info(">>> 任务名称:pushToRmaIflyWebJob 暂时没有[IFLY录音转码]任务。");
         }
         long end_pushToRmaIflyWeb=System.currentTimeMillis()-start_pushToRmaIflyWeb;
-        logger.info(">>> 任务名称:pushToRmaIflyWebJob 总执行时间为: ["+ end_pushToRmaIflyWeb+"]");
+        logger.info(">>> 任务名称:pushToRmaIflyWebJob(科大离线转码) 总执行时间为: ["+ end_pushToRmaIflyWeb+"]");
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
@@ -74,7 +74,7 @@ public class IflyAsrJob {
             logger.info(">>> 任务名称:AsrJsonParseJob 暂时没有[IFLY解析]任务。");
         }
         long end_pushToIflyAudio=System.currentTimeMillis()-start_pushToIflyAudio;
-        logger.info(">>> 任务名称:PushToIflyAudioJob 总执行时间为: ["+ end_pushToIflyAudio+"]");
+        logger.info(">>> 任务名称:PushToIflyAudioJob(科大离线解析) 总执行时间为: ["+ end_pushToIflyAudio+"]");
 
     }
 

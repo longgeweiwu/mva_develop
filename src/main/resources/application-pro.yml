@@ -74,23 +74,33 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     #二级缓存使用 true 打开，false 关闭
     cache-enabled: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #生产需要禁止掉下面这个选项
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:
   port: 52113
-
+shedlock:
+  defaults:
+    lock-at-most-for: 1m
 
 asrParams:
   recordsUrl: 172.16.12.229:9999
-  recordDir: /share/vpshare/leaveword/jt
-  channelType: 1
+  isPathdir: false
+  channelType: MONO
   audioFormat: auto
   property: chinese_8k_common
   fileExtention: .wav
-  resultType: JSON,
-  wordsInfo: WORD,
-  enableAddPunc: true,
-  enableDiarization: true,
-  enableEmotion: true,
-  enableSpeed: true
+  resultType: JSON
+  wordsInfo: NONE
+  enableCallback: false
+  enableDigitnorm: false
+  enableAddPunc: false
+  enableDiarization: false
+  enableEmotion: false
+  enableSpeed: false
   parallel: 24
+
+engineType:
+  jttype: 1
+  kdtype: 0
+  altype: 0

@@ -5,18 +5,30 @@
 
     <insert id="generateBaseTable" >
        insert into t_Qc_Intelligent_Asr
-          (pid, LOG_ID, LEAV_WORD_TIME, ANI, LEAVEWORD_PATH, VOICE_FILE_NAME)
+          (PID,
+           LOG_ID,
+           LEAV_WORD_TIME,
+           ANI,
+           LEAVEWORD_PATH,
+           VOICE_FILE_NAME,
+           CALLID,
+           FULL_PATH)
           select sys_guid(),
-         LOG_ID,
-         LEAV_WORD_TIME,
-         ANI,
-         LEAVEWORD_PATH,
-         VOICE_FILE_NAME
-        from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK
+                 LOG_ID,
+                 LEAV_WORD_TIME,
+                 ANI,
+                 LEAVEWORD_PATH,
+                 VOICE_FILE_NAME,
+                 CALLID,
+                 FULL_PATH
+            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+           where not exists (select callid
+                    from t_Qc_Intelligent_Asr asr
+                   where ivr.CALLID = asr.callid)
 	</insert>
 
-    <select id="getRecordsToAsr" resultType="string">
-        select *
+    <select id="getRecordsToAsr" resultType="com.itcc.mva.vo.RecordNameAndPathVo">
+        select VOICE_FILE_NAME as voice_filename, FULL_PATH
         from T_QC_INTELLIGENT_ASR t
         where t.output_filepath is null
         and t.output_filename is null
@@ -24,5 +36,21 @@
         and t.asr_timestamp is null
         and t.asr_failtimes &lt; 4
         and ROWNUM &lt; 25
+        order by leav_word_time desc
     </select>
+
+    <update id="asrSuccess" parameterType="java.util.Map" >
+        update T_QC_INTELLIGENT_ASR
+           set output_filepath = FULL_PATH || #{params.task_no} || '/',
+               output_filename = #{params.fileName},
+               asr_status      = 1,
+               asr_timestamp   = sysdate
+           where voice_file_name = #{params.recordName}
+    </update>
+
+    <update id="asrFail" parameterType="java.lang.String">
+        update T_QC_INTELLIGENT_ASR
+           set asr_failtimes = asr_failtimes + 1
+         where voice_file_name = #{recordName}
+    </update>
 </mapper>

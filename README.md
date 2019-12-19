@@ -51,7 +51,7 @@ Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
       - 手动安装：  
       ``` 登陆nexus --> Browse --> itcc-release --> upload component --> Group ID:com.inspur.est Artifact ID:signsec Version:1.1.6 -->勾选 Generate a POM file with these coordinates -->Upload``` 
 
----
+```
 
 * 3、 oracle 数据创建表语句
 
@@ -86,3 +86,19 @@ CREATE TABLE ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
 ```
 
 * 4、身份证号码sql
+
+```
+DROP TABLE ICC_UNION.T_ID_CARD CASCADE CONSTRAINTS;
+
+CREATE TABLE ICC_UNION.T_ID_CARD
+	(
+	  F_CODE     NUMBER NOT NULL
+	, F_PROVINCE VARCHAR2 (100)
+	, F_CITY     VARCHAR2 (100)
+	, F_AREA     VARCHAR2 (100),
+	PRIMARY KEY (F_CODE)
+	)
+	TABLESPACE USERS
+	STORAGE (BUFFER_POOL DEFAULT);
+
+```

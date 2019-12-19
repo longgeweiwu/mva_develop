@@ -134,6 +134,7 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
                 params.put("filePath",filePath.substring(7,filePath.length()-fileNameLength));
                 params.put("fileName",fileName);
                 params.put("task_no",task_no);
+                params.put("resultPath",resultPath);
                 if("success".equals(ob.getString("msg"))){
                     intelligentAsrMapper.asrSuccess(params);
                     i = i + 1;

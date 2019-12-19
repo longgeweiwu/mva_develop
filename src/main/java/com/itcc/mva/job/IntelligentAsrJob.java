@@ -1,20 +1,20 @@
 package com.itcc.mva.job;
 
 import com.itcc.mva.service.IIntelligentTransferService;
-import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * ASR解析
  * @author LCL
  */
 @Component
-@Slf4j
 public class IntelligentAsrJob {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IIntelligentTransferService intelligentTransferService;
@@ -25,11 +25,13 @@ public class IntelligentAsrJob {
      */
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "IntelligentAsrJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @SchedulerLock(name = "IntelligentBaseJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void generateBaseTable() {
+        long start_IntelligentBaseJob=System.currentTimeMillis();
         intelligentTransferService.generateBaseTable();
-        log.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
-//        return "ok";
+        //logger.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
+        long end_IntelligentBaseJob=System.currentTimeMillis()-start_IntelligentBaseJob;
+        logger.info(">>> 任务名称:IntelligentBaseJob(捷通基本生成) 总执行时间为: ["+ end_IntelligentBaseJob+" ms]");
     }
 
     /**
@@ -40,8 +42,10 @@ public class IntelligentAsrJob {
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "IntelligentAsrJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void asr() {
+        long start_IntelligentAsrJob=System.currentTimeMillis();
         intelligentTransferService.asr();
-        log.info("IntelligentAsrJob-------------asr调用了***************************");
-//        return "ok";
+        //log.info("IntelligentAsrJob-------------asr调用了***************************");
+        long end_IntelligentAsrJob=System.currentTimeMillis()-start_IntelligentAsrJob;
+        logger.info(">>> 任务名称:IntelligentAsrJob(捷通离线解析) 总执行时间为: ["+ end_IntelligentAsrJob+" ms]");
     }
 }

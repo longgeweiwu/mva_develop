@@ -1,5 +1,6 @@
 package com.itcc.mva.entity;
 
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,8 +9,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName(value="T_QC_INTELLIGENT_ASR")
-public class IntelligentAsrEntity {
+@TableName(value="MVA_IFLY_INTELLIGENT_ASR")
+public class QuarkCallbackEntity {
 
     @TableId(value = "PID")
     private String pid;
@@ -23,26 +24,23 @@ public class IntelligentAsrEntity {
     private String leaveWordpath;
     @TableField(value = "VOICE_FILE_NAME")
     private String voiceFilename;
-    @TableField(value = "OUTPUT_FILEPATH")
-    private String outputFilepath;
-    @TableField(value = "OUTPUT_FILENAME")
-    private String outputFilename;
-    @TableField(value = "ASR_STATUS")
-    private String asrStatus;
-    @TableField(value = "ASR_TIMESTAMP")
-    private Date asrTimestamp;
-    @TableField(value = "ASR_FAILTIMES")
-    private String asrFailtimes;
-    @TableField(value = "DATAGENERATE_TIME")
-    private Date datagenerateTime;
-    @TableField(value = "JSONPARSE_STATUS")
-    private Integer jsonparseStatus;
-    @TableField(value = "JSONPARSE_RESULT")
-    private String jsonparseResult;
     @TableField(value = "CALLID")
     private String callid;
-    @TableField(value = "ISSUBMIT")
-    private Integer issubmit;
     @TableField(value = "FULL_PATH")
     private String fullPath;
+    @TableField(value = "RMAVOICE_FILE_NAME")
+    private String rmavoiceFileName;
+    @TableField(value = "RMAFLAG")
+    private Integer rmaflag;
+    @TableField(value = "AID")
+    private String aid;
+    @TableField(value = "IFLY_RESULT")
+    private String iflyResult;
+    @TableField(value = "IFLYPARSE_STATUS")
+    private Integer iflyparseStatus;
+    @TableField(value = "INSERT_TIME")
+    private Date insertTime;
+    @TableField(value = "ISSUBMIT")
+    private Integer issubmit;
+
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcc.mva.mapper.QuarkCallbackMapper">
+
+    <insert id="generateIflyBaseTable" >
+        INSERT INTO MVA_IFLY_INTELLIGENT_ASR (PID
+            , LOG_ID
+            , LEAV_WORD_TIME
+            , ANI
+            , LEAVEWORD_PATH
+            , VOICE_FILE_NAME
+            , CALLID
+            , FULL_PATH)
+            SELECT sys_guid ()
+                , LOG_ID
+                , LEAV_WORD_TIME
+                , ANI
+                , LEAVEWORD_PATH
+                , VOICE_FILE_NAME
+                , CALLID
+                , FULL_PATH
+            FROM IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+            WHERE NOT EXISTS (SELECT callid
+                              FROM MVA_IFLY_INTELLIGENT_ASR asr
+                              WHERE ivr.CALLID = asr.callid)
+	</insert>
+
+    <select id="queryIflyPendingTopMapper" resultType="com.itcc.mva.entity.QuarkCallbackEntity" parameterType="java.lang.Integer">
+        SELECT PID
+             , LOG_ID
+             , LEAV_WORD_TIME
+             , ANI
+             , LEAVEWORD_PATH
+             , VOICE_FILE_NAME
+             , CALLID
+             , FULL_PATH
+	         , RMAVOICE_FILE_NAME
+	         , RMAFLAG
+             , AID
+             , IFLY_RESULT
+             , INSERT_TIME
+             , IFLYPARSE_STATUS
+             ,ISSUBMIT
+        FROM ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
+        WHERE ROWNUM  &lt;= #{top}
+        AND RMAVOICE_FILE_NAME IS NOT NULL
+        AND (IFLYPARSE_STATUS IS NULL OR IFLYPARSE_STATUS = 2 OR IFLYPARSE_STATUS = 3 OR IFLYPARSE_STATUS = 4)
+        ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
+    </select>
+
+
+    <select id="pushToIflyAudioTopMapper" resultType="com.itcc.mva.entity.QuarkCallbackEntity">
+        SELECT PID
+             , LOG_ID
+             , LEAV_WORD_TIME
+             , ANI
+             , LEAVEWORD_PATH
+             , VOICE_FILE_NAME
+             , CALLID
+             , FULL_PATH
+	         , RMAVOICE_FILE_NAME
+	         , RMAFLAG
+             , AID
+             , IFLY_RESULT
+             , INSERT_TIME
+             , IFLYPARSE_STATUS
+             ,ISSUBMIT
+        FROM ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
+        WHERE ROWNUM  &lt;= #{top}
+        AND VOICE_FILE_NAME IS NOT NULL
+        AND RMAVOICE_FILE_NAME IS NULL
+        AND RMAFLAG IS NULL
+        ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
+    </select>
+
+</mapper>

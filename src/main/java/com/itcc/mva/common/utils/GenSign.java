@@ -5,6 +5,9 @@ import com.inspur.est.signsec.utils.Md5DataSign;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @Author: Whoami
+ */
 public class GenSign {
 
     public static Map<String,Object> getValidSign(){

@@ -6,27 +6,55 @@ package com.itcc.mva.common.utils;
  */
 public class Constant {
     /**
-     *You can also set lockAtMostFor attribute which specifies how long the lock should be kept in case the executing node dies.
-     *  This is just a fallback, under normal circumstances the lock is released as soon the tasks finishes.
-     *  You have to set lockAtMostFor to a value which is much longer than normal execution time.
-     *  If the task takes longer than lockAtMostFor the resulting behavior may be unpredictable
-     *  (more then one process will effectively hold the lock).
-     *  lockAtMostFor：锁的最大时间单位为毫秒
+     * 部委来电信访登记
      */
-    public static final String lockAtMostForTime = "1s";
+    public static final String MVAURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
     /**
-     *Lastly, you can set lockAtLeastFor attribute which specifies minimum amount of time for which the lock should be kept.
-     *  Its main purpose is to prevent execution from multiple nodes in case of really short tasks and clock difference between the nodes.
-     *  lockAtLeastFor：锁的最小时间单位为毫秒
+     * 部委信息采集身份核验
      */
-    public static final String lockAtLeastForTime = "1s";
+    public static final String IDURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
+
+
+    public static final String RECORDURL="http://172.16.12.178:52111/";
+
+    /**
+     * 引擎选择
+     */
+    public static final int ENGINETYPE_JT = 1; //捷通
+    public static final int ENGINETYPE_KD = 1; //科大
+    public static final int ENGINETYPE_AL = 1; //阿里
 
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 
-    public static final int NO_PARSER = 25; //解析数量
+    public static final int NO_RMA_IFLY = 25; //科大讯飞解析数量
+    public static final int NO_PARSER_IFLY = 25; //科大讯飞解析数量
+    public static final int NO_PARSER = 25; //捷通解析数量
 
-    public static final int NO_SENDER = 25; //发送数量
+    public static final int ASRPARSER_SUCCESS = 1; //捷通成功
+    public static final int ASRPARSER_FAIL = 2; //捷通失败
+    public static final int ASRPARSER_IFLY_SUCCESS = 1; //科大成功
+    public static final int ASRPARSER_IFLY_FAIL = 2; //科大失败
 
-    public static final int ASRPARSER_SUCCESS = 1; //成功
-    public static final int ASRPARSER_FAIL = 2; //失败
+
+    public static final int NO_SENDER = 25; //部委发送数量
+    public static final int SEND_SUCCESS = 1; //部委成功
+    public static final int SEND_FAIL = 2; //部委失败
+
+    //转科大写音频回调地址
+    public static String NOTIFYURL="http://192.168.102.115:52113/quark/callback";
+    //科大离线转写引擎服务器地址
+    public static String URL="http://172.16.12.231:9505/quark_procer";
+    //科大待转写音频下载地址
+    public static String AUDIO="http://172.16.12.178:52111/";
+
+    //转码文件存储地址
+    public static final  String RMAPATH = "D:\\AAA\\voice-engine-quark-javademo\\src\\main\\resources\\static\\RM";
+    //转写音频回调地址
+    public static String RMANOTIFYURL="http://192.168.102.115:52113/rma/callback";
+    //离线转写引擎服务器地址
+    public static String RMAURL="http://172.16.12.231:9505/rma_procer";
+    //转码结果文件上传地址
+    public static final String UPLOADFILE = "http://192.168.102.115:52113/rma/upload";
+    public static final int RMA_IFLY_SUCCESS = 1; //科大转码成功
+    public static final int RMA_IFLY_FAIL = 2; //科大转码失败
 }

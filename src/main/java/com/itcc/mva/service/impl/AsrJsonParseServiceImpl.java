@@ -43,7 +43,7 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     @Transactional(rollbackFor = Exception.class)
     public void jsonSigle(IntelligentAsrEntity intelligentAsrEntity) {
         //生产path要修改！！！
-        String dirPath=intelligentAsrEntity.getOutputFilepath().replace("file:///home/data/", "z:\\leaveword\\jt");
+        String dirPath=intelligentAsrEntity.getOutputFilepath().replace("file:///home/data/", "z:\\leaveword\\jt\\");
         String path = dirPath+"\\"+ Tools.findTrueFname(dirPath,Tools.getSplitMaxValue(intelligentAsrEntity.getOutputFilename(),"\\_"));
         try {
             StringBuffer bfText = new StringBuffer();

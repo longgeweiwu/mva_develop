@@ -49,6 +49,8 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(intelligentAsrEntity.getCallid());
 
         Map<String, Object> headers = new HashMap<String, Object>();
+        headers.put("Content-Type","application/x-www-form-urlencoded");
+
         Map<String, Object> postparams = GenSign.getValidSign();
 
         JSONObject jsonObject= new JSONObject();

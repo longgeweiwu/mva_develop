@@ -201,7 +201,12 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         if(null != resultGet && Tools.isJSONValid(resultGet)){
             JSONObject httpResult= JSON.parseObject(resultGet);
             if(1==httpResult.getInteger("code")){
-                return httpResult.getJSONObject("data").getString("extDomicileAddress");
+                String add=httpResult.getJSONObject("data").getString("extDomicileAddress");
+                if(add.contains("区")){
+                    return add.substring(0,add.lastIndexOf("区")+1);
+                }else{
+                    return add;
+                }
             }else{
                 return null;
             }

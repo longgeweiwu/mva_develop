@@ -76,38 +76,46 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
         }else{
             String code = mvaOutVo.getId().substring(0,6);
             IdCardEntity fCode = idCardMapper.selectOne(new QueryWrapper<IdCardEntity>().eq("F_CODE", code));
-            jsonObject.put("extDomicileAddress",fCode.getFProvince()+fCode.getFCity()+fCode.getFArea());//户籍地址
+            if(null != fCode){
+                jsonObject.put("extDomicileAddress",fCode.getFProvince()+fCode.getFCity()+fCode.getFArea());//户籍地址
+            }
         }
-        jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
-        jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
-        //录音路径还有问题，需要注意
-        jsonObject.put("regRecordFileUri",Constant.RECORDURL+intelligentAsrEntity.getFullPath().split("/")[3]+"/"+intelligentAsrEntity.getVoiceFilename());//录音文件地址
+        if(jsonObject.containsKey("extDomicileAddress")){
+            jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
+            jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
+            //录音路径还有问题，需要注意
+            jsonObject.put("regRecordFileUri",Constant.RECORDURL+intelligentAsrEntity.getFullPath().split("/")[3]+"/"+intelligentAsrEntity.getVoiceFilename());//录音文件地址
+            Map<String, Object> validSign = GenSign.getValidSign();
+            postparams.put("data", jsonObject.toJSONString());
+            postparams.put("sign", validSign.get("sign"));
+            postparams.put("t", validSign.get("t"));
+            logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
 
-
-        Map<String, Object> validSign = GenSign.getValidSign();
-        postparams.put("data", jsonObject.toJSONString());
-        postparams.put("sign", validSign.get("sign"));
-        postparams.put("t", validSign.get("t"));
-        logger.info(">>> 推送准备 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
-
-        String resultPost= HttpUtil.httpPost(Constant.MVAURL, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
-        /**
-         * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
-         */
-        if(null != resultPost && Tools.isJSONValid(resultPost)){
-            JSONObject httpResult= JSON.parseObject(resultPost);
-            if(1==httpResult.getInteger("code")){
-                logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
-                //只有等于1 的时候说明推送成功
+            String resultPost= HttpUtil.httpPost(Constant.MVAURL, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+            /**
+             * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
+             */
+            if(null != resultPost && Tools.isJSONValid(resultPost)){
+                JSONObject httpResult= JSON.parseObject(resultPost);
+                if(1==httpResult.getInteger("code")){
+                    logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+                    //只有等于1 的时候说明推送成功
+                    IntelligentAsrEntity result = new IntelligentAsrEntity();
+                    result.setIssubmit(Constant.SEND_SUCCESS);
+                    intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
+                }
+            }else{
+                logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+                //等于空说明推送失败
                 IntelligentAsrEntity result = new IntelligentAsrEntity();
-                result.setIssubmit(Constant.SEND_SUCCESS);
+                result.setIssubmit(Constant.SEND_FAIL);
                 intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
             }
         }else{
-            logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));
+            logger.info(">>> 推送失败 请求时候的主要因为身份证参数 : " + mvaOutVo.getId());
             //等于空说明推送失败
             IntelligentAsrEntity result = new IntelligentAsrEntity();
-            result.setIssubmit(Constant.SEND_FAIL);
+            result.setIssubmit(Constant.ID_SEND_FAIL);
             intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
         }
     }

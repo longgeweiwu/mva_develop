@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/verify")
-public class AgentScoreController {
+public class ApiMvaController {
     @Autowired
     private IPushToMvaService iPushToMvaService;
 

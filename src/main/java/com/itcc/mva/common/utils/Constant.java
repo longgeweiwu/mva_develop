@@ -8,11 +8,11 @@ public class Constant {
     /**
      * 部委来电信访登记
      */
-    public static final String MVAURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
+    public static final String MVAURL = "https://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/incomingTelReg";
     /**
      * 部委信息采集身份核验
      */
-    public static final String IDURL = "http://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
+    public static final String IDURL = "https://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
 
 
     public static final String RECORDURL="http://172.16.12.178:52111/";

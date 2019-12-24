@@ -7,4 +7,6 @@ public interface IPushToMvaService {
     void singleSendToMvaServiceJt(IntelligentAsrEntity intelligentAsrEntity);
     void singleSendToMvaServiceKd(QuarkCallbackEntity quarkCallbackEntity);
     void singleSendToMvaServiceAl();
+
+    String illegalId(String id);
 }

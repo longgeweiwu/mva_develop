@@ -233,6 +233,28 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
     }
 
+    @Override
+    public String illegalId(String id) {
+        String result = getJudgeMvaId(id);
+        if(null !=result ){
+            return formVxml("1");
+        }else{
+            return formVxml("0");
+        }
+    }
+
+    private String formVxml(String num){
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> \n" +
+                "<vxml version=\"1.0\">\n" +
+                "<var name=\"ILLEGA\" expr=\""+  num  +"\" /> \n" +
+                "\t<form>\n" +
+                "\t\t<block>\n" +
+                "\t\t\t<return namelist=\"ILLEGA\" /> \n" +
+                "\t\t</block>\n" +
+                "\t</form>\n" +
+                "</vxml>";
+    }
+
     /**
      * 通过ID查询户籍归属地
      * @param id

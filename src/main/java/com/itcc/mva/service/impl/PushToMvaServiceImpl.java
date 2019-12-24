@@ -48,6 +48,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          */
         MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(intelligentAsrEntity.getCallid());
 
+        if(null != getJudgeMvaId(mvaOutVo.getId()) && Tools.isLegal(mvaOutVo.getId())){
         Map<String, Object> headers = new HashMap<String, Object>();
         headers.put("Content-Type","application/x-www-form-urlencoded");
 
@@ -124,6 +125,13 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
             result.setIssubmit(Constant.ID_SEND_FAIL);
             intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
         }
+        }else{
+            logger.info(">>> 推送失败 请求时候的主要因为身份证是非法的 : " + mvaOutVo.getId());
+            //等于空说明推送失败
+            IntelligentAsrEntity result = new IntelligentAsrEntity();
+            result.setIssubmit(Constant.ID_ILLEGAL_FAIL);
+            intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
+        }
     }
 
     @Override
@@ -132,6 +140,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
          * 查询callid对应信息存储
          */
         MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(quarkCallbackEntity.getCallid());
+        if(null != getJudgeMvaId(mvaOutVo.getId()) && Tools.isLegal(mvaOutVo.getId())){
 
         Map<String, Object> headers = new HashMap<String, Object>();
         headers.put("Content-Type","application/x-www-form-urlencoded");
@@ -208,6 +217,13 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
             //等于空说明推送失败
             QuarkCallbackEntity result = new QuarkCallbackEntity();
             result.setIssubmit(Constant.ID_SEND_FAIL);
+            quarkCallbackMapper.update(result, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", quarkCallbackEntity.getCallid()));
+        }
+        }else{
+            logger.info(">>> 推送失败 请求时候的主要因为身份证是非法的 : " + mvaOutVo.getId());
+            //等于空说明推送失败
+            QuarkCallbackEntity result = new QuarkCallbackEntity();
+            result.setIssubmit(Constant.ID_ILLEGAL_FAIL);
             quarkCallbackMapper.update(result, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", quarkCallbackEntity.getCallid()));
         }
     }

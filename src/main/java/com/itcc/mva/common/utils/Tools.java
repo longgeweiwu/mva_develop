@@ -145,4 +145,23 @@ public class Tools {
         System.out.println("添加格式转换完成:taskId："+taskId +"响应结果:"+resp);
 
     }
+
+    /**
+     * 判断身份证是否合法
+     * @param id    身份证号码
+     * @return  true:合法,false:不合法
+     */
+    public static boolean isLegal(String id) {
+        int sum = 0;
+        char[] chekBit = {'1','0','X','9','8','7','6','5','4','3','2'};
+        int[] power = {7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2};
+        char[] strinigAll = id.toCharArray();
+        for (int i = 0; i < 17; i++) {
+            sum += power[i]*(strinigAll[i] - '0');
+        }
+        if(strinigAll[17] == chekBit[sum%11]){
+            return true;
+        }
+        return false;
+    }
 }

@@ -41,7 +41,7 @@ public class PushToMvaJob {
     public void pushInfo()
     {
         long start_PushToMvaJob=System.currentTimeMillis();
-        logger.info(jttype==1?"[>>> JT引擎 开启状态]":"[>>> JT引擎 关闭状态]" + "  "+ (kdtype==1?"[>>> KD引擎 开启状态]":"[>>> KD引擎 关闭状态]") + "  "+ (kdtype==1?"[>>> AL引擎 开启状态]":"[>>> AL引擎 关闭状态]") );
+        logger.info(jttype==1?"[>>> JT引擎 开启状态]":"[>>> JT引擎 关闭状态]" + "  "+ (kdtype==1?"[>>> KD引擎 开启状态]":"[>>> KD引擎 关闭状态]") + "  "+ (altype==1?"[>>> AL引擎 开启状态]":"[>>> AL引擎 关闭状态]") );
         if(jttype==Constant.ENGINETYPE_JT){
             logger.info(">>> 正在使用JT引擎");
             List<IntelligentAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSendJt(Constant.NO_SENDER);

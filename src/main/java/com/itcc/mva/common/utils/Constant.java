@@ -39,7 +39,8 @@ public class Constant {
     public static final int NO_SENDER = 25; //部委发送数量
     public static final int SEND_SUCCESS = 1; //部委成功
     public static final int SEND_FAIL = 2; //部委失败
-    public static final int ID_SEND_FAIL = 3; //身份号不是有效身份证
+    public static final int SEND_NOTEXIST = 3; //部委失败
+    public static final int ID_SEND_FAIL = 4; //身份号不是有效身份证
 
     //转科大写音频回调地址
     public static String NOTIFYURL="http://192.168.102.115:52113/quark/callback";

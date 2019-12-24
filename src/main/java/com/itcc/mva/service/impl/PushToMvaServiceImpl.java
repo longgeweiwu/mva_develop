@@ -103,6 +103,12 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                     IntelligentAsrEntity result = new IntelligentAsrEntity();
                     result.setIssubmit(Constant.SEND_SUCCESS);
                     intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
+                }else{
+                    logger.info(">>> 推送成功 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t") + "接口返回参数为： "+httpResult);
+                    //只有等于1 的时候说明推送成功
+                    IntelligentAsrEntity result = new IntelligentAsrEntity();
+                    result.setIssubmit(Constant.SEND_NOTEXIST);
+                    intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
                 }
             }else{
                 logger.info(">>> 推送失败 请求时候的参数为 [URL]:"+Constant.MVAURL+" [params data]:"+postparams.get("data")+" [params sign]:"+postparams.get("sign")+" [params t]:"+postparams.get("t"));

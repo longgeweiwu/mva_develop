@@ -262,26 +262,31 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
      * @return 默认是NUll
      */
     public String getJudgeMvaId(String id){
-        Map<String, Object> getParams = GenSign.getValidSign();
-        Map<String, Object> validSign = GenSign.getValidSign();
-        getParams.put("idCard", id);
-        getParams.put("sign", validSign.get("sign"));
-        getParams.put("t", validSign.get("t"));
-        logger.info(">>> 身份接口准备 请求时候的参数为 [URL]:"+Constant.IDURL+" [params data]:"+getParams.get("idCard")+" [params sign]:"+getParams.get("sign")+" [params t]:"+getParams.get("t"));
-        String resultGet= HttpUtil.get(Constant.IDURL,getParams);
-        if(null != resultGet && Tools.isJSONValid(resultGet)){
-            JSONObject httpResult= JSON.parseObject(resultGet);
-            if(1==httpResult.getInteger("code")){
-                String add=httpResult.getJSONObject("data").getString("extDomicileAddress");
-                if(add.contains("区")){
-                    return add.substring(0,add.lastIndexOf("区")+1);
-                }else{
-                    return add;
+        if(id.length()>14) {
+            Map<String, Object> getParams = GenSign.getValidSign();
+            Map<String, Object> validSign = GenSign.getValidSign();
+            getParams.put("idCard", id);
+            getParams.put("sign", validSign.get("sign"));
+            getParams.put("t", validSign.get("t"));
+            logger.info(">>> 身份接口准备 请求时候的参数为 [URL]:" + Constant.IDURL + " [params data]:" + getParams.get("idCard") + " [params sign]:" + getParams.get("sign") + " [params t]:" + getParams.get("t"));
+            String resultGet = HttpUtil.get(Constant.IDURL, getParams);
+            if (null != resultGet && Tools.isJSONValid(resultGet)) {
+                JSONObject httpResult = JSON.parseObject(resultGet);
+                if (1 == httpResult.getInteger("code")) {
+                    String add = httpResult.getJSONObject("data").getString("extDomicileAddress");
+                    if (add.contains("区")) {
+                        return add.substring(0, add.lastIndexOf("区") + 1);
+                    } else {
+                        return add;
+                    }
+                } else {
+                    return null;
                 }
-            }else{
+            } else {
                 return null;
             }
         }else{
+            logger.info(">>> 身份接口异常 [身份证长度不足15位] 身份证号码为: "+id);
             return null;
         }
     }

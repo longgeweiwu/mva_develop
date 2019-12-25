@@ -53,7 +53,49 @@ Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
 
 ---
 
-* 3、 oracle 数据创建表语句
+
+* 3、 部署注意事项
+
+  需要搭建nginx 文件服务系统（其中核心配置）：
+  ```
+  server {  
+             listen       9000;        #端口  
+             server_name  localhost;   #服务名  
+             charset utf-8; # 避免中文乱码
+             root    E:\Download\java;  #显示的根索引目录，注意这里要改成你自己的，目录要存在  
+     
+             location / {
+                 autoindex on;             #开启索引功能  
+                 autoindex_exact_size off; # 关闭计算文件确切大小（单位bytes），只显示大概大小（单位kb、mb、gb）  
+                 autoindex_localtime on;   # 显示本机时间而非 GMT 时间  
+             }
+         }
+
+  ```
+  
+  因为多节点部署且各个节点机器性能一样的情况下，暂时用nginx的轮训方式做负载均衡（主要配置如下）
+  ```
+  upstream webserver{ 
+             server 127.0.0.1:52113;
+             server 127.0.0.1:52114;
+         } 
+     	
+     	server {  
+             listen       52111;        #端口  
+     
+             location / {
+                  proxy_pass http://webserver;
+             }
+         }
+
+   ```
+  
+
+---
+
+
+
+* 4、 oracle 数据创建表语句
 
 ```
  捷通解析表（基表）
@@ -85,7 +127,7 @@ CREATE TABLE ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
 	STORAGE (BUFFER_POOL DEFAULT);
 ```
 
-* 4、身份证号码sql
+* 5、身份证号码sql
 ```
 DROP TABLE ICC_UNION.T_ID_CARD CASCADE CONSTRAINTS;
 
@@ -5826,3 +5868,6 @@ INSERT INTO T_ID_CARD (F_CODE, F_PROVINCE, F_CITY, F_AREA) VALUES (659003, '新�
 INSERT INTO T_ID_CARD (F_CODE, F_PROVINCE, F_CITY, F_AREA) VALUES (659004, '新疆维吾尔自治区', '省直辖行政单位', '五家渠市');
 
 ```
+
+
+

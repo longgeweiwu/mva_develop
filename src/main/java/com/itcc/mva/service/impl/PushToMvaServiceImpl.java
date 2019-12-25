@@ -235,7 +235,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
     @Override
     public String illegalId(String id) {
-        logger.info(">>> 调用API查询身份证号是否在他的库里，此时身份号码为: " + id);
+        logger.info(">>> 调用API查询身份证号是否在MVA的数据库里，此时身份号码为: " + id);
         String result = getJudgeMvaId(id);
         if(null !=result ){
             return formVxml("1");

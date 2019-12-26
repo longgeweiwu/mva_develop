@@ -43,7 +43,7 @@ public class Constant {
     public static final int SEND_NOTEXIST = 3; //部委返回errorcode=0
     public static final int ID_SEND_FAIL = 4; //身份号找不到归属地，请查验
     public static final int ID_ILLEGAL_FAIL = 5; //身份号不合法
-    public static final int ICD_INFO_FAIL = 6; //身份号不合法
+    public static final int ICD_INFO_FAIL = 6; //话务平台成功标志不是1 主要看ICD数据库
 
     //转科大写音频回调地址
     public static String NOTIFYURL="http://172.16.12.178:52113/quark/callback";

@@ -58,7 +58,6 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     @Override
     public void updateRmaVoiceFlag(String aid, int rmaFlag) {
         QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
-        quarkCallbackEntity.setCallid(aid);
         quarkCallbackEntity.setRmaflag(rmaFlag);
         quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", aid));
     }

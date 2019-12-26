@@ -84,6 +84,7 @@ Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
              listen       52111;        #端口  
      
              location / {
+                  client_max_body_size 1000m;
                   proxy_pass http://webserver;
              }
          }

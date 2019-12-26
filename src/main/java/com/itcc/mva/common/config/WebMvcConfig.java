@@ -19,8 +19,8 @@ public class  WebMvcConfig implements WebMvcConfigurer {
 //resolveLazily属性启用是为了推迟文件解析，以在在UploadAction中捕获文件大小异常
 //        resolver.setResolveLazily(true);
 //        resolver.setMaxInMemorySize(40960);
-//上传文件大小 10M 10*1024*1024
-        resolver.setMaxUploadSize(10 * 1024 * 1024);
+//上传文件大小 100M 100*1024*1024
+        resolver.setMaxUploadSize(100 * 1024 * 1024);
         return resolver;
     }
 }

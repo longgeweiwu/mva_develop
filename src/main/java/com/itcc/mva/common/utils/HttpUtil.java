@@ -82,7 +82,7 @@ public class HttpUtil {
             byte[] b = new byte[1024];
             int length = -1;
             while ((length = inStrm.read(b)) != -1) {
-                builder.append(new String(b, 0, length));
+                builder.append(new String(b, 0, length,"UTF-8"));
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -43,9 +43,10 @@ public class Constant {
     public static final int SEND_NOTEXIST = 3; //部委返回errorcode=0
     public static final int ID_SEND_FAIL = 4; //身份号找不到归属地，请查验
     public static final int ID_ILLEGAL_FAIL = 5; //身份号不合法
+    public static final int ICD_INFO_FAIL = 6; //身份号不合法
 
     //转科大写音频回调地址
-    public static String NOTIFYURL="http://192.168.102.115:52113/quark/callback";
+    public static String NOTIFYURL="http://172.16.12.178:52113/quark/callback";
     //科大离线转写引擎服务器地址
     public static String URL="http://172.16.12.231:9505/quark_procer";
     //科大待转写音频下载地址
@@ -54,11 +55,11 @@ public class Constant {
     //转码文件存储地址
     public static final  String RMAPATH = "D:\\AAA\\voice-engine-quark-javademo\\src\\main\\resources\\static\\RM";
     //转写音频回调地址
-    public static String RMANOTIFYURL="http://192.168.102.115:52113/rma/callback";
+    public static String RMANOTIFYURL="http://172.16.12.178:52113/rma/callback";
     //离线转写引擎服务器地址
     public static String RMAURL="http://172.16.12.231:9505/rma_procer";
     //转码结果文件上传地址
-    public static final String UPLOADFILE = "http://192.168.102.115:52113/rma/upload";
+    public static final String UPLOADFILE = "http://172.16.12.178:52113/rma/upload";
     public static final int RMA_IFLY_SUCCESS = 1; //科大转码成功
     public static final int RMA_IFLY_FAIL = 2; //科大转码失败
 }

@@ -91,6 +91,16 @@ Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
 
    ```
   
+  PS:在高并发场景，我们需要事先启动更多的nginx进程以保存快速响应并处理用户的请求。具体的配置参数如下：
+  
+  ```
+  worker_processes 8;#建议等于cpu的个数或核数
+  
+  查看核数：grep "physical id" /proc/cpuinfo  
+           或  top 按 1
+  
+  ```
+  
 
 ---
 

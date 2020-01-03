@@ -17,7 +17,7 @@ public class QuarkCallbackEntity {
     @TableField(value = "LOG_ID")
     private String logId;
     @TableField(value = "LEAV_WORD_TIME")
-    private String leavWorktime;
+    private String leavWorkTime;
     @TableField(value = "ANI")
     private String ani;
     @TableField(value = "LEAVEWORD_PATH")

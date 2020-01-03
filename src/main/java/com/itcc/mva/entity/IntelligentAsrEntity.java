@@ -16,13 +16,13 @@ public class IntelligentAsrEntity {
     @TableField(value = "LOG_ID")
     private String logId;
     @TableField(value = "LEAV_WORD_TIME")
-    private String leavWorktime;
+    private String leavWordTime;
     @TableField(value = "ANI")
     private String ani;
     @TableField(value = "LEAVEWORD_PATH")
-    private String leaveWordpath;
+    private String leavewordPath;
     @TableField(value = "VOICE_FILE_NAME")
-    private String voiceFilename;
+    private String voiceFileName;
     @TableField(value = "OUTPUT_FILEPATH")
     private String outputFilepath;
     @TableField(value = "OUTPUT_FILENAME")

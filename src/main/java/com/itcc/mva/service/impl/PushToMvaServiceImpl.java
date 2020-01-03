@@ -383,20 +383,25 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
             getParams.put("sign", validSign.get("sign"));
             getParams.put("t", validSign.get("t"));
             logger.info(">>> 身份接口准备 请求时候的参数为 [URL]:" + Constant.IDURL + " [params data]:" + getParams.get("idCard") + " [params sign]:" + getParams.get("sign") + " [params t]:" + getParams.get("t"));
-            String resultGet = HttpUtil.get(Constant.IDURL, getParams);
-            if (null != resultGet && Tools.isJSONValid(resultGet)) {
-                JSONObject httpResult = JSON.parseObject(resultGet);
-                if (1 == httpResult.getInteger("code")) {
-                    String add = httpResult.getJSONObject("data").getString("extDomicileAddress");
-                    if (add.contains("区")) {
-                        return add.substring(0, add.lastIndexOf("区") + 1);
+            try {
+                String resultGet = HttpUtil.get(Constant.IDURL, getParams);
+                if (null != resultGet && Tools.isJSONValid(resultGet)) {
+                    JSONObject httpResult = JSON.parseObject(resultGet);
+                    if (1 == httpResult.getInteger("code")) {
+                        String add = httpResult.getJSONObject("data").getString("extDomicileAddress");
+                        if (add.contains("区")) {
+                            return add.substring(0, add.lastIndexOf("区") + 1);
+                        } else {
+                            return add;
+                        }
                     } else {
-                        return add;
+                        return null;
                     }
                 } else {
                     return null;
                 }
-            } else {
+            }catch(Exception e){
+                logger.info(">>> 身份接口异常有可能是网络问题: " + e.getMessage());
                 return null;
             }
         } else {

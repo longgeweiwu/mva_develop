@@ -40,6 +40,8 @@ public class IntelligentAsrJob {
             //logger.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
             long end_IntelligentBaseJob = System.currentTimeMillis() - start_IntelligentBaseJob;
             logger.info(">>> 任务名称:JtBaseJob(捷通基本生成) 总执行时间为: [" + end_IntelligentBaseJob + " ms]");
+        }else{
+            logger.info(">>> 任务名称:JtBaseJob(捷通基本生成) 停止工作");
         }
     }
 

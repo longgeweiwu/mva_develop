@@ -36,6 +36,8 @@ public class AliAsrJob {
             iAliTransferService.generateAliBaseTable();
             long end_generateBaseTable = System.currentTimeMillis() - start_generateBaseTable;
             logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 总执行时间为: [" + end_generateBaseTable + " ms]");
+        }else{
+            logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 停止工作");
         }
     }
 

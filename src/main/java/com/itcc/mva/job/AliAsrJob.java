@@ -7,6 +7,7 @@ import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,16 +22,21 @@ import java.util.List;
 public class AliAsrJob {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("${jobtype.aljob}")
+    private int aljob;
+
     @Autowired
     private IAliTransferService iAliTransferService;
 
     @Scheduled(cron = "* 0/1 * * * ?")
     @SchedulerLock(name = "AliBaseTableJob", lockAtMostFor = "40s", lockAtLeastFor = "40s")
     public void generateBaseTable() {
-        long start_generateBaseTable = System.currentTimeMillis();
-        iAliTransferService.generateAliBaseTable();
-        long end_generateBaseTable = System.currentTimeMillis() - start_generateBaseTable;
-        logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 总执行时间为: [" + end_generateBaseTable + " ms]");
+        if (Constant.JOB_AL == aljob) {
+            long start_generateBaseTable = System.currentTimeMillis();
+            iAliTransferService.generateAliBaseTable();
+            long end_generateBaseTable = System.currentTimeMillis() - start_generateBaseTable;
+            logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 总执行时间为: [" + end_generateBaseTable + " ms]");
+        }
     }
 
 

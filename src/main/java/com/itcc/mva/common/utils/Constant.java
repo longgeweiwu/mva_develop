@@ -14,9 +14,7 @@ public class Constant {
      */
     public static final String IDURL = "https://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
 
-
     public static final String RECORDURL="http://172.16.12.178:52111/";
-
     /**
      * 引擎选择
      */
@@ -28,13 +26,20 @@ public class Constant {
 
     public static final int NO_RMA_IFLY = 25; //科大讯飞解析数量
     public static final int NO_PARSER_IFLY = 25; //科大讯飞解析数量
+    public static final int NO_PARSER_ALI = 25; //阿里解析数量
     public static final int NO_PARSER = 25; //捷通解析数量
 
     public static final int ASRPARSER_SUCCESS = 1; //捷通成功
     public static final int ASRPARSER_FAIL = 2; //捷通失败
     public static final int ASRPARSER_IFLY_SUCCESS = 1; //科大成功
     public static final int ASRPARSER_IFLY_FAIL = 2; //科大失败
+    public static final int ASRPARSER_ALI_SUCCESS = 1; //阿里成功
+    public static final int ASRPARSER_ALI_FAIL = 2; //阿里失败
 
+    public static final int ASRPARSER_QUERYALI_SUCCESS = 1; //阿里成功
+    public static final int ASRPARSER_QUERYRESULTALI_FAIL = 3; //阿里请将如上响应的J SON字符串反馈给对接⼈
+    public static final int ASRPARSER_SERIOUS_FAIL = 4; //阿里失败
+    public static final int ASRPARSER_EXCEPTION_FAIL = 2; //阿里查询结果为空 可能原因 网络
 
     public static final int NO_SENDER = 25; //部委发送数量
     public static final int SEND_SUCCESS = 1; //部委成功
@@ -62,4 +67,20 @@ public class Constant {
     public static final String UPLOADFILE = "http://172.16.12.178:52113/rma/upload";
     public static final int RMA_IFLY_SUCCESS = 1; //科大转码成功
     public static final int RMA_IFLY_FAIL = 2; //科大转码失败
+
+
+    /**
+     * 阿里常量字段，请勿修改
+     */
+    public static final String KEY_APPKEY = "appkey";
+    public static final String KEY_TOKEN = "token";
+    public static final String KEY_FILE_LINK = "file_link";
+
+    public static final String KEY_TASK_ID = "task_id";
+    public static final String STATUS_SUCCESS = "SUCCESS";
+    public static final String STATUS_RUNNING = "RUNNING";
+    public static final String FILE_DOWNLOAD_FAILED = "FILE_DOWNLOAD_FAILED";
+
+    public static final String KEY_ALIASR = "http://172.16.12.233:8101/stream/v1/filetrans";
+    public static final String KEY_QUERYALIASR = "http://172.16.12.233:8101/stream/v1/filetrans";
 }

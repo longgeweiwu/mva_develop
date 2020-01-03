@@ -79,8 +79,27 @@
         ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
     </select>
 
-    <select id="queryWaitingSendAl" resultType="com.itcc.mva.entity.IntelligentAsrEntity">
-
+    <select id="queryWaitingSendAl" resultType="com.itcc.mva.entity.AliAsrEntity">
+        SELECT
+            PID
+            , LOG_ID
+            , LEAV_WORD_TIME
+            , ANI
+            , LEAVEWORD_PATH
+            , VOICE_FILE_NAME
+            , CALLID
+            , FULL_PATH
+            , ASRFLAG
+            , TASKID
+            , ALI_RESULT
+            , INSERT_TIME
+            , ALIPARSE_STATUS
+            , ISSUBMIT
+        FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR
+        WHERE ROWNUM  &lt;= #{top}
+          AND ISSUBMIT IS NULL
+          AND ALI_RESULT IS NOT NULL
+        ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
     </select>
 
 </mapper>

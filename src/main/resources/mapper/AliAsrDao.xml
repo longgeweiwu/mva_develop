@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcc.mva.mapper.AliTransferMapper">
+
+    <insert id="generateAliBaseTable" >
+       insert into MVA_ALI_INTELLIGENT_ASR
+          (PID,
+           LOG_ID,
+           LEAV_WORD_TIME,
+           ANI,
+           LEAVEWORD_PATH,
+           VOICE_FILE_NAME,
+           CALLID,
+           FULL_PATH)
+          select sys_guid(),
+                 LOG_ID,
+                 LEAV_WORD_TIME,
+                 ANI,
+                 LEAVEWORD_PATH,
+                 VOICE_FILE_NAME,
+                 CALLID,
+                 FULL_PATH
+            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+           where not exists (select callid
+                    from MVA_ALI_INTELLIGENT_ASR asr
+                   where ivr.CALLID = asr.callid)
+	</insert>
+
+    <select id="queryAliPendingTopMapper" resultType="com.itcc.mva.entity.AliAsrEntity" parameterType="java.lang.Integer">
+        SELECT PID
+            , LOG_ID
+            , LEAV_WORD_TIME
+            , ANI
+            , LEAVEWORD_PATH
+            , VOICE_FILE_NAME
+            , CALLID
+            , FULL_PATH
+            , ASRFLAG
+            , TASKID
+            , ALI_RESULT
+            , INSERT_TIME
+            , ALIPARSE_STATUS
+            , ISSUBMIT
+         FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR
+        WHERE  ROWNUM &lt;= #{top}
+          AND ISSUBMIT IS NULL
+          AND FULL_PATH IS NOT NULL
+          AND ALI_RESULT IS NULL
+          AND CALLID IS NOT NULL
+          AND (ASRFLAG IS NULL OR ASRFLAG = 2 OR ASRFLAG = 3 OR ASRFLAG = 4)
+        ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
+    </select>
+
+    <select id="queryAliResultTopMapper" resultType="com.itcc.mva.entity.AliAsrEntity" parameterType="java.lang.Integer">
+        SELECT PID
+            , LOG_ID
+            , LEAV_WORD_TIME
+            , ANI
+            , LEAVEWORD_PATH
+            , VOICE_FILE_NAME
+            , CALLID
+            , FULL_PATH
+            , ASRFLAG
+            , TASKID
+            , ALI_RESULT
+            , INSERT_TIME
+            , ALIPARSE_STATUS
+            , ISSUBMIT
+         FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR
+        WHERE  ROWNUM &lt;= #{top}
+          AND ISSUBMIT IS NULL
+          AND TASKID IS NOT NULL
+          AND CALLID IS NOT NULL
+          AND ALIPARSE_STATUS IS NULL
+          AND ASRFLAG = 1
+        ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
+    </select>
+
+</mapper>

@@ -85,7 +85,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
             jsonObject.put("acceptItem","");//问题属地（行政区划码）这行为空
             jsonObject.put("regAppealContent",intelligentAsrEntity.getJsonparseResult());//主要述求详情
             //录音路径还有问题，需要注意
-            jsonObject.put("regRecordFileUri",Constant.RECORDURL+intelligentAsrEntity.getFullPath().split("/")[3]+"/"+intelligentAsrEntity.getVoiceFilename());//录音文件地址
+            jsonObject.put("regRecordFileUri",Constant.RECORDURL+intelligentAsrEntity.getFullPath().split("/")[3]+"/"+intelligentAsrEntity.getVoiceFileName());//录音文件地址
             Map<String, Object> validSign = GenSign.getValidSign();
             postparams.put("data", jsonObject.toJSONString());
             postparams.put("sign", validSign.get("sign"));

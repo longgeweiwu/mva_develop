@@ -24,8 +24,8 @@ public class IflyAsrJob {
     @Autowired
     private IQuarkCallbackService iQuarkCallbackService;
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @Scheduled(cron = "* 0/1 * * * ?")
+    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "40s", lockAtLeastFor ="40s")
     public void  generateBaseTable() {
         long start_generateBaseTable=System.currentTimeMillis();
         iQuarkCallbackService.generateIflyBaseTable();
@@ -34,7 +34,7 @@ public class IflyAsrJob {
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "pushToRmaIflyWebJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @SchedulerLock(name = "IflyPushToRmaWebJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void  pushToRmaIflyWeb() {
         long start_pushToRmaIflyWeb=System.currentTimeMillis();
         /**
@@ -49,14 +49,14 @@ public class IflyAsrJob {
             }
             logger.info(">>> 存在[IFLY录音转码]任务 。 结束时间 ["+new Date()+"]");
         }else{
-            logger.info(">>> 任务名称:pushToRmaIflyWebJob 暂时没有[IFLY录音转码]任务。");
+            logger.info(">>> 任务名称:IflyPushToRmaWebJob 暂时没有[IFLY录音转码]任务。");
         }
         long end_pushToRmaIflyWeb=System.currentTimeMillis()-start_pushToRmaIflyWeb;
-        logger.info(">>> 任务名称:pushToRmaIflyWebJob(科大离线转码) 总执行时间为: ["+ end_pushToRmaIflyWeb+" ms]");
+        logger.info(">>> 任务名称:IflyPushToRmaWebJob(科大离线转码) 总执行时间为: ["+ end_pushToRmaIflyWeb+" ms]");
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "PushToIflyAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @SchedulerLock(name = "IflyPushToAudioJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
     public void pushToIflyAudio() {
         long start_pushToIflyAudio=System.currentTimeMillis();
         /**
@@ -71,10 +71,10 @@ public class IflyAsrJob {
             }
             logger.info(">>> 存在[IFLY解析]任务 。 结束时间 ["+new Date()+"]");
         }else{
-            logger.info(">>> 任务名称:AsrJsonParseJob 暂时没有[IFLY解析]任务。");
+            logger.info(">>> 任务名称:IflyPushToAudioJob 暂时没有[IFLY解析]任务。");
         }
         long end_pushToIflyAudio=System.currentTimeMillis()-start_pushToIflyAudio;
-        logger.info(">>> 任务名称:PushToIflyAudioJob(科大离线解析) 总执行时间为: ["+ end_pushToIflyAudio+" ms]");
+        logger.info(">>> 任务名称:IflyPushToAudioJob(科大离线解析) 总执行时间为: ["+ end_pushToIflyAudio+" ms]");
 
     }
 

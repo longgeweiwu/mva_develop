@@ -45,7 +45,7 @@ public class Constant {
     public static final int SEND_SUCCESS = 1; //部委成功
     public static final int SEND_FAIL = 2; //部委接口问题
 
-    public static final int SEND_NOTEXIST = 3; //部委返回errorcode=0
+    public static final int SEND_NOTEXIST = 3; //部委返回errorcode=0 送的参数有问题，请查证
     public static final int ID_SEND_FAIL = 4; //身份号找不到归属地，请查验
     public static final int ID_ILLEGAL_FAIL = 5; //身份号不合法
     public static final int ICD_INFO_FAIL = 6; //话务平台成功标志不是1 主要看ICD数据库

@@ -43,29 +43,29 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     @Transactional(rollbackFor = Exception.class)
     public void jsonSigle(IntelligentAsrEntity intelligentAsrEntity) {
         //生产path要修改！！！
-        String dirPath=intelligentAsrEntity.getOutputFilepath().replace("file:///home/data/", "z:\\leaveword\\jt\\");
-        String path = dirPath+"\\"+ Tools.findTrueFname(dirPath,Tools.getSplitMaxValue(intelligentAsrEntity.getOutputFilename(),"\\_"));
         try {
+            String dirPath = intelligentAsrEntity.getOutputFilepath().replace("file:///home/data/", "z:\\leaveword\\jt\\");
+            String path = dirPath + "\\" + Tools.findTrueFname(dirPath, Tools.getSplitMaxValue(intelligentAsrEntity.getOutputFilename(), "\\_"));
             StringBuffer bfText = new StringBuffer();
             String readJsonFile = JsonTools.readJsonFile(path);
             JSONObject jsonObj = JSON.parseObject(readJsonFile);
-            int spit=0;
+            int spit = 0;
             try {
-                JSONArray resultArr=jsonObj.getJSONObject("result").getJSONArray("sentence_list");
-                for(int i=0;i<resultArr.size();i++) {
-                    bfText.append(((JSONObject)resultArr.get(i)).get("text"));
+                JSONArray resultArr = jsonObj.getJSONObject("result").getJSONArray("sentence_list");
+                for (int i = 0; i < resultArr.size(); i++) {
+                    bfText.append(((JSONObject) resultArr.get(i)).get("text"));
                     if (++spit < resultArr.size()) {
                         bfText.append(",");
                     }
                 }
-            }catch (Exception e) {
-                logger.error(">>> [解析]出错，请检查文件 ："+ path);
+            } catch (Exception e) {
+                logger.error(">>> [解析]出错，请检查文件 ：" + path);
             }
             IntelligentAsrEntity result = new IntelligentAsrEntity();
             result.setJsonparseStatus(Constant.ASRPARSER_SUCCESS);
             result.setJsonparseResult(bfText.toString());
             intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
-        }catch(Exception e){
+        } catch (Exception e) {
             IntelligentAsrEntity result = new IntelligentAsrEntity();
             result.setJsonparseStatus(Constant.ASRPARSER_FAIL);
             intelligentAsrMapper.update(result, new QueryWrapper<IntelligentAsrEntity>().eq("CALLID", intelligentAsrEntity.getCallid()));
@@ -74,16 +74,16 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
 
     @Override
     public List<IntelligentAsrEntity> queryWaitingSendJt(int num) {
-            return asrJsonParseMapper.queryWaitingSendJt(num);
+        return asrJsonParseMapper.queryWaitingSendJt(num);
     }
 
     @Override
     public List<QuarkCallbackEntity> queryWaitingSendKd(int num) {
-            return asrJsonParseMapper.queryWaitingSendKd(num);
+        return asrJsonParseMapper.queryWaitingSendKd(num);
     }
 
     @Override
     public List<AliAsrEntity> queryWaitingSendAl(int num) {
-            return asrJsonParseMapper.queryWaitingSendAl(num);
+        return asrJsonParseMapper.queryWaitingSendAl(num);
     }
 }

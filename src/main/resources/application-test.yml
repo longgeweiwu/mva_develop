@@ -78,7 +78,6 @@ mybatis-plus:
 
 server:
   port: 52113
-
 shedlock:
   defaults:
     lock-at-most-for: 1m

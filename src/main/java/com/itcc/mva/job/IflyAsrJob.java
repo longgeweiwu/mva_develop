@@ -36,6 +36,8 @@ public class IflyAsrJob {
             iQuarkCallbackService.generateIflyBaseTable();
             long end_generateBaseTable = System.currentTimeMillis() - start_generateBaseTable;
             logger.info(">>> 任务名称:IflyBaseTableJob(科大生成科大基表) 总执行时间为: [" + end_generateBaseTable + " ms]");
+        }else{
+            logger.info(">>> 任务名称:IflyBaseTableJob(科大生成科大基表) 停止工作");
         }
     }
 

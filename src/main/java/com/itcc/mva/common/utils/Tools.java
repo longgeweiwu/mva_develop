@@ -147,11 +147,7 @@ public class Tools {
         map.put("rma_procer_action", "convert");
         map.put("action", "rma_procer");
         String resp = HttpUtil.get(serverUrl, map);
-        if(null != resp){
-            System.out.println("添加格式转换完成:taskId：" + taskId + "响应结果:" + resp);
-        }else{
-            System.out.println("添加格式转换失败:网络原因.");
-        }
+        System.out.println("添加格式转换完成:taskId：" + taskId + "响应结果:" + resp);
     }
 
     /**

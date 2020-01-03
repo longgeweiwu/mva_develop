@@ -35,7 +35,7 @@ public class AliAsrJob {
 
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "PushToAliAudioJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+    @SchedulerLock(name = "AliPushToAudioJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushToAliAudio() {
         long start_pushToAliAudio = System.currentTimeMillis();
         /**
@@ -58,7 +58,7 @@ public class AliAsrJob {
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "queryAndSetAliAudio", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+    @SchedulerLock(name = "AliQueryAndSetAudio", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void queryAliAudio() {
         long start_queryAliAudio = System.currentTimeMillis();
         /**

@@ -24,8 +24,8 @@ public class IflyAsrJob {
     @Autowired
     private IQuarkCallbackService iQuarkCallbackService;
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @Scheduled(cron = "* 0/1 * * * ?")
+    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "40s", lockAtLeastFor ="40s")
     public void  generateBaseTable() {
         long start_generateBaseTable=System.currentTimeMillis();
         iQuarkCallbackService.generateIflyBaseTable();

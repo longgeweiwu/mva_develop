@@ -24,8 +24,8 @@ public class IntelligentAsrJob {
      * @Author LCL
      */
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "JtBaseJob", lockAtMostFor = "1m", lockAtLeastFor ="1m")
+    @Scheduled(cron = "* 0/1 * * * ?")
+    @SchedulerLock(name = "JtBaseJob", lockAtMostFor = "40s", lockAtLeastFor ="40s")
     public void generateBaseTable() {
         long start_IntelligentBaseJob=System.currentTimeMillis();
         intelligentTransferService.generateBaseTable();

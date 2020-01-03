@@ -16,7 +16,7 @@ public class IntelligentAsrEntity {
     @TableField(value = "LOG_ID")
     private String logId;
     @TableField(value = "LEAV_WORD_TIME")
-    private String leavWorkTime;
+    private String leavWordTime;
     @TableField(value = "ANI")
     private String ani;
     @TableField(value = "LEAVEWORD_PATH")

@@ -34,7 +34,7 @@ public class Tools {
             }
             return trueFname.substring(trueFname.lastIndexOf("\\") + 1, trueFname.length());
         } else {
-            return null;
+            return trueFname;
         }
     }
 

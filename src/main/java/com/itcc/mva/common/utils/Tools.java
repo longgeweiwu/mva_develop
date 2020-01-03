@@ -25,17 +25,13 @@ public class Tools {
         String trueFname = "";
         File file = new File(path);
         File[] fileList = file.listFiles();
-        if (null != fileList) {
-            for (int i = 0; i < fileList.length; i++) {
-                if (fileList[i].toString().contains(fname)) {
-                    trueFname = fileList[i].toString();
-                    break;
-                }
+        for (int i = 0; i < fileList.length; i++) {
+            if (fileList[i].toString().contains(fname)) {
+                trueFname = fileList[i].toString();
+                break;
             }
-            return trueFname.substring(trueFname.lastIndexOf("\\") + 1, trueFname.length());
-        } else {
-            return trueFname;
         }
+        return trueFname.substring(trueFname.lastIndexOf("\\") + 1, trueFname.length());
     }
 
     /**

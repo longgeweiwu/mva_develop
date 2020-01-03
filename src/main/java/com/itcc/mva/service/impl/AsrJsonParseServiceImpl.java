@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.JsonTools;
 import com.itcc.mva.common.utils.Tools;
+import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 import com.itcc.mva.mapper.AsrJsonParseMapper;
@@ -15,7 +16,6 @@ import com.itcc.mva.service.IAsrJsonParseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,7 +83,7 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     }
 
     @Override
-    public List<IntelligentAsrEntity> queryWaitingSendAl(int num) {
+    public List<AliAsrEntity> queryWaitingSendAl(int num) {
             return asrJsonParseMapper.queryWaitingSendAl(num);
     }
 }

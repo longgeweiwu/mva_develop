@@ -1,5 +1,6 @@
 package com.itcc.mva.service;
 
+import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 
@@ -39,5 +40,5 @@ public interface IAsrJsonParseService {
      * @param num AL查询待发送多少条
      * @return
      */
-    List<IntelligentAsrEntity> queryWaitingSendAl(int num);
+    List<AliAsrEntity> queryWaitingSendAl(int num);
 }

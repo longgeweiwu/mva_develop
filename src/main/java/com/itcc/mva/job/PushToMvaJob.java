@@ -1,6 +1,7 @@
 package com.itcc.mva.job;
 
 import com.itcc.mva.common.utils.Constant;
+import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 import com.itcc.mva.service.IAsrJsonParseService;
@@ -69,7 +70,17 @@ public class PushToMvaJob {
             }
         }
         if(altype==Constant.ENGINETYPE_AL){
-            System.out.println("阿里引擎");
+            logger.info(">>> 正在使用阿里引擎");
+            List<AliAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSendAl(Constant.NO_SENDER);
+            if(0 != waitingSend.size()) {
+                logger.info(">>> 存在[AL推送]任务 。 开始时间 ["+new Date()+"]");
+                for (int i = 0; i < waitingSend.size(); i++) {
+                    iPushToMvaService.singleSendToMvaServiceAl(waitingSend.get(i));
+                }
+                logger.info(">>> 存在[AL推送]任务 。 结束时间 ["+new Date()+"]");
+            }else{
+                logger.info(">>> 任务名称:PushToMvaJob 暂时没有[AL推送]任务。");
+            }
         }
         long end_PushToMvaJob=System.currentTimeMillis()-start_PushToMvaJob;
         logger.info(">>> 任务名称:PushToMvaJob(推部委接口) 总执行时间为: ["+ end_PushToMvaJob+" ms]");

@@ -21,7 +21,7 @@ public class QuarkCallbackEntity {
     @TableField(value = "ANI")
     private String ani;
     @TableField(value = "LEAVEWORD_PATH")
-    private String leavewordpath;
+    private String leavewordPath;
     @TableField(value = "VOICE_FILE_NAME")
     private String voiceFileName;
     @TableField(value = "CALLID")

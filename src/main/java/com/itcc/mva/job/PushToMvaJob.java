@@ -38,7 +38,7 @@ public class PushToMvaJob {
     private IPushToMvaService iPushToMvaService;
 
     @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "PushToMvaJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+    @SchedulerLock(name = "MvaPushToJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushInfo() {
         long start_PushToMvaJob = System.currentTimeMillis();
         logger.info(jttype == 1 ? "[>>> JT引擎 开启状态]" : "[>>> JT引擎 关闭状态]" + "  " + (kdtype == 1 ? "[>>> KD引擎 开启状态]" : "[>>> KD引擎 关闭状态]") + "  " + (altype == 1 ? "[>>> AL引擎 开启状态]" : "[>>> AL引擎 关闭状态]"));
@@ -52,7 +52,7 @@ public class PushToMvaJob {
                 }
                 logger.info(">>> 存在[JT推送]任务 。 结束时间 [" + new Date() + "]");
             } else {
-                logger.info(">>> 任务名称:PushToMvaJob 暂时没有[JT推送]任务。");
+                logger.info(">>> 任务名称:MvaPushToJob 暂时没有[JT推送]任务。");
             }
         }
         if (kdtype == Constant.ENGINETYPE_KD) {
@@ -65,7 +65,7 @@ public class PushToMvaJob {
                 }
                 logger.info(">>> 存在[KD推送]任务 。 结束时间 [" + new Date() + "]");
             } else {
-                logger.info(">>> 任务名称:PushToMvaJob 暂时没有[KD推送]任务。");
+                logger.info(">>> 任务名称:MvaPushToJob 暂时没有[KD推送]任务。");
             }
         }
         if (altype == Constant.ENGINETYPE_AL) {
@@ -78,10 +78,10 @@ public class PushToMvaJob {
                 }
                 logger.info(">>> 存在[AL推送]任务 。 结束时间 [" + new Date() + "]");
             } else {
-                logger.info(">>> 任务名称:PushToMvaJob 暂时没有[AL推送]任务。");
+                logger.info(">>> 任务名称:MvaPushToJob 暂时没有[AL推送]任务。");
             }
         }
         long end_PushToMvaJob = System.currentTimeMillis() - start_PushToMvaJob;
-        logger.info(">>> 任务名称:PushToMvaJob(推部委接口) 总执行时间为: [" + end_PushToMvaJob + " ms]");
+        logger.info(">>> 任务名称:MvaPushToJob(推部委接口) 总执行时间为: [" + end_PushToMvaJob + " ms]");
     }
 }

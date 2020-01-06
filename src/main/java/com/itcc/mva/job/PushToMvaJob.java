@@ -43,7 +43,7 @@ public class PushToMvaJob {
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "MvaPushToJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushInfo() {
-        long start_PushToMvaJob = System.currentTimeMillis();
+        long startPushToMvaJob = System.currentTimeMillis();
         logger.info(jttype == 1 ? "[>>> JT引擎 开启状态]" : "[>>> JT引擎 关闭状态]" + "  " + (kdtype == 1 ? "[>>> KD引擎 开启状态]" : "[>>> KD引擎 关闭状态]") + "  " + (altype == 1 ? "[>>> AL引擎 开启状态]" : "[>>> AL引擎 关闭状态]"));
         if (jttype == Constant.ENGINETYPE_JT) {
             logger.info(">>> 正在使用JT引擎");
@@ -84,7 +84,7 @@ public class PushToMvaJob {
                 logger.info(">>> 任务名称:MvaPushToJob 暂时没有[AL推送]任务。");
             }
         }
-        long end_PushToMvaJob = System.currentTimeMillis() - start_PushToMvaJob;
-        logger.info(">>> 任务名称:MvaPushToJob(推部委接口) 总执行时间为: [" + end_PushToMvaJob + " ms]");
+        long endPushToMvaJob = System.currentTimeMillis() - startPushToMvaJob;
+        logger.info(">>> 任务名称:MvaPushToJob(推部委接口) 总执行时间为: [" + endPushToMvaJob + " ms]");
     }
 }

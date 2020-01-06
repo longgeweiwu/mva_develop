@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Properties;
-
+/**
+ * @author whoami
+ */
 @Configuration
 @EnableTransactionManagement
 @ComponentScan

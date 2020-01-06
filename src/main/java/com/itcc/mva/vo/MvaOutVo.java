@@ -3,7 +3,9 @@ package com.itcc.mva.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+/**
+ * @author whoami
+ */
 @Data
 @ApiModel(value = "Mva信息集合")
 public class MvaOutVo {

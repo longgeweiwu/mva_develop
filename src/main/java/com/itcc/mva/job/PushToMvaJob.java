@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author whoami
+ */
 @Component
 public class PushToMvaJob {
 

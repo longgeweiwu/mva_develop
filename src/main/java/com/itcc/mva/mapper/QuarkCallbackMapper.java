@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 
 import java.util.List;
-
+/**
+ * @author whoami
+ */
 public interface QuarkCallbackMapper extends BaseMapper<QuarkCallbackEntity> {
 
     /**

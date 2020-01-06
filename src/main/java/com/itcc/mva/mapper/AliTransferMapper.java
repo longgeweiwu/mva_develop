@@ -5,7 +5,9 @@ import com.itcc.mva.entity.AliAsrEntity;
 
 import java.util.List;
 
-
+/**
+ * @author whoami
+ */
 public interface AliTransferMapper extends BaseMapper<AliAsrEntity> {
     void generateAliBaseTable();
 

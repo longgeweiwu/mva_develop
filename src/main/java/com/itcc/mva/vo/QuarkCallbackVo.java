@@ -1,7 +1,9 @@
 package com.itcc.mva.vo;
 
 import java.util.List;
-
+/**
+ * @author whoami
+ */
 public class QuarkCallbackVo {
 
     private String aid;

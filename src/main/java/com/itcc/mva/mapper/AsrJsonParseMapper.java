@@ -5,7 +5,9 @@ import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 
 import java.util.List;
-
+/**
+ * @author whoami
+ */
 public interface AsrJsonParseMapper {
     /**
      *

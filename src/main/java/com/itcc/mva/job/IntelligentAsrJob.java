@@ -35,11 +35,10 @@ public class IntelligentAsrJob {
     @SchedulerLock(name = "JtBaseJob", lockAtMostFor = "40s", lockAtLeastFor = "40s")
     public void generateBaseTable() {
         if (Constant.JOB_JT == jtjob) {
-            long start_IntelligentBaseJob = System.currentTimeMillis();
+            long startIntelligentBaseJob = System.currentTimeMillis();
             intelligentTransferService.generateBaseTable();
-            //logger.info("IntelligentAsrJob-------------generateBaseTable调用了***************************");
-            long end_IntelligentBaseJob = System.currentTimeMillis() - start_IntelligentBaseJob;
-            logger.info(">>> 任务名称:JtBaseJob(捷通基本生成) 总执行时间为: [" + end_IntelligentBaseJob + " ms]");
+            long endIntelligentBaseJob = System.currentTimeMillis() - startIntelligentBaseJob;
+            logger.info(">>> 任务名称:JtBaseJob(捷通基本生成) 总执行时间为: [" + endIntelligentBaseJob + " ms]");
         }else{
             logger.info(">>> 任务名称:JtBaseJob(捷通基本生成) 停止工作");
         }
@@ -54,10 +53,9 @@ public class IntelligentAsrJob {
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "JtAsrJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void asr() {
-        long start_IntelligentAsrJob = System.currentTimeMillis();
+        long startIntelligentAsrJob = System.currentTimeMillis();
         intelligentTransferService.asr();
-        //log.info("IntelligentAsrJob-------------asr调用了***************************");
-        long end_IntelligentAsrJob = System.currentTimeMillis() - start_IntelligentAsrJob;
-        logger.info(">>> 任务名称:JtAsrJob(捷通离线解析) 总执行时间为: [" + end_IntelligentAsrJob + " ms]");
+        long endIntelligentAsrJob = System.currentTimeMillis() - startIntelligentAsrJob;
+        logger.info(">>> 任务名称:JtAsrJob(捷通离线解析) 总执行时间为: [" + endIntelligentAsrJob + " ms]");
     }
 }

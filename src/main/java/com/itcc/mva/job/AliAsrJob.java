@@ -32,10 +32,10 @@ public class AliAsrJob {
     @SchedulerLock(name = "AliBaseTableJob", lockAtMostFor = "40s", lockAtLeastFor = "40s")
     public void generateBaseTable() {
         if (Constant.JOB_AL == aljob) {
-            long start_generateBaseTable = System.currentTimeMillis();
+            long startGenerateBaseTable = System.currentTimeMillis();
             iAliTransferService.generateAliBaseTable();
-            long end_generateBaseTable = System.currentTimeMillis() - start_generateBaseTable;
-            logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 总执行时间为: [" + end_generateBaseTable + " ms]");
+            long endGenerateBaseTable = System.currentTimeMillis() - startGenerateBaseTable;
+            logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 总执行时间为: [" + endGenerateBaseTable + " ms]");
         }else{
             logger.info(">>> 任务名称:AliBaseTableJob(阿里生成科大基表) 停止工作");
         }
@@ -45,7 +45,7 @@ public class AliAsrJob {
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "AliPushToAudioJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void pushToAliAudio() {
-        long start_pushToAliAudio = System.currentTimeMillis();
+        long startPushToAliAudio = System.currentTimeMillis();
         /**
          * 先检查未解析过的ALI列表
          */
@@ -60,15 +60,15 @@ public class AliAsrJob {
         } else {
             logger.info(">>> 任务名称:PushToAliAudioJob 暂时没有[ALI解析]任务。");
         }
-        long end_pushToAliAudio = System.currentTimeMillis() - start_pushToAliAudio;
-        logger.info(">>> 任务名称:PushToAliAudioJob(阿里离线解析) 总执行时间为: [" + end_pushToAliAudio + " ms]");
+        long endPushToAliAudio = System.currentTimeMillis() - startPushToAliAudio;
+        logger.info(">>> 任务名称:PushToAliAudioJob(阿里离线解析) 总执行时间为: [" + endPushToAliAudio + " ms]");
 
     }
 
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "AliQueryAndSetAudio", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void queryAliAudio() {
-        long start_queryAliAudio = System.currentTimeMillis();
+        long startQueryAliAudio = System.currentTimeMillis();
         /**
          * 查询阿里解析结果列表
          */
@@ -83,8 +83,8 @@ public class AliAsrJob {
         } else {
             logger.info(">>> 任务名称:queryAndSetAliAudio 暂时没有[ALI查询并更新基表]任务。");
         }
-        long end_queryAliAudio = System.currentTimeMillis() - start_queryAliAudio;
-        logger.info(">>> 任务名称:queryAndSetAliAudio(阿里查询并更新基表离线解析) 总执行时间为: [" + end_queryAliAudio + " ms]");
+        long endQueryAliAudio = System.currentTimeMillis() - startQueryAliAudio;
+        logger.info(">>> 任务名称:queryAndSetAliAudio(阿里查询并更新基表离线解析) 总执行时间为: [" + endQueryAliAudio + " ms]");
     }
 
 }

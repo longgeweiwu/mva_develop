@@ -26,7 +26,7 @@ public class AsrJsonParseJob {
     @Scheduled(cron = "* 0/2 * * * ?")
     @SchedulerLock(name = "JtAsrParseResultJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void runParse() {
-        long start_runParse = System.currentTimeMillis();
+        long startRunParse = System.currentTimeMillis();
         List<IntelligentAsrEntity> asrEntityList = iAsrJsonParseService.queryPendingTop(Constant.NO_PARSER);
         if (0 != asrEntityList.size()) {
             logger.info(">>> 存在[解析]任务 。 开始时间 [" + new Date() + "]");
@@ -37,7 +37,7 @@ public class AsrJsonParseJob {
         } else {
             logger.info(">>> 任务名称:JtAsrParseResultJob 暂时没有[解析]任务。");
         }
-        long end_runParse = System.currentTimeMillis() - start_runParse;
-        logger.info(">>> 任务名称:JtAsrParseResultJob(捷通JSON文件解析) 总执行时间为: [" + end_runParse + " ms]");
+        long endRunParse = System.currentTimeMillis() - startRunParse;
+        logger.info(">>> 任务名称:JtAsrParseResultJob(捷通JSON文件解析) 总执行时间为: [" + endRunParse + " ms]");
     }
 }

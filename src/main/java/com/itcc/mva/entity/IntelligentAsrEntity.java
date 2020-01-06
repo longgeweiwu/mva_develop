@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
-
+/**
+ * @author whoami
+ */
 @Data
 @TableName(value="T_QC_INTELLIGENT_ASR")
 public class IntelligentAsrEntity {

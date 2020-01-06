@@ -3,9 +3,9 @@ package com.itcc.mva.rest;
 import com.itcc.mva.service.IPushToMvaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
-
+/**
+ * @author whoami
+ */
 @RestController
 @RequestMapping("/verify")
 public class ApiMvaController {

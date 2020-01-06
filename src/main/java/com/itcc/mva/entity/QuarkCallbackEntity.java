@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
-
+/**
+ * @author whoami
+ */
 @Data
 @TableName(value="MVA_IFLY_INTELLIGENT_ASR")
 public class QuarkCallbackEntity {

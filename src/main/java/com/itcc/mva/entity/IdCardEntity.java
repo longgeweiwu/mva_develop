@@ -6,8 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.util.Date;
-
+/**
+ * @author whoami
+ */
 @Data
 @TableName(value="T_ID_CARD")
 public class IdCardEntity {

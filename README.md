@@ -46,7 +46,7 @@ Springboot(2.2.2)+Mybatis-Plus(3.0-RC3)+shedLock(4.0.1)
 
  * 2、 本项目需要引入本地jar包   
    - 两种方式：  
-      - 本地安装：   
+      - ~~本地安装~~：   
        ``` mvn install:install-file -DgroupId=com.inspur.est -DartifactId=signsec -Dversion=1.1.6 -Dpackaging=jar -Dfile=D:\excLib\sign-security-1.1.6.jar  ```  
       - 手动安装：  
       ``` 登陆nexus --> Browse --> itcc-release --> upload component --> Group ID:com.inspur.est Artifact ID:signsec Version:1.1.6 -->勾选 Generate a POM file with these coordinates -->Upload``` 

@@ -64,7 +64,7 @@ public class TxAsrJob {
     public void pushToTxAudio() {
         long startPushToTxAudio = System.currentTimeMillis();
         /**
-         * 先检查未解析过的ALI列表
+         * 先检查未解析过的Tx列表
          */
         List<TxAsrEntity> asrEntityList = iTxService.queryTxPendingTop(Constant.NO_PARSER_TX);
 
@@ -80,5 +80,27 @@ public class TxAsrJob {
         long endPushToTxAudio = System.currentTimeMillis() - startPushToTxAudio;
         logger.info(">>> 任务名称:TxPushToAudioJob(腾讯离线解析) 总执行时间为: [" + endPushToTxAudio + " ms]");
 
+    }
+
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "TxQueryAndSetAudio", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+    public void queryTxAudio() {
+        long startQueryTxAudio = System.currentTimeMillis();
+        /**
+         * 查询腾讯解析结果列表
+         */
+        List<TxAsrEntity> asrEntityList = iTxService.queryTxResultTop(Constant.NO_PARSER_TX);
+
+        if (0 != asrEntityList.size()) {
+            logger.info(">>> 存在[Tx查询并更新基表]任务 。 开始时间 [" + new Date() + "]");
+            for (int i = 0; i < asrEntityList.size(); i++) {
+                iTxService.queryAndSetTxBase(asrEntityList.get(i));
+            }
+            logger.info(">>> 存在[Tx查询并更新基表]任务 。 结束时间 [" + new Date() + "]");
+        } else {
+            logger.info(">>> 任务名称:queryAndSetTxAudio 暂时没有[Tx查询并更新基表]任务。");
+        }
+        long endQueryTxAudio = System.currentTimeMillis() - startQueryTxAudio;
+        logger.info(">>> 任务名称:queryAndSetTxAudio(阿里查询并更新基表离线解析) 总执行时间为: [" + endQueryTxAudio + " ms]");
     }
 }

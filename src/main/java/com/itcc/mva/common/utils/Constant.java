@@ -106,5 +106,8 @@ public class Constant {
     public static final String SECRETID = "AKIDNbdS3QOWFnYEh258sSt9HCuPhleJt6B3";
     public static final String SECRETKEY = "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx";
     public static final String TX_AUDIL_URL = "http://39.105.47.147:52111/";
+    public static final int ASRPARSER_TX_SUCCESS = 1; //腾讯解析成功
+    public static final int ASRPARSER_TX_FAIL = 2; //腾讯解析失败
+    public static final int ASRRESULT_TX_FAIL = 3; //腾讯解析失败
 
 }

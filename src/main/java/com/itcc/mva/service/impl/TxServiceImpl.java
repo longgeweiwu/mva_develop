@@ -1,5 +1,6 @@
 package com.itcc.mva.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.entity.TxAsrEntity;
@@ -8,6 +9,8 @@ import com.itcc.mva.service.ITxService;
 import com.tencentcloudapi.asr.v20190614.AsrClient;
 import com.tencentcloudapi.asr.v20190614.models.CreateRecTaskRequest;
 import com.tencentcloudapi.asr.v20190614.models.CreateRecTaskResponse;
+import com.tencentcloudapi.asr.v20190614.models.DescribeTaskStatusRequest;
+import com.tencentcloudapi.asr.v20190614.models.DescribeTaskStatusResponse;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -87,8 +90,72 @@ public class TxServiceImpl implements ITxService {
             CreateRecTaskResponse resp = client.CreateRecTask(req);
 
             System.out.println(CreateRecTaskRequest.toJsonString(resp));
+
+            JSONObject result = JSONObject.parseObject(CreateRecTaskRequest.toJsonString(resp));
+
+            if(result.containsKey("Data") && result.getJSONObject("Data").containsKey("TaskId")){
+                TxAsrEntity asrEntity = new TxAsrEntity();
+                asrEntity.setAsrflag(Constant.ASRPARSER_TX_SUCCESS);
+                asrEntity.setTaskid(result.getJSONObject("Data").getString("TaskId"));
+                txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+            }else{
+                TxAsrEntity asrEntity = new TxAsrEntity();
+                asrEntity.setAsrflag(Constant.ASRRESULT_TX_FAIL);
+                txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+            }
         } catch (TencentCloudSDKException e) {
             System.out.println(e.toString());
+            TxAsrEntity asrEntity = new TxAsrEntity();
+            asrEntity.setAsrflag(Constant.ASRPARSER_TX_FAIL);
+            txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+        }
+    }
+
+    @Override
+    public List<TxAsrEntity> queryTxResultTop(int top) {
+        return txMapper.queryTxResultTop(top);
+    }
+
+    @Override
+    public void queryAndSetTxBase(TxAsrEntity txAsrEntity) {
+        try{
+
+            Credential cred = new Credential(Constant.SECRETID,Constant.SECRETKEY);
+
+            HttpProfile httpProfile = new HttpProfile();
+            httpProfile.setEndpoint("asr.ap-beijing.tencentcloudapi.com");
+
+            ClientProfile clientProfile = new ClientProfile();
+            clientProfile.setHttpProfile(httpProfile);
+
+            AsrClient client = new AsrClient(cred, "ap-beijing", clientProfile);
+
+            String params = "{\"TaskId\":"+txAsrEntity.getTaskid()+"}";//623390897//623385178//623394120
+            DescribeTaskStatusRequest req = DescribeTaskStatusRequest.fromJsonString(params, DescribeTaskStatusRequest.class);
+
+            DescribeTaskStatusResponse resp = client.DescribeTaskStatus(req);
+
+            System.out.println(DescribeTaskStatusRequest.toJsonString(resp));
+
+            JSONObject result = JSONObject.parseObject(DescribeTaskStatusRequest.toJsonString(resp));
+
+            if(result.containsKey("Data") && result.getJSONObject("Data").containsKey("Status") && 2 == result.getJSONObject("Data").getIntValue("Status")){
+
+                TxAsrEntity asrEntity = new TxAsrEntity();
+                asrEntity.setInsertTime(new Date());
+                asrEntity.setTxResult(result.getJSONObject("Data").getString("Result").replaceAll("\\[.*\\]", "").replaceAll("\n", "").replaceAll(" ", ""));
+                txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+            }else{
+                TxAsrEntity asrEntity = new TxAsrEntity();
+                asrEntity.setInsertTime(new Date());
+                txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+            }
+
+        } catch (TencentCloudSDKException e) {
+            System.out.println(e.toString());
+            TxAsrEntity asrEntity = new TxAsrEntity();
+            asrEntity.setInsertTime(new Date());
+            txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
         }
     }
 

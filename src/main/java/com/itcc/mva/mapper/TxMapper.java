@@ -24,4 +24,11 @@ public interface TxMapper extends BaseMapper<TxAsrEntity> {
      * @return
      */
     List<TxAsrEntity> queryTxPendingTop(int top);
+
+    /**
+     * 查询离线转写
+     * @param top
+     * @return
+     */
+    List<TxAsrEntity> queryTxResultTop(int top);
 }

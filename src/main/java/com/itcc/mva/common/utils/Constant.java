@@ -82,6 +82,7 @@ public class Constant {
     public static final String KEY_APPKEY = "appkey";
     public static final String KEY_TOKEN = "token";
     public static final String KEY_FILE_LINK = "file_link";
+    public static final String VOCABULARY_ID = "096d421ab4e74266b9ecd3c28e27e936";
 
     public static final String KEY_TASK_ID = "task_id";
     public static final String STATUS_SUCCESS = "SUCCESS";

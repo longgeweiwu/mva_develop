@@ -7,10 +7,7 @@ import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.common.utils.GenSign;
 import com.itcc.mva.common.utils.HttpUtil;
 import com.itcc.mva.common.utils.Tools;
-import com.itcc.mva.entity.AliAsrEntity;
-import com.itcc.mva.entity.IdCardEntity;
-import com.itcc.mva.entity.IntelligentAsrEntity;
-import com.itcc.mva.entity.QuarkCallbackEntity;
+import com.itcc.mva.entity.*;
 import com.itcc.mva.mapper.*;
 import com.itcc.mva.service.IPushToMvaService;
 import com.itcc.mva.vo.MvaOutVo;
@@ -42,6 +39,9 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
     @Autowired
     private AliTransferMapper aliTransferMapper;
+
+    @Autowired
+    private TxMapper txMapper;
 
     @Override
     public void singleSendToMvaServiceJt(IntelligentAsrEntity intelligentAsrEntity) {
@@ -349,9 +349,115 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
     }
 
     @Override
+    public void singleSendToMvaServiceTx(TxAsrEntity txAsrEntity) {
+        /**
+         * 查询callid对应信息存储
+         */
+        MvaOutVo mvaOutVo = pushToMvaMapper.queryByCallid(txAsrEntity.getCallid());
+        if (null != mvaOutVo) {
+            if (Tools.isLegal(mvaOutVo.getId())) {
+                Map<String, Object> headers = new HashMap<String, Object>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+                Map<String, Object> postparams = GenSign.getValidSign();
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("extIdcard", mvaOutVo.getId());//身份证号码
+                /**
+                 * 一级主要述求
+                 * 1：退役安置类
+                 * 2：优待抚恤类
+                 * 3：就业创业类
+                 * 4：褒扬纪念类
+                 * 5：军休服务类
+                 * 6：帮扶援助类
+                 * 7：党员管理类
+                 * 8：咨询建议类
+                 * 9：其他
+                 *
+                 * 传 数字
+                 */
+                jsonObject.put("extMobileOne", mvaOutVo.getPhoneno());
+                jsonObject.put("regMainAppealOne", mvaOutVo.getQuestionType());
+                String mvaAdd = getJudgeMvaId(mvaOutVo.getId());
+                if (null != mvaAdd) {
+                    jsonObject.put("extDomicileAddress", mvaAdd);//户籍地址
+                } else {
+                    String code = mvaOutVo.getId().substring(0, 6);
+                    IdCardEntity fCode = idCardMapper.selectOne(new QueryWrapper<IdCardEntity>().eq("F_CODE", code));
+                    if (null != fCode) {
+                        jsonObject.put("extDomicileAddress", fCode.getFProvince() + fCode.getFCity() + fCode.getFArea());//户籍地址
+                    }
+                }
+                if (jsonObject.containsKey("extDomicileAddress")) {
+                    jsonObject.put("acceptItem", "");//问题属地（行政区划码）这行为空
+                    jsonObject.put("regAppealContent", txAsrEntity.getTxResult());//主要述求详情
+                    //录音路径还有问题，需要注意
+                    jsonObject.put("regRecordFileUri", Constant.RECORDURL + txAsrEntity.getFullPath().split("/")[3] + "/" + txAsrEntity.getVoiceFileName());//录音文件地址
+                    Map<String, Object> validSign = GenSign.getValidSign();
+                    postparams.put("data", jsonObject.toJSONString());
+                    postparams.put("sign", validSign.get("sign"));
+                    postparams.put("t", validSign.get("t"));
+                    logger.info(">>> 推送准备 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));
+
+                    String resultPost = HttpUtil.httpPost(Constant.MVAURL, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+                    /**
+                     * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
+                     */
+                    if (null != resultPost && Tools.isJSONValid(resultPost)) {
+                        JSONObject httpResult = JSON.parseObject(resultPost);
+                        if (1 == httpResult.getInteger("code")) {
+                            logger.info(">>> 推送成功 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));
+                            //只有等于1 的时候说明推送成功
+                            TxAsrEntity result = new TxAsrEntity();
+                            result.setIssubmit(Constant.SEND_SUCCESS);
+                            txMapper.update(result, new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+                        } else {
+                            logger.info(">>> 推送成功 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t") + "接口返回参数为： " + httpResult);
+                            //只有等于1 的时候说明推送成功
+                            TxAsrEntity result = new TxAsrEntity();
+                            result.setIssubmit(Constant.SEND_NOTEXIST);
+                            txMapper.update(result, new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+                        }
+                    } else {
+                        logger.info(">>> 推送失败 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));
+                        //等于空说明推送失败
+                        TxAsrEntity result = new TxAsrEntity();
+                        result.setIssubmit(Constant.SEND_FAIL);
+                        txMapper.update(result, new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+                    }
+                } else {
+                    logger.info(">>> 推送失败 请求时候的主要因为身份证参数 : " + mvaOutVo.getId());
+                    //等于空说明推送失败
+                    TxAsrEntity result = new TxAsrEntity();
+                    result.setIssubmit(Constant.ID_SEND_FAIL);
+                    txMapper.update(result, new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+                }
+            } else {
+                logger.info(">>> 推送失败 请求时候的主要因为身份证是非法的 : " + mvaOutVo.getId());
+                //等于空说明推送失败
+                TxAsrEntity result = new TxAsrEntity();
+                result.setIssubmit(Constant.ID_ILLEGAL_FAIL);
+                txMapper.update(result, new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+            }
+        } else {
+            logger.info(">>> 推送失败 请求时候的主要因为在ICD数据库没有找到相关要素信息");
+            //等于空说明推送失败
+            TxAsrEntity result = new TxAsrEntity();
+            result.setIssubmit(Constant.ICD_INFO_FAIL);
+            txMapper.update(result, new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+        }
+    }
+
+    @Override
     public String illegalId(String id) {
         logger.info(">>> 调用API查询身份证号是否在MVA的数据库里，此时身份号码为: " + id);
-        return formVxml("1");
+        String result = getJudgeMvaId(id);
+        if (null != result) {
+            return formVxml("1");
+        } else {
+            return formVxml("0");
+        }
     }
 
     private String formVxml(String num) {

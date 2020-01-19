@@ -38,7 +38,7 @@ public class TxServiceImpl implements ITxService {
 
     @Override
     public void uploadTxFile(TxAsrEntity txAsrEntity) {
-        String fileName = txAsrEntity.getVoiceFileName() + txAsrEntity.getVoiceFileName();
+        String fileName = txAsrEntity.getLeaveWordpath() + txAsrEntity.getVoiceFileName();
         Map<String, Object> map = new HashMap<>();
         map.put("filePath", Constant.TX_FILEPATH);
         try {

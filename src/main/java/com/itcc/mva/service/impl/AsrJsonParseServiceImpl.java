@@ -10,6 +10,7 @@ import com.itcc.mva.common.utils.Tools;
 import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
+import com.itcc.mva.entity.TxAsrEntity;
 import com.itcc.mva.mapper.AsrJsonParseMapper;
 import com.itcc.mva.mapper.IntelligentAsrMapper;
 import com.itcc.mva.service.IAsrJsonParseService;
@@ -85,5 +86,10 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
     @Override
     public List<AliAsrEntity> queryWaitingSendAl(int num) {
         return asrJsonParseMapper.queryWaitingSendAl(num);
+    }
+
+    @Override
+    public List<TxAsrEntity> queryWaitingSendTx(int num) {
+        return asrJsonParseMapper.queryWaitingSendTx(num);
     }
 }

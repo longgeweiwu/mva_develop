@@ -4,6 +4,7 @@ import com.itcc.mva.common.utils.Constant;
 import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.IntelligentAsrEntity;
 import com.itcc.mva.entity.QuarkCallbackEntity;
+import com.itcc.mva.entity.TxAsrEntity;
 import com.itcc.mva.service.IAsrJsonParseService;
 import com.itcc.mva.service.IPushToMvaService;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
@@ -33,6 +34,9 @@ public class PushToMvaJob {
 
     @Value("${engineType.altype}")
     private int altype;
+
+    @Value("${engineType.txtype}")
+    private int txtype;
 
     @Autowired
     private IAsrJsonParseService iAsrJsonParseService;
@@ -82,6 +86,19 @@ public class PushToMvaJob {
                 logger.info(">>> 存在[AL推送]任务 。 结束时间 [" + new Date() + "]");
             } else {
                 logger.info(">>> 任务名称:MvaPushToJob 暂时没有[AL推送]任务。");
+            }
+        }
+        if (txtype == Constant.ENGINETYPE_TX) {
+            logger.info(">>> 正在使用腾讯引擎");
+            List<TxAsrEntity> waitingSend = iAsrJsonParseService.queryWaitingSendTx(Constant.NO_SENDER);
+            if (0 != waitingSend.size()) {
+                logger.info(">>> 存在[TX推送]任务 。 开始时间 [" + new Date() + "]");
+                for (int i = 0; i < waitingSend.size(); i++) {
+                    iPushToMvaService.singleSendToMvaServiceTx(waitingSend.get(i));
+                }
+                logger.info(">>> 存在[TX推送]任务 。 结束时间 [" + new Date() + "]");
+            } else {
+                logger.info(">>> 任务名称:MvaPushToJob 暂时没有[TX推送]任务。");
             }
         }
         long endPushToMvaJob = System.currentTimeMillis() - startPushToMvaJob;

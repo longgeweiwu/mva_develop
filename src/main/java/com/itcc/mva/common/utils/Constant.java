@@ -28,6 +28,7 @@ public class Constant {
     public static final int JOB_JT = 1; //捷通
     public static final int JOB_KD = 1; //科大
     public static final int JOB_AL = 1; //阿里
+    public static final int JOB_TX = 1; //腾讯
 
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 
@@ -35,6 +36,7 @@ public class Constant {
     public static final int NO_PARSER_IFLY = 25; //科大讯飞解析数量
     public static final int NO_PARSER_ALI = 25; //阿里解析数量
     public static final int NO_PARSER = 25; //捷通解析数量
+    public static final int NO_FILE_TX = 25; //腾讯上传数量
 
     public static final int ASRPARSER_SUCCESS = 1; //捷通成功
     public static final int ASRPARSER_FAIL = 2; //捷通失败
@@ -82,7 +84,7 @@ public class Constant {
     public static final String KEY_APPKEY = "appkey";
     public static final String KEY_TOKEN = "token";
     public static final String KEY_FILE_LINK = "file_link";
-    public static final String VOCABULARY_ID = "096d421ab4e74266b9ecd3c28e27e936";
+    public static final String VOCABULARY_ID = "vocabulary_id";
 
     public static final String KEY_TASK_ID = "task_id";
     public static final String STATUS_SUCCESS = "SUCCESS";
@@ -91,4 +93,14 @@ public class Constant {
 
     public static final String KEY_ALIASR = "http://172.16.12.233:8101/stream/v1/filetrans";
     public static final String KEY_QUERYALIASR = "http://172.16.12.233:8101/stream/v1/filetrans";
+
+
+    /**
+     * 腾讯需要变量
+     */
+    public static final String TX_URL = "http://39.105.47.147:52119/file/uploading";
+    public static final String TX_FILEPATH = "/asrdata/";
+    public static final int UPFILE_SUCCESS = 1; //上传文件成功
+    public static final int UPFILE_FAIL = 2; //上传文件失败
+
 }

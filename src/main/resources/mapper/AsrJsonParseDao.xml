@@ -102,7 +102,7 @@
         ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
     </select>
 
-    <select id="queryWaitingSendTx" resultType="com.itcc.mva.entity.AliAsrEntity">
+    <select id="queryWaitingSendTx" resultType="com.itcc.mva.entity.TxAsrEntity">
         SELECT
             PID
         , LOG_ID

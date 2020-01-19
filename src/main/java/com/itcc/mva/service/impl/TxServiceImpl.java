@@ -2,10 +2,16 @@ package com.itcc.mva.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itcc.mva.common.utils.Constant;
-import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.TxAsrEntity;
 import com.itcc.mva.mapper.TxMapper;
 import com.itcc.mva.service.ITxService;
+import com.tencentcloudapi.asr.v20190614.AsrClient;
+import com.tencentcloudapi.asr.v20190614.models.CreateRecTaskRequest;
+import com.tencentcloudapi.asr.v20190614.models.CreateRecTaskResponse;
+import com.tencentcloudapi.common.Credential;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
+import com.tencentcloudapi.common.profile.ClientProfile;
+import com.tencentcloudapi.common.profile.HttpProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +57,38 @@ public class TxServiceImpl implements ITxService {
             TxAsrEntity asrEntity = new TxAsrEntity();
             asrEntity.setTxfileflag(Constant.UPFILE_FAIL);
             txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+        }
+    }
+
+    @Override
+    public List<TxAsrEntity> queryTxPendingTop(int top) {
+        return txMapper.queryTxPendingTop(top);
+    }
+
+    @Override
+    public void addTxTask(TxAsrEntity txAsrEntity) {
+        try {
+
+            Credential cred = new Credential(Constant.SECRETID,Constant.SECRETKEY);
+
+            HttpProfile httpProfile = new HttpProfile();
+            httpProfile.setEndpoint("asr.ap-beijing.tencentcloudapi.com");
+
+            ClientProfile clientProfile = new ClientProfile();
+            clientProfile.setHttpProfile(httpProfile);
+
+            AsrClient client = new AsrClient(cred, "ap-beijing", clientProfile);
+
+            String params = "{\"EngineModelType\":\"8k_zh_s\",\"ChannelNum\":1,\"ResTextFormat\":0,\"SourceType\":0,\"Url\":\"" +
+                    Constant.TX_AUDIL_URL+txAsrEntity.getVoiceFileName().substring(0,8)+"/"+txAsrEntity.getVoiceFileName()+
+                    "\"}";
+            CreateRecTaskRequest req = CreateRecTaskRequest.fromJsonString(params, CreateRecTaskRequest.class);
+
+            CreateRecTaskResponse resp = client.CreateRecTask(req);
+
+            System.out.println(CreateRecTaskRequest.toJsonString(resp));
+        } catch (TencentCloudSDKException e) {
+            System.out.println(e.toString());
         }
     }
 

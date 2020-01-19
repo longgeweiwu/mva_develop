@@ -59,4 +59,26 @@ public class TxAsrJob {
         logger.info(">>> 任务名称:syncFileToServiceJob(TX同步录音) 总执行时间为: [" + endSyncFileTx + " ms]");
     }
 
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "TxPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+    public void pushToTxAudio() {
+        long startPushToTxAudio = System.currentTimeMillis();
+        /**
+         * 先检查未解析过的ALI列表
+         */
+        List<TxAsrEntity> asrEntityList = iTxService.queryTxPendingTop(Constant.NO_PARSER_TX);
+
+        if (0 != asrEntityList.size()) {
+            logger.info(">>> 存在[TX解析]任务 。 开始时间 [" + new Date() + "]");
+            for (int i = 0; i < asrEntityList.size(); i++) {
+                iTxService.addTxTask(asrEntityList.get(i));
+            }
+            logger.info(">>> 存在[TX解析]任务 。 结束时间 [" + new Date() + "]");
+        } else {
+            logger.info(">>> 任务名称:TxPushToAudioJob 暂时没有[TX解析]任务。");
+        }
+        long endPushToTxAudio = System.currentTimeMillis() - startPushToTxAudio;
+        logger.info(">>> 任务名称:TxPushToAudioJob(腾讯离线解析) 总执行时间为: [" + endPushToTxAudio + " ms]");
+
+    }
 }

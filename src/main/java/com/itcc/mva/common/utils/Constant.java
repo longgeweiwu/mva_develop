@@ -35,6 +35,7 @@ public class Constant {
     public static final int NO_RMA_IFLY = 25; //科大讯飞解析数量
     public static final int NO_PARSER_IFLY = 25; //科大讯飞解析数量
     public static final int NO_PARSER_ALI = 25; //阿里解析数量
+    public static final int NO_PARSER_TX = 25; //阿里解析数量
     public static final int NO_PARSER = 25; //捷通解析数量
     public static final int NO_FILE_TX = 25; //腾讯上传数量
 
@@ -102,5 +103,8 @@ public class Constant {
     public static final String TX_FILEPATH = "/asrdata/";
     public static final int UPFILE_SUCCESS = 1; //上传文件成功
     public static final int UPFILE_FAIL = 2; //上传文件失败
+    public static final String SECRETID = "AKIDNbdS3QOWFnYEh258sSt9HCuPhleJt6B3";
+    public static final String SECRETKEY = "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx";
+    public static final String TX_AUDIL_URL = "http://39.105.47.147:52111/";
 
 }

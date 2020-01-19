@@ -101,6 +101,6 @@ public class TxAsrJob {
             logger.info(">>> 任务名称:queryAndSetTxAudio 暂时没有[Tx查询并更新基表]任务。");
         }
         long endQueryTxAudio = System.currentTimeMillis() - startQueryTxAudio;
-        logger.info(">>> 任务名称:queryAndSetTxAudio(阿里查询并更新基表离线解析) 总执行时间为: [" + endQueryTxAudio + " ms]");
+        logger.info(">>> 任务名称:queryAndSetTxAudio(腾讯查询并更新基表离线解析) 总执行时间为: [" + endQueryTxAudio + " ms]");
     }
 }

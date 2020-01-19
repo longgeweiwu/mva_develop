@@ -103,6 +103,7 @@ engineType:
   jttype: 1
   kdtype: 0
   altype: 0
+  txtype: 0
 
 jobtype:
   jtjob: 1

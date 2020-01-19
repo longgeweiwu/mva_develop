@@ -27,7 +27,7 @@
                    where ivr.CALLID = asr.callid)
 	</insert>
 
-    <select id="queryTxFileTop" resultType="com.itcc.mva.entity.AliAsrEntity" parameterType="java.lang.Integer">
+    <select id="queryTxFileTop" resultType="com.itcc.mva.entity.TxAsrEntity" parameterType="java.lang.Integer">
         SELECT PID
         , LOG_ID
         , LEAV_WORD_TIME

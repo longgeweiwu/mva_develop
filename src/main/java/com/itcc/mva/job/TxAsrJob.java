@@ -1,7 +1,6 @@
 package com.itcc.mva.job;
 
 import com.itcc.mva.common.utils.Constant;
-import com.itcc.mva.entity.AliAsrEntity;
 import com.itcc.mva.entity.TxAsrEntity;
 import com.itcc.mva.service.ITxService;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;

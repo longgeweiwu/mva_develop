@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcc.mva.mapper.TxMapper">
+
+    <insert id="generateTxBaseTable" >
+       insert into MVA_TX_INTELLIGENT_ASR
+          (PID,
+           LOG_ID,
+           LEAV_WORD_TIME,
+           ANI,
+           LEAVEWORD_PATH,
+           VOICE_FILE_NAME,
+           CALLID,
+           FULL_PATH)
+          select sys_guid(),
+                 LOG_ID,
+                 LEAV_WORD_TIME,
+                 ANI,
+                 LEAVEWORD_PATH,
+                 VOICE_FILE_NAME,
+                 CALLID,
+                 FULL_PATH
+            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+           where not exists (select callid
+                    from MVA_TX_INTELLIGENT_ASR asr
+                   where ivr.CALLID = asr.callid)
+	</insert>
+
+    <select id="queryTxFileTop" resultType="com.itcc.mva.entity.AliAsrEntity" parameterType="java.lang.Integer">
+        SELECT PID
+        , LOG_ID
+        , LEAV_WORD_TIME
+        , ANI
+        , LEAVEWORD_PATH
+        , VOICE_FILE_NAME
+        , CALLID
+        , FULL_PATH
+        , TXFILEFLAG
+        , ASRFLAG
+        , TASKID
+        , TX_RESULT
+        , INSERT_TIME
+        , TXPARSE_STATUS
+        , ISSUBMIT
+        FROM ICC_UNION.MVA_TX_INTELLIGENT_ASR
+        WHERE  ROWNUM &lt;= #{top}
+          AND TXFILEFLAG IS NULL
+          AND LEAVEWORD_PATH IS NOT NULL
+          AND VOICE_FILE_NAME IS NOT NULL
+        ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
+    </select>
+
+</mapper>

@@ -37,8 +37,8 @@ public class TxAsrJob {
         }
     }
 
-    @Scheduled(cron = "0/10 * * * * ?")
-    @SchedulerLock(name = "syncFileToServiceJob", lockAtMostFor = "7s", lockAtLeastFor = "7s")
+    @Scheduled(cron = "0/15 * * * * ?")
+    @SchedulerLock(name = "syncFileToServiceJob", lockAtMostFor = "13s", lockAtLeastFor = "13s")
     public void syncFileToSever() {
         long startsyncFileTx = System.currentTimeMillis();
         /**

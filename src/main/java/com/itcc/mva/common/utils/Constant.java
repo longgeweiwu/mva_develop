@@ -22,6 +22,7 @@ public class Constant {
     public static final int ENGINETYPE_JT = 1; //捷通
     public static final int ENGINETYPE_KD = 1; //科大
     public static final int ENGINETYPE_AL = 1; //阿里
+    public static final int ENGINETYPE_TX = 1; //腾讯
     /**
      * 引擎选择
      */
@@ -109,5 +110,8 @@ public class Constant {
     public static final int ASRPARSER_TX_SUCCESS = 1; //腾讯解析成功
     public static final int ASRPARSER_TX_FAIL = 2; //腾讯解析失败
     public static final int ASRRESULT_TX_FAIL = 3; //腾讯解析失败
+    public static final int ASRJSONRESULT_TX_SUCCESS = 1; //腾讯结果解析成功
+    public static final int ASRJSONRESULT_TX_FAIL = 2; //腾讯结果解析失败
+    public static final int ASRJSONRESULT_TX_OTHERFAIL = 3; //腾讯结果解析失败
 
 }

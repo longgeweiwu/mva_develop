@@ -143,11 +143,13 @@ public class TxServiceImpl implements ITxService {
 
                 TxAsrEntity asrEntity = new TxAsrEntity();
                 asrEntity.setInsertTime(new Date());
+                asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_SUCCESS);
                 asrEntity.setTxResult(result.getJSONObject("Data").getString("Result").replaceAll("\\[.*\\]", "").replaceAll("\n", "").replaceAll(" ", ""));
                 txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
             }else{
                 TxAsrEntity asrEntity = new TxAsrEntity();
                 asrEntity.setInsertTime(new Date());
+                asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_OTHERFAIL);
                 txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
             }
 
@@ -155,6 +157,7 @@ public class TxServiceImpl implements ITxService {
             System.out.println(e.toString());
             TxAsrEntity asrEntity = new TxAsrEntity();
             asrEntity.setInsertTime(new Date());
+            asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_FAIL);
             txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
         }
     }

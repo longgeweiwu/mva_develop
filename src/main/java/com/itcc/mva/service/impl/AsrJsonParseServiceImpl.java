@@ -56,7 +56,7 @@ public class AsrJsonParseServiceImpl implements IAsrJsonParseService {
                 for (int i = 0; i < resultArr.size(); i++) {
                     bfText.append(((JSONObject) resultArr.get(i)).get("text"));
                     if (++spit < resultArr.size()) {
-                        bfText.append(",");
+                        bfText.append("");
                     }
                 }
             } catch (Exception e) {

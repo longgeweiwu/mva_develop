@@ -94,7 +94,7 @@ asrParams:
   wordsInfo: NONE
   enableCallback: false
   enableDigitnorm: false
-  enableAddPunc: false
+  enableAddPunc: true
   enableDiarization: false
   enableEmotion: false
   enableSpeed: false

@@ -50,6 +50,7 @@ public class AliTransferServiceImpl implements IAliTransferService {
         sendAliweb.put(Constant.KEY_TOKEN,"default");
         sendAliweb.put(Constant.KEY_FILE_LINK,audioUrl);
         sendAliweb.put(Constant.VOCABULARY_ID,"096d421ab4e74266b9ecd3c28e27e936");
+        sendAliweb.put(Constant.CUSTOMIZATION_ID,"jt-model");
 
         String response= HttpUtil.httpPost(Constant.KEY_ALIASR, headers,  sendAliweb.toJSONString(), null,Constant.HTTP_TIMEOUT, false);
 

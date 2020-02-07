@@ -87,6 +87,7 @@ public class Constant {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_FILE_LINK = "file_link";
     public static final String VOCABULARY_ID = "vocabulary_id";
+    public static final String CUSTOMIZATION_ID = "customization_id";
 
     public static final String KEY_TASK_ID = "task_id";
     public static final String STATUS_SUCCESS = "SUCCESS";

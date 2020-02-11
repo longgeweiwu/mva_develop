@@ -105,6 +105,29 @@ public class Tools {
         resultBuff.append("\r\n");
     }
 
+    public static void parseReusltWithoutRole(StringBuffer resultBuff, String result) {
+        if (StringUtils.isEmpty(result)) {
+            return;
+        }
+        JSONObject json = JSON.parseObject(result);
+        JSONObject st = json.getJSONObject("st");
+        JSONArray rtArray = st.getJSONArray("rt");
+        if (rtArray != null && rtArray.size() != 0) {
+            for (Object rt : rtArray) {
+                JSONArray wsArray = ((JSONObject) rt).getJSONArray("ws");
+                if (wsArray != null && wsArray.size() != 0) {
+                    for (Object ws : wsArray) {
+                        JSONArray cwArray = ((JSONObject) ws).getJSONArray("cw");
+                        for (Object cw : cwArray) {
+                            String w = ((JSONObject) cw).getString("w");
+                            resultBuff.append(w);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * 添加离线转写任务
      *

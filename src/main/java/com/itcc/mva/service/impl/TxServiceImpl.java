@@ -84,7 +84,7 @@ public class TxServiceImpl implements ITxService {
 
             String params = "{\"EngineModelType\":\"8k_zh_s\",\"ChannelNum\":1,\"ResTextFormat\":0,\"SourceType\":0,\"Url\":\"" +
                     Constant.TX_AUDIL_URL+txAsrEntity.getVoiceFileName().substring(0,8)+"/"+txAsrEntity.getVoiceFileName()+
-                    "\"}";
+                    "\",\"HotwordId\":\""+Constant.TX_HOTWORDID+"\"}";
             CreateRecTaskRequest req = CreateRecTaskRequest.fromJsonString(params, CreateRecTaskRequest.class);
 
             CreateRecTaskResponse resp = client.CreateRecTask(req);

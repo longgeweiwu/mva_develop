@@ -62,7 +62,7 @@ public class QuarkCallbackController {
             return "success";
         }
         for (QuarkCallbackVo.Lattice l : resp.getLattice()) {
-            Tools.parseReuslt(resultBuff, l.getJson_1best());
+            Tools.parseReusltWithoutRole(resultBuff, l.getJson_1best());
         }
         if (!results.containsKey(resp.getAid())) {
             results.put(resp.getAid(), Long.toString(System.currentTimeMillis()));

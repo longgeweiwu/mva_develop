@@ -114,6 +114,7 @@ public class Constant {
     public static final int ASRRESULT_TX_FAIL = 3; //腾讯解析失败
     public static final int ASRJSONRESULT_TX_SUCCESS = 1; //腾讯结果解析成功
     public static final int ASRJSONRESULT_TX_FAIL = 2; //腾讯结果解析失败
-    public static final int ASRJSONRESULT_TX_OTHERFAIL = 3; //腾讯结果解析失败
+    public static final int ASRJSONRESULT_TX_NOFAIL = 3; //腾讯结果其他解析失败
+    public static final int ASRJSONRESULT_TX_OTHERFAIL = 4; //腾讯结果其他解析失败
 
 }

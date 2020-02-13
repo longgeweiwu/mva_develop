@@ -101,7 +101,7 @@ asrParams:
   parallel: 24
 
 engineType:
-  jttype: 1
+  jttype: 0
   kdtype: 0
   altype: 0
   txtype: 0

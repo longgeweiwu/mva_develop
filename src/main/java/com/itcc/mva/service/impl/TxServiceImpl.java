@@ -139,20 +139,27 @@ public class TxServiceImpl implements ITxService {
 
             JSONObject result = JSONObject.parseObject(DescribeTaskStatusRequest.toJsonString(resp));
 
-            if(result.containsKey("Data") && result.getJSONObject("Data").containsKey("Status") && 2 == result.getJSONObject("Data").getIntValue("Status")){
-
-                TxAsrEntity asrEntity = new TxAsrEntity();
-                asrEntity.setInsertTime(new Date());
-                asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_SUCCESS);
-                asrEntity.setTxResult(result.getJSONObject("Data").getString("Result").replaceAll("\\[.*\\]", "").replaceAll("\n", "").replaceAll(" ", ""));
-                txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+            if(result.containsKey("Data") && result.getJSONObject("Data").containsKey("Status")){
+                if(2 == result.getJSONObject("Data").getIntValue("Status")){
+                    TxAsrEntity asrEntity = new TxAsrEntity();
+                    asrEntity.setInsertTime(new Date());
+                    asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_SUCCESS);
+                    asrEntity.setTxResult(result.getJSONObject("Data").getString("Result").replaceAll("\\[.*\\]", "").replaceAll("\n", "").replaceAll(" ", ""));
+                    txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+                }else if(3 == result.getJSONObject("Data").getIntValue("Status")){
+                    TxAsrEntity asrEntity = new TxAsrEntity();
+                    asrEntity.setInsertTime(new Date());
+                    asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_NOFAIL);
+                    txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
+                }else{
+                    //其他情况 0 任务等待 1任务执行 这种情况需要在次查询 3是失败 2是成功
+                }
             }else{
                 TxAsrEntity asrEntity = new TxAsrEntity();
                 asrEntity.setInsertTime(new Date());
                 asrEntity.setTxparseStatus(Constant.ASRJSONRESULT_TX_OTHERFAIL);
                 txMapper.update(asrEntity,new QueryWrapper<TxAsrEntity>().eq("CALLID", txAsrEntity.getCallid()));
             }
-
         } catch (TencentCloudSDKException e) {
             System.out.println(e.toString());
             TxAsrEntity asrEntity = new TxAsrEntity();

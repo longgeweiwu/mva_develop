@@ -182,6 +182,9 @@ public class Tools {
      * @return true:合法,false:不合法
      */
     public static boolean isLegal(String id) {
+        if(!id.matches("^[a-z0-9A-Z]+$")){
+            return false;
+        }
         int sum = 0;
         char[] chekBit = {'1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'};
         int[] power = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};

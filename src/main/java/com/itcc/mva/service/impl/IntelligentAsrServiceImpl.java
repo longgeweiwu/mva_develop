@@ -99,7 +99,7 @@ public class IntelligentAsrServiceImpl implements IIntelligentTransferService {
                 files.add(record.getVoiceFilename());
             }
             String task_no = responseResult.getString("task_no");
-            log.info("获得asr引擎的返回信息--------------------------");
+            log.info("获得asr引擎的返回信息--------------------------\n任务ID为:"+task_no);
             JSONObject statusDetail = new JSONObject();
             statusDetail.put("task_no",task_no);
             statusDetail.put("files",files);

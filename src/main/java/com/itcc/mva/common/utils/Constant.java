@@ -42,6 +42,7 @@ public class Constant {
 
     public static final int ASRPARSER_SUCCESS = 1; //捷通成功
     public static final int ASRPARSER_FAIL = 2; //捷通失败
+    public static final int ASRPARSER_REQIFLY_SUCCESS = 0; //请求完事
     public static final int ASRPARSER_IFLY_SUCCESS = 1; //科大成功
     public static final int ASRPARSER_IFLY_FAIL = 2; //科大失败
     public static final int ASRPARSER_ALI_SUCCESS = 1; //阿里成功

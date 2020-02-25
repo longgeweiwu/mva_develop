@@ -35,6 +35,16 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/16k_"+quarkCallbackEntity.getVoiceFileName();
         //添加任务
         Tools.addTask(wavcid, Constant.URL,waitingUrl,task_notyfy_url);
+        preIflyParse(wavcid);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void preIflyParse(String callid) {
+        QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
+        quarkCallbackEntity.setAid(callid);
+        quarkCallbackEntity.setInsertTime(new Date());
+        quarkCallbackEntity.setIflyparseStatus(Constant.ASRPARSER_REQIFLY_SUCCESS);
+        quarkCallbackMapper.update(quarkCallbackEntity, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", callid));
     }
 
     @Override
@@ -48,6 +58,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateRmaVoiceName(String voiceFileName, String rmaVoiceName) {
         QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
         quarkCallbackEntity.setVoiceFileName(voiceFileName);
@@ -56,6 +67,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateRmaVoiceFlag(String aid, int rmaFlag) {
         QuarkCallbackEntity quarkCallbackEntity = new QuarkCallbackEntity();
         quarkCallbackEntity.setRmaflag(rmaFlag);
@@ -88,6 +100,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void modifyIflyParse(String callid) {
         //修改基表 科讯飞 解析完成
         QuarkCallbackEntity result = quarkCallbackMapper.selectOne(new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", callid));

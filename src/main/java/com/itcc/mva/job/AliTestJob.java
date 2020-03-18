@@ -49,8 +49,8 @@ public class AliTestJob {
     @Autowired
     private AliTestMapper aliTestMapper;
 
-    @Scheduled(cron = "0/30 * * * * ?")
-    @SchedulerLock(name = "AliTestVHm", lockAtMostFor = "28s", lockAtLeastFor = "28s")
+    @Scheduled(cron = "0/10 * * * * ?")
+    @SchedulerLock(name = "AliTestVHm", lockAtMostFor = "8s", lockAtLeastFor = "8s")
     public void vocuPutRecordToAli() {
         List<String> name = getFileName();
         for(int i=0;i<name.size();i++) {
@@ -110,7 +110,7 @@ public class AliTestJob {
     @SchedulerLock(name = "AliTestGetVHmResult", lockAtMostFor = "28s", lockAtLeastFor = "28s")
     public void AliTestGetVHmResult() throws IOException {
 
-        List<AliTestEntity> aliTestEntities=aliTestMapper.selectList(new QueryWrapper<AliTestEntity>().isNotNull("ORITASKID").isNotNull("VMTASKID").isNotNull("VHMTASKID"));
+        List<AliTestEntity> aliTestEntities=aliTestMapper.selectList(new QueryWrapper<AliTestEntity>().isNotNull("ORITASKID").isNotNull("VMTASKID").isNotNull("VHMTASKID").isNotNull("VHM_RESULT").isNotNull("VM_RESULT").isNotNull("ORI_RESULT"));
 
         for(int j=0;j<aliTestEntities.size();j++){
 
@@ -131,7 +131,7 @@ public class AliTestJob {
                                     oriResult.append(((JSONObject) payloadOri.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                 }
                                 aliTestEntity.setOriResult(oriResult.toString());
-                                aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid()));
+
                             }
                             break;
                         default:
@@ -157,7 +157,7 @@ public class AliTestJob {
                                     vmResult.append(((JSONObject) payloadVm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                 }
                                 aliTestEntity.setVmResult(vmResult.toString());
-                                aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
+                                //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
                             }
                             break;
                         default:
@@ -183,7 +183,7 @@ public class AliTestJob {
                                     vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                 }
                                 aliTestEntity.setVhmResult(vhmResult.toString());
-                                aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
+                                //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
                             }
                             break;
                         default:
@@ -191,7 +191,7 @@ public class AliTestJob {
                     }
                 }
             }
-
+            aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid()));
             }
     }
 

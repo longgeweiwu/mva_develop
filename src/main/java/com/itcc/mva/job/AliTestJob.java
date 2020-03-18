@@ -134,7 +134,7 @@ public class AliTestJob {
                                     oriResult.append(((JSONObject) payloadOri.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                 }
                                 aliTestEntity.setOriResult(oriResult.toString());
-
+                                aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid()));
                             }
                             break;
                         default:
@@ -162,7 +162,7 @@ public class AliTestJob {
                                         vmResult.append(((JSONObject) payloadVm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                     }
                                     aliTestEntity.setVmResult(vmResult.toString());
-                                    //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
+                                    aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
                                 }
                                 break;
                             default:
@@ -189,7 +189,7 @@ public class AliTestJob {
                                         vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                     }
                                     aliTestEntity.setVhmResult(vhmResult.toString());
-                                    //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
+                                    aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
                                 }
                                 break;
                             default:
@@ -198,7 +198,7 @@ public class AliTestJob {
                     }
                 }
             }
-            aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid()));
+            //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid()));
             }
     }
 

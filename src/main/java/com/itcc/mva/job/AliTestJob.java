@@ -189,7 +189,7 @@ public class AliTestJob {
                                         vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
                                     }
                                     aliTestEntity.setVhmResult(vhmResult.toString());
-                                    aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
+                                    aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVhmtaskid()));
                                 }
                                 break;
                             default:

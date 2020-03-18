@@ -117,7 +117,7 @@ public class AliTestJob {
 
 
             AliTestEntity aliTestEntity = new AliTestEntity();
-            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid())).getOriResult().equals("")){
+            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid())).getOriResult()==null){
 
             StringBuffer oriResult = new StringBuffer();
             Map<String, Object> requestOri = new HashMap<String, Object>();
@@ -145,7 +145,7 @@ public class AliTestJob {
 
             }
 
-            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid())).getVmResult().equals("")) {
+            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid())).getVmResult()==null) {
 
                 StringBuffer vmResult = new StringBuffer();
                 Map<String, Object> requestVm = new HashMap<String, Object>();
@@ -172,7 +172,7 @@ public class AliTestJob {
                 }
             }
 
-            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVhmtaskid())).getVhmResult().equals("")) {
+            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVhmtaskid())).getVhmResult()==null) {
 
                 StringBuffer vhmResult = new StringBuffer();
                 Map<String, Object> requestVhm = new HashMap<String, Object>();

@@ -49,8 +49,8 @@ public class AliTestJob {
     @Autowired
     private AliTestMapper aliTestMapper;
 
-    @Scheduled(cron = "0/10 * * * * ?")
-    @SchedulerLock(name = "AliTestVHm", lockAtMostFor = "8s", lockAtLeastFor = "8s")
+    @Scheduled(cron = "0/20 * * * * ?")
+    @SchedulerLock(name = "AliTestVHm", lockAtMostFor = "18s", lockAtLeastFor = "18s")
     public void vocuPutRecordToAli() {
         List<String> name = getFileName();
         for(int i=0;i<name.size();i++) {
@@ -106,15 +106,18 @@ public class AliTestJob {
     }
 
 
-    @Scheduled(cron = "0/30 * * * * ?")
-    @SchedulerLock(name = "AliTestGetVHmResult", lockAtMostFor = "28s", lockAtLeastFor = "28s")
+    @Scheduled(cron = "0/20 * * * * ?")
+    @SchedulerLock(name = "AliTestGetVHmResult", lockAtMostFor = "18s", lockAtLeastFor = "18s")
     public void AliTestGetVHmResult() throws IOException {
 
-        List<AliTestEntity> aliTestEntities=aliTestMapper.selectList(new QueryWrapper<AliTestEntity>().isNotNull("ORITASKID").isNotNull("VMTASKID").isNotNull("VHMTASKID").isNotNull("VHM_RESULT").isNotNull("VM_RESULT").isNotNull("ORI_RESULT"));
+        List<AliTestEntity> aliTestEntities=aliTestMapper.selectList(new QueryWrapper<AliTestEntity>().isNotNull("ORITASKID").isNotNull("VMTASKID").isNotNull("VHMTASKID"));
 
         for(int j=0;j<aliTestEntities.size();j++){
 
+
+
             AliTestEntity aliTestEntity = new AliTestEntity();
+            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid())).getOriResult().equals("")){
 
             StringBuffer oriResult = new StringBuffer();
             Map<String, Object> requestOri = new HashMap<String, Object>();
@@ -140,54 +143,58 @@ public class AliTestJob {
                 }
             }
 
+            }
 
+            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid())).getVmResult().equals("")) {
 
-            StringBuffer vmResult = new StringBuffer();
-            Map<String, Object> requestVm = new HashMap<String, Object>();
-            requestVm.put(Constant.KEY_TASK_ID, aliTestEntities.get(j).getVmtaskid());
-            String vm = HttpUtil.get(Constant.KEY_QUERYALIASR, requestVm);
-            if (null != vm) {
-                JSONObject vmJson = JSONObject.parseObject(vm);
-                if (vmJson.containsKey("header") && vmJson.containsKey("payload")) {
-                    switch (vmJson.getJSONObject("header").getString("status_message")) {
-                        case Constant.STATUS_SUCCESS:
-                            JSONObject payloadVm = vmJson.getJSONObject("payload");
-                            if (payloadVm.containsKey("sentences")) {
-                                for (int i = 0; i < payloadVm.getJSONArray("sentences").size(); i++) {
-                                    vmResult.append(((JSONObject) payloadVm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                StringBuffer vmResult = new StringBuffer();
+                Map<String, Object> requestVm = new HashMap<String, Object>();
+                requestVm.put(Constant.KEY_TASK_ID, aliTestEntities.get(j).getVmtaskid());
+                String vm = HttpUtil.get(Constant.KEY_QUERYALIASR, requestVm);
+                if (null != vm) {
+                    JSONObject vmJson = JSONObject.parseObject(vm);
+                    if (vmJson.containsKey("header") && vmJson.containsKey("payload")) {
+                        switch (vmJson.getJSONObject("header").getString("status_message")) {
+                            case Constant.STATUS_SUCCESS:
+                                JSONObject payloadVm = vmJson.getJSONObject("payload");
+                                if (payloadVm.containsKey("sentences")) {
+                                    for (int i = 0; i < payloadVm.getJSONArray("sentences").size(); i++) {
+                                        vmResult.append(((JSONObject) payloadVm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                                    }
+                                    aliTestEntity.setVmResult(vmResult.toString());
+                                    //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
                                 }
-                                aliTestEntity.setVmResult(vmResult.toString());
-                                //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
-                            }
-                            break;
-                        default:
-                            break;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
 
+            if(aliTestMapper.selectOne(new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVhmtaskid())).getVhmResult().equals("")) {
 
-
-            StringBuffer vhmResult = new StringBuffer();
-            Map<String, Object> requestVhm = new HashMap<String, Object>();
-            requestVhm.put(Constant.KEY_TASK_ID, aliTestEntities.get(j).getVhmtaskid());
-            String vhm = HttpUtil.get(Constant.KEY_QUERYALIASR, requestVhm);
-            if (null != vhm) {
-                JSONObject vhmJson = JSONObject.parseObject(vhm);
-                if (vhmJson.containsKey("header") && vhmJson.containsKey("payload")) {
-                    switch (vhmJson.getJSONObject("header").getString("status_message")) {
-                        case Constant.STATUS_SUCCESS:
-                            JSONObject payloadVhm = vhmJson.getJSONObject("payload");
-                            if (payloadVhm.containsKey("sentences")) {
-                                for (int i = 0; i < payloadVhm.getJSONArray("sentences").size(); i++) {
-                                    vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                StringBuffer vhmResult = new StringBuffer();
+                Map<String, Object> requestVhm = new HashMap<String, Object>();
+                requestVhm.put(Constant.KEY_TASK_ID, aliTestEntities.get(j).getVhmtaskid());
+                String vhm = HttpUtil.get(Constant.KEY_QUERYALIASR, requestVhm);
+                if (null != vhm) {
+                    JSONObject vhmJson = JSONObject.parseObject(vhm);
+                    if (vhmJson.containsKey("header") && vhmJson.containsKey("payload")) {
+                        switch (vhmJson.getJSONObject("header").getString("status_message")) {
+                            case Constant.STATUS_SUCCESS:
+                                JSONObject payloadVhm = vhmJson.getJSONObject("payload");
+                                if (payloadVhm.containsKey("sentences")) {
+                                    for (int i = 0; i < payloadVhm.getJSONArray("sentences").size(); i++) {
+                                        vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                                    }
+                                    aliTestEntity.setVhmResult(vhmResult.toString());
+                                    //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
                                 }
-                                aliTestEntity.setVhmResult(vhmResult.toString());
-                                //aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVmtaskid()));
-                            }
-                            break;
-                        default:
-                            break;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }

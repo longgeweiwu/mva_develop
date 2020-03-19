@@ -131,7 +131,7 @@ public class AliTestJob {
                             JSONObject payloadOri = oriJson.getJSONObject("payload");
                             if (payloadOri.containsKey("sentences")) {
                                 for (int i = 0; i < payloadOri.getJSONArray("sentences").size(); i++) {
-                                    oriResult.append(((JSONObject) payloadOri.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                                    oriResult.append(((JSONObject) payloadOri.getJSONArray("sentences").get(i)).get("text"));
                                 }
                                 aliTestEntity.setOriResult(oriResult.toString());
                                 aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("ORITASKID",aliTestEntities.get(j).getOritaskid()));
@@ -159,7 +159,7 @@ public class AliTestJob {
                                 JSONObject payloadVm = vmJson.getJSONObject("payload");
                                 if (payloadVm.containsKey("sentences")) {
                                     for (int i = 0; i < payloadVm.getJSONArray("sentences").size(); i++) {
-                                        vmResult.append(((JSONObject) payloadVm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                                        vmResult.append(((JSONObject) payloadVm.getJSONArray("sentences").get(i)).get("text"));
                                     }
                                     aliTestEntity.setVmResult(vmResult.toString());
                                     aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VMTASKID",aliTestEntities.get(j).getVmtaskid()));
@@ -186,7 +186,7 @@ public class AliTestJob {
                                 JSONObject payloadVhm = vhmJson.getJSONObject("payload");
                                 if (payloadVhm.containsKey("sentences")) {
                                     for (int i = 0; i < payloadVhm.getJSONArray("sentences").size(); i++) {
-                                        vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text")).append("\r\n");
+                                        vhmResult.append(((JSONObject) payloadVhm.getJSONArray("sentences").get(i)).get("text"));
                                     }
                                     aliTestEntity.setVhmResult(vhmResult.toString());
                                     aliTestMapper.update(aliTestEntity,new QueryWrapper<AliTestEntity>().eq("VHMTASKID",aliTestEntities.get(j).getVhmtaskid()));

@@ -32,8 +32,7 @@
     </select>
 
     <select id="queryWaitingSendJt" resultType="com.itcc.mva.entity.IntelligentAsrEntity" parameterType="java.lang.Integer">
-        SELECT
-            PID
+        SELECT PID
             , LOG_ID
             , LEAV_WORD_TIME
             , ANI
@@ -48,9 +47,28 @@
             , JSONPARSE_STATUS
             , JSONPARSE_RESULT
             , CALLID
-            ,ISSUBMIT
-            ,FULL_PATH
-        FROM ICC_UNION.T_QC_INTELLIGENT_ASR
+            , ISSUBMIT
+            , FULL_PATH
+        FROM (SELECT TQIA.PID
+                  , TQIA.LOG_ID
+                  , TQIA.LEAV_WORD_TIME
+                  , TQIA.ANI
+                  , TQIA.LEAVEWORD_PATH
+                  , TQIA.VOICE_FILE_NAME
+                  , TQIA.OUTPUT_FILEPATH
+                  , TQIA.OUTPUT_FILENAME
+                  , TQIA.ASR_STATUS
+                  , TQIA.ASR_TIMESTAMP
+                  , TQIA.ASR_FAILTIMES
+                  , TQIA.DATAGENERATE_TIME
+                  , TQIA.JSONPARSE_STATUS
+                  , TQIA.JSONPARSE_RESULT
+                  , TQIA.CALLID
+                  , TQIA.ISSUBMIT
+                  , TQIA.FULL_PATH
+              FROM ICC_UNION.T_QC_INTELLIGENT_ASR TQIA
+                  , IVR_JTINFO@HUAWEI_ICD_DB_LINK IJ
+              WHERE TQIA.CALLID = IJ.CALLID ( +) AND IJ.FLAG = '1')
         WHERE ROWNUM &lt;= #{num}
           AND ISSUBMIT IS NULL
           AND CALLID IS NOT NULL
@@ -60,28 +78,42 @@
 
     <select id="queryWaitingSendKd" resultType="com.itcc.mva.entity.QuarkCallbackEntity" parameterType="java.lang.Integer">
         SELECT PID
-             , LOG_ID
-             , LEAV_WORD_TIME
-             , ANI
-             , LEAVEWORD_PATH
-             , VOICE_FILE_NAME
-             , CALLID
-             , FULL_PATH
-             , AID
-             , IFLY_RESULT
-             , INSERT_TIME
-             , IFLYPARSE_STATUS
-             ,ISSUBMIT
-        FROM ICC_UNION.MVA_IFLY_INTELLIGENT_ASR
-        WHERE ROWNUM  &lt;= #{top}
+            , LOG_ID
+            , LEAV_WORD_TIME
+            , ANI
+            , LEAVEWORD_PATH
+            , VOICE_FILE_NAME
+            , CALLID
+            , FULL_PATH
+            , AID
+            , IFLY_RESULT
+            , INSERT_TIME
+            , IFLYPARSE_STATUS
+            , ISSUBMIT
+        FROM (SELECT MIIA.PID
+                  , MIIA.LOG_ID
+                  , MIIA.LEAV_WORD_TIME
+                  , MIIA.ANI
+                  , MIIA.LEAVEWORD_PATH
+                  , MIIA.VOICE_FILE_NAME
+                  , MIIA.CALLID
+                  , MIIA.FULL_PATH
+                  , MIIA.AID
+                  , MIIA.IFLY_RESULT
+                  , MIIA.INSERT_TIME
+                  , MIIA.IFLYPARSE_STATUS
+                  , MIIA.ISSUBMIT
+              FROM ICC_UNION.MVA_IFLY_INTELLIGENT_ASR MIIA
+                  , IVR_JTINFO@HUAWEI_ICD_DB_LINK IJ
+              WHERE MIIA.CALLID = IJ.CALLID ( +) AND IJ.FLAG = '1')
+        WHERE  ROWNUM  &lt;= #{top}
           AND ISSUBMIT IS NULL
           AND IFLY_RESULT IS NOT NULL
         ORDER BY to_date (LEAV_WORD_TIME, 'YYYY-MM-DD HH24:MI:SS')
     </select>
 
     <select id="queryWaitingSendAl" resultType="com.itcc.mva.entity.AliAsrEntity">
-        SELECT
-            PID
+        SELECT PID
             , LOG_ID
             , LEAV_WORD_TIME
             , ANI
@@ -95,7 +127,23 @@
             , INSERT_TIME
             , ALIPARSE_STATUS
             , ISSUBMIT
-        FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR
+        FROM (SELECT MAIA.PID
+                  , MAIA.LOG_ID
+                  , MAIA.LEAV_WORD_TIME
+                  , MAIA.ANI
+                  , MAIA.LEAVEWORD_PATH
+                  , MAIA.VOICE_FILE_NAME
+                  , MAIA.CALLID
+                  , MAIA.FULL_PATH
+                  , MAIA.ASRFLAG
+                  , MAIA.TASKID
+                  , MAIA.ALI_RESULT
+                  , MAIA.INSERT_TIME
+                  , MAIA.ALIPARSE_STATUS
+                  , MAIA.ISSUBMIT
+              FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR MAIA
+                  , IVR_JTINFO@HUAWEI_ICD_DB_LINK IJ
+              WHERE MAIA.CALLID = IJ.CALLID ( +) AND IJ.FLAG = '1')
         WHERE ROWNUM  &lt;= #{top}
           AND ISSUBMIT IS NULL
           AND ALI_RESULT IS NOT NULL

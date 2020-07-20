@@ -44,8 +44,8 @@ public class PushToMvaJob {
     @Autowired
     private IPushToMvaService iPushToMvaService;
 
-    @Scheduled(cron = "0/15 * * * * ?")
-    @SchedulerLock(name = "MvaPushToJob", lockAtMostFor = "13s", lockAtLeastFor = "13s")
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "MvaPushToJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushInfo() {
         long startPushToMvaJob = System.currentTimeMillis();
         logger.info(jttype == 1 ? "[>>> JT引擎 开启状态]" : "[>>> JT引擎 关闭状态]" + "  " + (kdtype == 1 ? "[>>> KD引擎 开启状态]" : "[>>> KD引擎 关闭状态]") + "  " + (altype == 1 ? "[>>> AL引擎 开启状态]" : "[>>> AL引擎 关闭状态]"));

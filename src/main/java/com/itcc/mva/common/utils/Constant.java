@@ -33,8 +33,8 @@ public class Constant {
 
     public static final int HTTP_TIMEOUT=60000;//默认超时时间
 
-    public static final int NO_RMA_IFLY = 25; //科大讯飞解析数量
-    public static final int NO_PARSER_IFLY = 25; //科大讯飞解析数量
+    public static final int NO_RMA_IFLY = 10; //科大讯飞解析数量
+    public static final int NO_PARSER_IFLY = 10; //科大讯飞解析数量
     public static final int NO_PARSER_ALI = 25; //阿里解析数量
     public static final int NO_PARSER_TX = 25; //阿里解析数量
     public static final int NO_PARSER = 25; //捷通解析数量
@@ -53,7 +53,7 @@ public class Constant {
     public static final int ASRPARSER_SERIOUS_FAIL = 4; //阿里失败
     public static final int ASRPARSER_EXCEPTION_FAIL = 2; //阿里查询结果为空 可能原因 网络
 
-    public static final int NO_SENDER = 25; //部委发送数量
+    public static final int NO_SENDER = 10; //部委发送数量
     public static final int SEND_SUCCESS = 1; //部委成功
     public static final int SEND_FAIL = 2; //部委接口问题
 
@@ -87,6 +87,7 @@ public class Constant {
     public static final String KEY_APPKEY = "appkey";
     public static final String KEY_TOKEN = "token";
     public static final String KEY_FILE_LINK = "file_link";
+    public static final String KEY_AUTO_SPLIT = "auto_split";
     public static final String VOCABULARY_ID = "vocabulary_id";
     public static final String CUSTOMIZATION_ID = "customization_id";
 

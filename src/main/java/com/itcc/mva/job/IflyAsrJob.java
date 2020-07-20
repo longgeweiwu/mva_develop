@@ -28,8 +28,8 @@ public class IflyAsrJob {
     @Autowired
     private IQuarkCallbackService iQuarkCallbackService;
 
-    @Scheduled(cron = "* 0/1 * * * ?")
-    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "40s", lockAtLeastFor = "40s")
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "IflyBaseTableJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void generateBaseTable() {
         if (Constant.JOB_KD == kdjob) {
             long startGenerateBaseTable = System.currentTimeMillis();
@@ -41,8 +41,8 @@ public class IflyAsrJob {
         }
     }
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "IflyPushToRmaWebJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "IflyPushToRmaWebJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToRmaIflyWeb() {
         long startPushToRmaIflyWeb = System.currentTimeMillis();
         /**
@@ -63,8 +63,8 @@ public class IflyAsrJob {
         logger.info(">>> 任务名称:IflyPushToRmaWebJob(科大离线转码) 总执行时间为: [" + endPushToRmaIflyWeb + " ms]");
     }
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "IflyPushToAudioJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "IflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToIflyAudio() {
         long startPushToIflyAudio = System.currentTimeMillis();
         /**

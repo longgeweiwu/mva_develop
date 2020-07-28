@@ -13,12 +13,23 @@ public interface IQuarkCallbackService {
      * @return
      */
     List<QuarkCallbackEntity> queryIflyPendingTop(int top);
+    /**
+     * create job visit ifly web
+     * @param top 查询多少条
+     * @return
+     */
+    List<QuarkCallbackEntity> queryIstIflyPendingTop(int top);
 
     /**
      * create job visit ifly web
      * 单条解析文本
      */
     void addIflyTask(QuarkCallbackEntity quarkCallbackEntity);
+    /**
+     * create job visit ifly web
+     * 单条解析文本
+     */
+    void addistIflyTask(QuarkCallbackEntity quarkCallbackEntity);
 
     /**
      * create job visit ifly web

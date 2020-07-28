@@ -128,6 +128,22 @@ public class Tools {
         }
     }
 
+    public static void istWithoutRole(StringBuffer resultBuff, String result) {
+        if (StringUtils.isEmpty(result)) {
+            return;
+        }
+        JSONObject json = JSON.parseObject(result);
+        JSONArray rtArray = json.getJSONArray("ws");
+        if (rtArray != null && rtArray.size() != 0) {
+            for (Object rt : rtArray) {
+                JSONArray cws = ((JSONObject) rt).getJSONArray("cw");
+                for (Object cw : cws) {
+                    String w = ((JSONObject) cw).getString("w");
+                    resultBuff.append(w);
+                }
+            }
+        }
+    }
     /**
      * 添加离线转写任务
      *
@@ -150,6 +166,49 @@ public class Tools {
         long end = System.currentTimeMillis() - start;
         long netEnd = System.currentTimeMillis() - netstart;
         System.out.println("添加离线转写任务taskId:" + wavcid + ",总耗时：" + end + "网络耗时:" + netEnd + " 响应结果:" + resp);
+    }
+
+    /**
+     * 添加离线转写任务
+     *
+     * @param wavcid    任务唯一Id
+     * @param audiourl  音频文件下载地址
+     * @param notifyUrl 转写结果通知url地址
+     */
+    public static int addIstTask(String wavcid, String serverurl, String audiourl, String notifyUrl) {
+        long start = System.currentTimeMillis();
+        Map<String, Object> headers = new HashMap<String, Object>();
+        headers.put("Content-Type", "application/json");
+
+
+        JSONObject send = new JSONObject();
+        send.put(Constant.KEY_ISTIFLY_ID, wavcid);
+        JSONObject audiojs = new JSONObject();
+        audiojs.put("aid",wavcid);
+        audiojs.put("bits",16);
+        audiojs.put("chnl",1);
+        audiojs.put("encoding",6);
+        audiojs.put("offset",0);
+        audiojs.put("rate",8000);
+        audiojs.put("spkn",2);
+        audiojs.put("uri",audiourl);
+        send.put(Constant.KEY_ISTIFLY_AUDIO, audiojs);
+        send.put(Constant.KEY_ISTIFLY_CALLBACK, notifyUrl);
+        send.put(Constant.KEY_ISTIFLY_RESID, 0);
+        send.put(Constant.KEY_ISTIFLY_TYPE, 2);
+        send.put(Constant.KEY_ISTIFLY_TAGS, new JSONObject());
+
+        long netstart = System.currentTimeMillis();
+
+        String response = HttpUtil.httpPost(serverurl, headers, send.toJSONString(), null, Constant.HTTP_TIMEOUT, false);
+
+        long end = System.currentTimeMillis() - start;
+        long netEnd = System.currentTimeMillis() - netstart;
+        System.out.println("添加离线转写任务taskId:" + wavcid + ",总耗时：" + end + "网络耗时:" + netEnd + " 响应结果:" + response);
+
+        JSONObject resJs=JSON.parseObject(response);
+
+        return resJs.getJSONObject("state").getIntValue("ok");
     }
 
     /**

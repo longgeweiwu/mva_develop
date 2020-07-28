@@ -15,7 +15,7 @@ public class Constant {
      */
     public static final String IDURL = "https://wsxf.mva.gov.cn:8090/letter_test/service/letterPhoneRegister/identityVerify";
 
-    public static final String RECORDURL="http://172.16.12.178:52111/";
+    public static final String RECORDURL="http://47.92.107.98:52118/asr/";
     /**
      * 引擎选择
      */
@@ -64,8 +64,12 @@ public class Constant {
 
     //转科大写音频回调地址
     public static String NOTIFYURL="http://172.16.12.178:52113/quark/callback";
+    //转科大写音频回调地址
+    public static String NOTISTIFYURL="http://172.16.12.178:52113/ist/callback";
     //科大离线转写引擎服务器地址
     public static String URL="http://172.16.12.231:9505/quark_procer";
+    //科大离线转写引擎服务器地址
+    public static String ISTURL="http://poc.51znyx.com:17031/tuling/asr/v21/ist/async/process";
     //科大待转写音频下载地址
     public static String AUDIO="http://172.16.12.178:52111/";
 
@@ -79,6 +83,17 @@ public class Constant {
     public static final String UPLOADFILE = "http://172.16.12.178:52113/rma/upload";
     public static final int RMA_IFLY_SUCCESS = 1; //科大转码成功
     public static final int RMA_IFLY_FAIL = 2; //科大转码失败
+
+    /**
+     * 科大新接口
+     */
+    public static final String KEY_ISTIFLY_ID = "id";
+    public static final String KEY_ISTIFLY_AUDIO = "audio";
+    public static final String KEY_ISTIFLY_CALLBACK = "callback";
+    public static final String KEY_ISTIFLY_RESID = "resId";
+    public static final String KEY_ISTIFLY_TYPE = "type";
+    public static final String KEY_ISTIFLY_TAGS = "tags";
+
 
 
     /**

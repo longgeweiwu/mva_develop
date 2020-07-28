@@ -28,6 +28,11 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
     }
 
     @Override
+    public List<QuarkCallbackEntity> queryIstIflyPendingTop(int top) {
+        return quarkCallbackMapper.queryIstIflyPendingTopMapper(top);
+    }
+
+    @Override
     public void addIflyTask(QuarkCallbackEntity quarkCallbackEntity) {
         String wavcid = quarkCallbackEntity.getCallid();
         //生成唯一的消息通知地址
@@ -36,6 +41,18 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         //添加任务
         Tools.addTask(wavcid, Constant.URL,waitingUrl,task_notyfy_url);
         preIflyParse(wavcid);
+    }
+
+    @Override
+    public void addistIflyTask(QuarkCallbackEntity quarkCallbackEntity) {
+        String wavcid = quarkCallbackEntity.getCallid();
+        //生成唯一的消息通知地址
+        String task_notyfy_url= Constant.NOTISTIFYURL;
+        String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/"+quarkCallbackEntity.getVoiceFileName();
+        //添加任务
+        if(Tools.addIstTask(wavcid, Constant.ISTURL,waitingUrl,task_notyfy_url)==1){
+            preIflyParse(wavcid);
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)

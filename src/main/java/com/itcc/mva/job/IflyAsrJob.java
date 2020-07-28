@@ -41,6 +41,9 @@ public class IflyAsrJob {
         }
     }
 
+    /**
+     * 2
+     */
     @Scheduled(cron = "0/5 * * * * ?")
     @SchedulerLock(name = "IflyPushToRmaWebJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToRmaIflyWeb() {
@@ -63,6 +66,9 @@ public class IflyAsrJob {
         logger.info(">>> 任务名称:IflyPushToRmaWebJob(科大离线转码) 总执行时间为: [" + endPushToRmaIflyWeb + " ms]");
     }
 
+    /**
+     * 3
+     */
     @Scheduled(cron = "0/5 * * * * ?")
     @SchedulerLock(name = "IflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToIflyAudio() {
@@ -83,6 +89,32 @@ public class IflyAsrJob {
         }
         long endPushToIflyAudio = System.currentTimeMillis() - startPushToIflyAudio;
         logger.info(">>> 任务名称:IflyPushToAudioJob(科大离线解析) 总执行时间为: [" + endPushToIflyAudio + " ms]");
+
+    }
+
+    /**
+     * 新版接口，需要停掉2和3
+     */
+    //@Scheduled(cron = "0/5 * * * * ?")
+   //@SchedulerLock(name = "ISTIflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+    public void pushToISTIflyAudio() {
+        long startPushToIflyAudio = System.currentTimeMillis();
+        /**
+         * 先检查未解析过的ifly列表
+         */
+        List<QuarkCallbackEntity> asrEntityList = iQuarkCallbackService.queryIstIflyPendingTop(Constant.NO_PARSER_IFLY);
+
+        if (0 != asrEntityList.size()) {
+            logger.info(">>> 存在新接口[IFLY解析]任务 。 开始时间 [" + new Date() + "]");
+            for (int i = 0; i < asrEntityList.size(); i++) {
+                iQuarkCallbackService.addistIflyTask(asrEntityList.get(i));
+            }
+            logger.info(">>> 存在新接口[IFLY解析]任务 。 结束时间 [" + new Date() + "]");
+        } else {
+            logger.info(">>> 任务名称:ISTIflyPushToAudioJob 暂时没有新接口[IFLY解析]任务。");
+        }
+        long endPushToIflyAudio = System.currentTimeMillis() - startPushToIflyAudio;
+        logger.info(">>> 任务名称:ISTIflyPushToAudioJob(新接口科大离线解析) 总执行时间为: [" + endPushToIflyAudio + " ms]");
 
     }
 

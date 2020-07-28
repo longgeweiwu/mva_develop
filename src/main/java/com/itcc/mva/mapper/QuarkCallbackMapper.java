@@ -22,6 +22,12 @@ public interface QuarkCallbackMapper extends BaseMapper<QuarkCallbackEntity> {
      * @return
      */
     List<QuarkCallbackEntity> pushToIflyAudioTopMapper(int top);
+    /**
+     *
+     * @param top 查询待转录音多少条
+     * @return
+     */
+    List<QuarkCallbackEntity> queryIstIflyPendingTopMapper(int top);
 
     void generateIflyBaseTable();
 }

@@ -44,8 +44,8 @@ public class IflyAsrJob {
     /**
      * 2
      */
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "IflyPushToRmaWebJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+    //@Scheduled(cron = "0/5 * * * * ?")
+    //@SchedulerLock(name = "IflyPushToRmaWebJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToRmaIflyWeb() {
         long startPushToRmaIflyWeb = System.currentTimeMillis();
         /**
@@ -69,8 +69,8 @@ public class IflyAsrJob {
     /**
      * 3
      */
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "IflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+    //@Scheduled(cron = "0/5 * * * * ?")
+    //@SchedulerLock(name = "IflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToIflyAudio() {
         long startPushToIflyAudio = System.currentTimeMillis();
         /**
@@ -95,8 +95,8 @@ public class IflyAsrJob {
     /**
      * 新版接口，需要停掉2和3
      */
-    //@Scheduled(cron = "0/5 * * * * ?")
-   //@SchedulerLock(name = "ISTIflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+    @Scheduled(cron = "0/5 * * * * ?")
+    @SchedulerLock(name = "ISTIflyPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToISTIflyAudio() {
         long startPushToIflyAudio = System.currentTimeMillis();
         /**

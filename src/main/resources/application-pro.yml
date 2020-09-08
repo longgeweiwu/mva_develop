@@ -107,7 +107,7 @@ engineType:
   txtype: 0
 
 jobtype:
-  jtjob: 1
+  jtjob: 0
   kdjob: 1
-  aljob: 1
+  aljob: 0
   txjob: 0

@@ -23,8 +23,8 @@ public class AsrJsonParseJob {
     @Autowired
     private IAsrJsonParseService iAsrJsonParseService;
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "JtAsrParseResultJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+//    @Scheduled(cron = "* 0/2 * * * ?")
+//    @SchedulerLock(name = "JtAsrParseResultJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void runParse() {
         long startRunParse = System.currentTimeMillis();
         List<IntelligentAsrEntity> asrEntityList = iAsrJsonParseService.queryPendingTop(Constant.NO_PARSER);

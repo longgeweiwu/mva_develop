@@ -31,8 +31,8 @@ public class IntelligentAsrJob {
      * @Author LCL
      */
 
-    @Scheduled(cron = "* 0/1 * * * ?")
-    @SchedulerLock(name = "JtBaseJob", lockAtMostFor = "40s", lockAtLeastFor = "40s")
+//    @Scheduled(cron = "* 0/1 * * * ?")
+//    @SchedulerLock(name = "JtBaseJob", lockAtMostFor = "40s", lockAtLeastFor = "40s")
     public void generateBaseTable() {
         if (Constant.JOB_JT == jtjob) {
             long startIntelligentBaseJob = System.currentTimeMillis();
@@ -50,8 +50,8 @@ public class IntelligentAsrJob {
      * @Author LCL
      */
 
-    @Scheduled(cron = "* 0/2 * * * ?")
-    @SchedulerLock(name = "JtAsrJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
+//    @Scheduled(cron = "* 0/2 * * * ?")
+//    @SchedulerLock(name = "JtAsrJob", lockAtMostFor = "1m", lockAtLeastFor = "1m")
     public void asr() {
         long startIntelligentAsrJob = System.currentTimeMillis();
         intelligentTransferService.asr();

@@ -24,8 +24,8 @@ public class TxAsrJob {
     @Autowired
     private ITxService iTxService;
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "TxBaseTableJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    @SchedulerLock(name = "TxBaseTableJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void generateBaseTable() {
         if (Constant.JOB_TX == txjob) {
             long startGenerateBaseTable = System.currentTimeMillis();
@@ -37,8 +37,8 @@ public class TxAsrJob {
         }
     }
 
-    @Scheduled(cron = "0/15 * * * * ?")
-    @SchedulerLock(name = "syncFileToServiceJob", lockAtMostFor = "13s", lockAtLeastFor = "13s")
+//    @Scheduled(cron = "0/15 * * * * ?")
+//    @SchedulerLock(name = "syncFileToServiceJob", lockAtMostFor = "13s", lockAtLeastFor = "13s")
     public void syncFileToSever() {
         long startsyncFileTx = System.currentTimeMillis();
         /**
@@ -59,8 +59,8 @@ public class TxAsrJob {
         logger.info(">>> 任务名称:syncFileToServiceJob(TX同步录音) 总执行时间为: [" + endSyncFileTx + " ms]");
     }
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "TxPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    @SchedulerLock(name = "TxPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToTxAudio() {
         long startPushToTxAudio = System.currentTimeMillis();
         /**
@@ -82,8 +82,8 @@ public class TxAsrJob {
 
     }
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "TxQueryAndSetAudio", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    @SchedulerLock(name = "TxQueryAndSetAudio", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void queryTxAudio() {
         long startQueryTxAudio = System.currentTimeMillis();
         /**

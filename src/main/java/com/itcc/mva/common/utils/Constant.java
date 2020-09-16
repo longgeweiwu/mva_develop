@@ -122,8 +122,8 @@ public class Constant {
     public static final String TX_FILEPATH = "/asrdata/";
     public static final int UPFILE_SUCCESS = 1; //上传文件成功
     public static final int UPFILE_FAIL = 2; //上传文件失败
-    public static final String SECRETID = "AKIDNbdS3QOWFnYEh258sSt9HCuPhleJt6B3";
-    public static final String SECRETKEY = "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx";
+    public static final String SECRETID = "*";//请修改对应的开发者ID和KEY
+    public static final String SECRETKEY = "*";
     public static final String TX_AUDIL_URL = "http://39.105.47.147:52111/";
     public static final String TX_HOTWORDID = "30c8cf9d4c7311eabcc8446a2eb5fd98";
     public static final int ASRPARSER_TX_SUCCESS = 1; //腾讯解析成功

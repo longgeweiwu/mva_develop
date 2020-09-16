@@ -49,8 +49,8 @@ public class AliTestJob {
     @Autowired
     private AliTestMapper aliTestMapper;
 
-    @Scheduled(cron = "0/20 * * * * ?")
-    @SchedulerLock(name = "AliTestVHm", lockAtMostFor = "18s", lockAtLeastFor = "18s")
+//    @Scheduled(cron = "0/20 * * * * ?")
+//    @SchedulerLock(name = "AliTestVHm", lockAtMostFor = "18s", lockAtLeastFor = "18s")
     public void vocuPutRecordToAli() {
         List<String> name = getFileName();
         for(int i=0;i<name.size();i++) {
@@ -106,8 +106,8 @@ public class AliTestJob {
     }
 
 
-    @Scheduled(cron = "0/20 * * * * ?")
-    @SchedulerLock(name = "AliTestGetVHmResult", lockAtMostFor = "18s", lockAtLeastFor = "18s")
+//    @Scheduled(cron = "0/20 * * * * ?")
+//    @SchedulerLock(name = "AliTestGetVHmResult", lockAtMostFor = "18s", lockAtLeastFor = "18s")
     public void AliTestGetVHmResult() throws IOException {
 
         List<AliTestEntity> aliTestEntities=aliTestMapper.selectList(new QueryWrapper<AliTestEntity>().isNotNull("ORITASKID").isNotNull("VMTASKID").isNotNull("VHMTASKID"));

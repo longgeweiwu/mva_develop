@@ -28,8 +28,8 @@ public class AliAsrJob {
     @Autowired
     private IAliTransferService iAliTransferService;
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "AliBaseTableJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    @SchedulerLock(name = "AliBaseTableJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void generateBaseTable() {
         if (Constant.JOB_AL == aljob) {
             long startGenerateBaseTable = System.currentTimeMillis();
@@ -42,8 +42,8 @@ public class AliAsrJob {
     }
 
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "AliPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    @SchedulerLock(name = "AliPushToAudioJob", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void pushToAliAudio() {
         long startPushToAliAudio = System.currentTimeMillis();
         /**
@@ -65,8 +65,8 @@ public class AliAsrJob {
 
     }
 
-    @Scheduled(cron = "0/5 * * * * ?")
-    @SchedulerLock(name = "AliQueryAndSetAudio", lockAtMostFor = "3s", lockAtLeastFor = "3s")
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    @SchedulerLock(name = "AliQueryAndSetAudio", lockAtMostFor = "3s", lockAtLeastFor = "3s")
     public void queryAliAudio() {
         long startQueryAliAudio = System.currentTimeMillis();
         /**

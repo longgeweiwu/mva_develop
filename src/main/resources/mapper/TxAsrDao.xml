@@ -21,7 +21,7 @@
                  VOICE_FILE_NAME,
                  CALLID,
                  FULL_PATH
-            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+            from IVR_JT_LEAVWORD ivr
            where not exists (select callid
                     from MVA_TX_INTELLIGENT_ASR asr
                    where ivr.CALLID = asr.callid)
@@ -43,7 +43,7 @@
         , INSERT_TIME
         , TXPARSE_STATUS
         , ISSUBMIT
-        FROM ICC_UNION.MVA_TX_INTELLIGENT_ASR
+        FROM MVA_TX_INTELLIGENT_ASR
         WHERE  ROWNUM &lt;= #{top}
           AND TXFILEFLAG IS NULL
           AND LEAVEWORD_PATH IS NOT NULL
@@ -67,7 +67,7 @@
         , INSERT_TIME
         , TXPARSE_STATUS
         , ISSUBMIT
-        FROM ICC_UNION.MVA_TX_INTELLIGENT_ASR
+        FROM MVA_TX_INTELLIGENT_ASR
         WHERE  ROWNUM &lt;= #{top}
           AND TXFILEFLAG = 1
           AND ASRFLAG IS NULL
@@ -93,7 +93,7 @@
         , INSERT_TIME
         , TXPARSE_STATUS
         , ISSUBMIT
-        FROM ICC_UNION.MVA_TX_INTELLIGENT_ASR
+        FROM MVA_TX_INTELLIGENT_ASR
         WHERE  ROWNUM &lt;= #{top}
           AND TXFILEFLAG = 1
           AND ASRFLAG = 1

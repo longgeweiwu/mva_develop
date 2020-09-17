@@ -21,7 +21,7 @@
                  VOICE_FILE_NAME,
                  CALLID,
                  FULL_PATH
-            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+            from IVR_JT_LEAVWORD ivr
            where not exists (select callid
                     from MVA_ALI_INTELLIGENT_ASR asr
                    where ivr.CALLID = asr.callid)
@@ -42,7 +42,7 @@
             , INSERT_TIME
             , ALIPARSE_STATUS
             , ISSUBMIT
-         FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR
+         FROM MVA_ALI_INTELLIGENT_ASR
         WHERE  ROWNUM &lt;= #{top}
           AND ISSUBMIT IS NULL
           AND FULL_PATH IS NOT NULL
@@ -67,7 +67,7 @@
             , INSERT_TIME
             , ALIPARSE_STATUS
             , ISSUBMIT
-         FROM ICC_UNION.MVA_ALI_INTELLIGENT_ASR
+         FROM MVA_ALI_INTELLIGENT_ASR
         WHERE  ROWNUM &lt;= #{top}
           AND ISSUBMIT IS NULL
           AND TASKID IS NOT NULL

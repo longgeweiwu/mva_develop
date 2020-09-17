@@ -13,8 +13,8 @@
               , IJ.PHONENO AS PHONENO
               , IJ.QUESTION_TYPE AS QUESTION_TYPE
               , IJ.FLAG AS FLAG
-           FROM IVR_JTINFO@HUAWEI_ICD_DB_LINK IJ
-              , IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK IJL
+           FROM IVR_JTINFO IJ
+              , IVR_JT_LEAVWORD IJL
           WHERE IJ.CALLID = IJL.CALLID ( +)
             AND IJ.FLAG = '1'
             AND IJ.CALLID=#{callid}

@@ -21,7 +21,7 @@
                  VOICE_FILE_NAME,
                  CALLID,
                  FULL_PATH
-            from IVR_JT_LEAVWORD@HUAWEI_ICD_DB_LINK ivr
+            from IVR_JT_LEAVWORD ivr
            where not exists (select callid
                     from t_Qc_Intelligent_Asr asr
                    where ivr.CALLID = asr.callid)

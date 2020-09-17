@@ -65,13 +65,13 @@ public class Constant {
     //转科大写音频回调地址
     public static String NOTIFYURL="http://172.16.12.178:52113/quark/callback";
     //转科大写音频回调地址
-    public static String NOTISTIFYURL="http://172.16.12.178:52113/ist/callback";
+    public static String NOTISTIFYURL="http://192.168.60.81/ist/callback";
     //科大离线转写引擎服务器地址
     public static String URL="http://172.16.12.231:9505/quark_procer";
     //科大离线转写引擎服务器地址
     public static String ISTURL="http://172.16.12.38:5583/tuling/asr/v21/ist/async/process";
     //科大待转写音频下载地址
-    public static String AUDIO="http://172.16.12.178:52111/";
+    public static String AUDIO="http://192.168.60.81:12306/";
 
     //转码文件存储地址
     public static final  String RMAPATH = "D:\\AAA\\voice-engine-quark-javademo\\src\\main\\resources\\static\\RM";

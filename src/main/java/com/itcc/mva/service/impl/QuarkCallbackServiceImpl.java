@@ -6,6 +6,8 @@ import com.itcc.mva.common.utils.Tools;
 import com.itcc.mva.entity.QuarkCallbackEntity;
 import com.itcc.mva.mapper.QuarkCallbackMapper;
 import com.itcc.mva.service.IQuarkCallbackService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @Service
 public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private QuarkCallbackMapper quarkCallbackMapper;
@@ -50,6 +53,7 @@ public class QuarkCallbackServiceImpl implements IQuarkCallbackService {
         String task_notyfy_url= Constant.NOTISTIFYURL;
         String waitingUrl=Constant.AUDIO+quarkCallbackEntity.getFullPath().split("\\/")[3]+"/"+quarkCallbackEntity.getVoiceFileName();
         //添加任务
+        logger.info("回调地址为:"+task_notyfy_url + "-----> 录音地址为:"+waitingUrl);
         if(Tools.addIstTask(wavcid, Constant.ISTURL,waitingUrl,task_notyfy_url)==1){
             preIflyParse(wavcid);
         }

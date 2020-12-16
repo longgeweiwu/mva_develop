@@ -15,7 +15,7 @@ public class Constant {
      */
     public static final String IDURL = "http://59.255.20.131:59137/letter_test/service/letterPhoneRegister/identityVerify";
 
-    public static final String RECORDURL="http://59.255.20.164:12306/";
+    public static final String RECORDURL="http://59.255.20.166:12306/";
     /**
      * 引擎选择
      */

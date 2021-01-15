@@ -3,10 +3,7 @@ package com.itcc.mva.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.itcc.mva.common.utils.Constant;
-import com.itcc.mva.common.utils.GenSign;
-import com.itcc.mva.common.utils.HttpUtil;
-import com.itcc.mva.common.utils.Tools;
+import com.itcc.mva.common.utils.*;
 import com.itcc.mva.entity.*;
 import com.itcc.mva.mapper.*;
 import com.itcc.mva.service.IPushToMvaService;
@@ -193,7 +190,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
 
                     Map<String, Object> validSign = GenSign.getValidSign();
-                    postparams.put("data", jsonObject.toJSONString());
+                    postparams.put("data", AESEncryptUtils.encrypt(jsonObject.toJSONString()));
                     postparams.put("sign", validSign.get("sign"));
                     postparams.put("t", validSign.get("t"));
                     logger.info(">>> 推送准备 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));

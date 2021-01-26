@@ -187,7 +187,7 @@ public class Tools {
         audiojs.put("aid",wavcid);
         audiojs.put("bits",16);
         audiojs.put("chnl",1);
-        audiojs.put("encoding",6);
+        audiojs.put("encoding",0);
         audiojs.put("offset",0);
         audiojs.put("rate",8000);
         audiojs.put("spkn",2);

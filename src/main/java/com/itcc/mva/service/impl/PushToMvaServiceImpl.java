@@ -170,7 +170,21 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                  *
                  * 传 数字
                  */
-                jsonObject.put("extMobileOne", mvaOutVo.getPhoneno());
+                String extNumber=mvaOutVo.getPhoneno();
+                if(!(extNumber.indexOf("0")==0) && !(extNumber.indexOf("1")==0)){
+                    extNumber="010-"+extNumber;
+                    logger.info("01开头号码："+ extNumber);
+                }else if(extNumber.indexOf("02")==0){
+                    extNumber=extNumber.substring(0, 3)+"-"+extNumber.substring(3);
+                    logger.info("02开头号码:"+extNumber);
+                }else if(!(extNumber.indexOf("02")==0)&&!(extNumber.indexOf("01")==0)&&!(extNumber.indexOf("1")==0)){
+                    extNumber=extNumber.substring(0, 4)+"-"+extNumber.substring(4);
+                    logger.info("非02和01:"+extNumber);
+                }else {
+                    logger.info("手机号:"+extNumber);
+                }
+
+                jsonObject.put("extMobileOne", extNumber);
                 jsonObject.put("regMainAppealOne", mvaOutVo.getQuestionType());
                 String mvaAdd = getJudgeMvaId(mvaOutVo.getId());
                 if (null != mvaAdd) {

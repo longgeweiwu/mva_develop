@@ -51,7 +51,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                 Map<String, Object> headers = new HashMap<String, Object>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
 
-                Map<String, Object> postparams = GenSign.getValidSign();
+                Map<String, Object> postparams = GenSign.getValidSign(mvaOutVo.getId());
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("extIdcard", mvaOutVo.getId());//身份证号码
@@ -86,7 +86,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                     jsonObject.put("regAppealContent", intelligentAsrEntity.getJsonparseResult());//主要述求详情
                     //录音路径还有问题，需要注意
                     jsonObject.put("regRecordFileUri", Constant.RECORDURL + intelligentAsrEntity.getFullPath().split("/")[3] + "/" + intelligentAsrEntity.getVoiceFileName());//录音文件地址
-                    Map<String, Object> validSign = GenSign.getValidSign();
+                    Map<String, Object> validSign = GenSign.getPushValidSign(jsonObject.toJSONString());
                     postparams.put("data", jsonObject.toJSONString());
                     postparams.put("sign", validSign.get("sign"));
                     postparams.put("t", validSign.get("t"));
@@ -152,7 +152,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
                 Map<String, Object> headers = new HashMap<String, Object>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
-                Map<String, Object> postparams = GenSign.getValidSign();
+                Map<String, Object> postparams = GenSign.getValidSign(mvaOutVo.getId());
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("extIdcard", mvaOutVo.getId());//身份证号码
@@ -203,7 +203,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                     jsonObject.put("regRecordFileUri", Constant.RECORDURL + quarkCallbackEntity.getFullPath().split("/")[3] + "/" + quarkCallbackEntity.getVoiceFileName());//录音文件地址
 
 
-                    Map<String, Object> validSign = GenSign.getValidSign();
+                    Map<String, Object> validSign = GenSign.getPushValidSign(jsonObject.toJSONString());
                     postparams.put("data", AESEncryptUtils.encrypt(jsonObject.toJSONString()));
                     postparams.put("sign", validSign.get("sign"));
                     postparams.put("t", validSign.get("t"));
@@ -269,7 +269,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                 Map<String, Object> headers = new HashMap<String, Object>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
 
-                Map<String, Object> postparams = GenSign.getValidSign();
+                Map<String, Object> postparams = GenSign.getValidSign(mvaOutVo.getId());
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("extIdcard", mvaOutVo.getId());//身份证号码
@@ -304,7 +304,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                     jsonObject.put("regAppealContent", aliAsrEntity.getAliResult());//主要述求详情
                     //录音路径还有问题，需要注意
                     jsonObject.put("regRecordFileUri", Constant.RECORDURL + aliAsrEntity.getFullPath().split("/")[3] + "/" + aliAsrEntity.getVoiceFileName());//录音文件地址
-                    Map<String, Object> validSign = GenSign.getValidSign();
+                    Map<String, Object> validSign = GenSign.getPushValidSign(jsonObject.toJSONString());
                     postparams.put("data", jsonObject.toJSONString());
                     postparams.put("sign", validSign.get("sign"));
                     postparams.put("t", validSign.get("t"));
@@ -370,7 +370,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                 Map<String, Object> headers = new HashMap<String, Object>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
 
-                Map<String, Object> postparams = GenSign.getValidSign();
+                Map<String, Object> postparams = GenSign.getValidSign(mvaOutVo.getId());
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("extIdcard", mvaOutVo.getId());//身份证号码
@@ -405,7 +405,7 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                     jsonObject.put("regAppealContent", txAsrEntity.getTxResult());//主要述求详情
                     //录音路径还有问题，需要注意
                     jsonObject.put("regRecordFileUri", Constant.RECORDURL + txAsrEntity.getFullPath().split("/")[3] + "/" + txAsrEntity.getVoiceFileName());//录音文件地址
-                    Map<String, Object> validSign = GenSign.getValidSign();
+                    Map<String, Object> validSign = GenSign.getPushValidSign(jsonObject.toJSONString());
                     postparams.put("data", jsonObject.toJSONString());
                     postparams.put("sign", validSign.get("sign"));
                     postparams.put("t", validSign.get("t"));
@@ -491,8 +491,8 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
      */
     public String getJudgeMvaId(String id) {
         if (id.length() > 14) {
-            Map<String, Object> getParams = GenSign.getValidSign();
-            Map<String, Object> validSign = GenSign.getValidSign();
+            Map<String, Object> getParams = GenSign.getValidSign(id);
+            Map<String, Object> validSign = GenSign.getValidSign(id);
             getParams.put("idCard", id);
             getParams.put("sign", validSign.get("sign"));
             getParams.put("t", validSign.get("t"));

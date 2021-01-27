@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class GenSign {
 
-    public static Map<String,Object> getValidSign(){
+    public static Map<String,Object> getValidSign(String idCard){
         Map<String, Object> result = new HashMap<String, Object>();
         //appId
         String appId = "incoming_phone";
@@ -21,8 +21,11 @@ public class GenSign {
         //当前时间戳
         long t = System.currentTimeMillis();
 
+        String data= "{idCard:"+idCard+"}";
+
         //组装带加密的数据
-        String signStr ="appId"+appId+"t"+t+"appSecret"+appSecret;
+        String signStr ="appId"+appId+"t"+t+"appSecret"+appSecret
+                +"data"+data;
         //进行加密
         Md5DataSign md5Sign = new Md5DataSign();
         String sign = md5Sign.sign(salt, signStr);
@@ -33,7 +36,7 @@ public class GenSign {
 
 
 
-    public static Map<String,Object> getValidSign(String data){
+    public static Map<String,Object> getPushValidSign(String data){
         Map<String, Object> result = new HashMap<String, Object>();
         //appId
         String appId = "incoming_phone";

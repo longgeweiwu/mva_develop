@@ -152,7 +152,6 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
 
                 Map<String, Object> headers = new HashMap<String, Object>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
-                Map<String, Object> postparams = GenSign.getValidSign(mvaOutVo.getId());
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("extIdcard", mvaOutVo.getId());//身份证号码
@@ -203,33 +202,34 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
                     jsonObject.put("regRecordFileUri", Constant.RECORDURL + quarkCallbackEntity.getFullPath().split("/")[3] + "/" + quarkCallbackEntity.getVoiceFileName());//录音文件地址
 
 
+                    // Map<String, Object> postparams = GenSign.getValidSign(mvaOutVo.getId());
                     Map<String, Object> validSign = GenSign.getPushValidSign(jsonObject.toJSONString());
-                    postparams.put("data", AESEncryptUtils.encrypt(jsonObject.toJSONString()));
-                    postparams.put("sign", validSign.get("sign"));
-                    postparams.put("t", validSign.get("t"));
-                    logger.info(">>> 推送准备 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));
+                    validSign.put("data", AESEncryptUtils.encrypt(jsonObject.toJSONString()));
+                    //postparams.put("sign", validSign.get("sign"));
+                    //postparams.put("t", validSign.get("t"));
+                    logger.info(">>> 推送准备 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + validSign.get("data") + " [params sign]:" + validSign.get("sign") + " [params t]:" + validSign.get("t"));
 
-                    String resultPost = HttpUtil.httpPost(Constant.MVAURL, headers, null, postparams, Constant.HTTP_TIMEOUT, false);
+                    String resultPost = HttpUtil.httpPost(Constant.MVAURL, headers, null, validSign, Constant.HTTP_TIMEOUT, false);
                     /**
                      * 这块做逻辑处理，失败啥的等等吧。暂时按照文档写
                      */
                     if (null != resultPost && Tools.isJSONValid(resultPost)) {
                         JSONObject httpResult = JSON.parseObject(resultPost);
                         if (1 == httpResult.getInteger("code")) {
-                            logger.info(">>> 推送成功 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));
+                            logger.info(">>> 推送成功 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + validSign.get("data") + " [params sign]:" + validSign.get("sign") + " [params t]:" + validSign.get("t"));
                             //只有等于1 的时候说明推送成功
                             QuarkCallbackEntity result = new QuarkCallbackEntity();
                             result.setIssubmit(Constant.SEND_SUCCESS);
                             quarkCallbackMapper.update(result, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", quarkCallbackEntity.getCallid()));
                         } else {
-                            logger.info(">>> 推送成功 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t") + "接口返回参数为： " + httpResult);
+                            logger.info(">>> 推送成功 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + validSign.get("data") + " [params sign]:" + validSign.get("sign") + " [params t]:" + validSign.get("t") + "接口返回参数为： " + httpResult);
                             //只有等于1 的时候说明推送成功
                             QuarkCallbackEntity result = new QuarkCallbackEntity();
                             result.setIssubmit(Constant.SEND_NOTEXIST);
                             quarkCallbackMapper.update(result, new QueryWrapper<QuarkCallbackEntity>().eq("CALLID", quarkCallbackEntity.getCallid()));
                         }
                     } else {
-                        logger.info(">>> 推送失败 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + postparams.get("data") + " [params sign]:" + postparams.get("sign") + " [params t]:" + postparams.get("t"));
+                        logger.info(">>> 推送失败 请求时候的参数为 [URL]:" + Constant.MVAURL + " [params data]:" + validSign.get("data") + " [params sign]:" + validSign.get("sign") + " [params t]:" + validSign.get("t"));
                         //等于空说明推送失败
                         QuarkCallbackEntity result = new QuarkCallbackEntity();
                         result.setIssubmit(Constant.SEND_FAIL);
@@ -491,14 +491,13 @@ public class PushToMvaServiceImpl implements IPushToMvaService {
      */
     public String getJudgeMvaId(String id) {
         if (id.length() > 14) {
-            Map<String, Object> getParams = GenSign.getValidSign(id);
+            //Map<String, Object> getParams = GenSign.getValidSign(id);
             Map<String, Object> validSign = GenSign.getValidSign(id);
-            getParams.put("idCard", id);
-            getParams.put("sign", validSign.get("sign"));
-            getParams.put("t", validSign.get("t"));
-            logger.info(">>> 身份接口准备 请求时候的参数为 [URL]:" + Constant.IDURL + " [params data]:" + getParams.get("idCard") + " [params sign]:" + getParams.get("sign") + " [params t]:" + getParams.get("t"));
+            validSign.put("idCard", id);
+            logger.info(">>> 身份接口准备 请求时候的参数为 [URL]:" + Constant.IDURL + " [params data]:" + validSign.get("idCard") + " [params sign]:" + validSign.get("sign") + " [params t]:" + validSign.get("t"));
             try {
-                String resultGet = HttpUtil.get(Constant.IDURL, getParams);
+                String resultGet = HttpUtil.get(Constant.IDURL, validSign);
+                logger.info("resultGet--->"+resultGet);
                 if (null != resultGet && Tools.isJSONValid(resultGet)) {
                     JSONObject httpResult = JSON.parseObject(resultGet);
                     if (1 == httpResult.getInteger("code")) {
